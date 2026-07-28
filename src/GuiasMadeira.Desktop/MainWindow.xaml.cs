@@ -29,6 +29,8 @@ public partial class MainWindow
 
     private void NavRolarias_Checked(object sender, RoutedEventArgs e) => NavigateTo(new RolariaPage());
 
+    private void NavImportarCodigosBarras_Checked(object sender, RoutedEventArgs e) => NavigateTo(new ImportarCodigosBarrasPage());
+
     private void NavPesquisar_Checked(object sender, RoutedEventArgs e) => NavigateTo(new PesquisarGuiaPage());
 
     private void NavigateTo(System.Windows.Controls.Page page)

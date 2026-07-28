@@ -39,6 +39,8 @@
                                  Content="Proprietários" Checked="NavProprietarios_Checked"/>
                     <RadioButton x:Name="NavRolarias" GroupName="MainNav" Style="{StaticResource NavItem}"
                                  Content="Rolarias" Checked="NavRolarias_Checked"/>
+                    <RadioButton x:Name="NavImportarCodigosBarras" GroupName="MainNav" Style="{StaticResource NavItem}"
+                                 Content="Importar Vinhetas" Checked="NavImportarCodigosBarras_Checked"/>
                 </StackPanel>
             </DockPanel>
         </Border>
