@@ -1,0 +1,1696 @@
+﻿Version =21
+VersionRequired =20
+PublishOption =1
+Checksum =461619322
+Begin Report
+    LayoutForPrint = NotDefault
+    DividingLines = NotDefault
+    AllowDesignChanges = NotDefault
+    DateGrouping =1
+    GrpKeepTogether =1
+    PictureAlignment =2
+    DatasheetGridlinesBehavior =3
+    GridY =10
+    Width =7620
+    DatasheetFontHeight =11
+    ItemSuffix =135
+    Right =17085
+    Bottom =12195
+    DatasheetGridlinesColor =15132391
+    Filter ="IDGuia = 67"
+    RecordSource ="Relatorio"
+    DatasheetFontName ="Calibri"
+    FilterOnLoad =0
+    FitToPage =1
+    DisplayOnSharePointSite =1
+    DatasheetAlternateBackColor =15921906
+    DatasheetGridlinesColor12 =0
+    FitToScreen =1
+    DatasheetBackThemeColorIndex =1
+    BorderThemeColorIndex =3
+    ThemeFontIndex =1
+    ForeThemeColorIndex =0
+    AlternateBackThemeColorIndex =1
+    AlternateBackShade =95.0
+    PrtDevNamesW = Begin
+        0x04001b0032000100000000000000000000000000000000000000000000000000 ,
+        0x0000000000000000000000000000000000000000000000000000000000000000 ,
+        0x0000000000000000000000000000000000000000000000000000000000000000 ,
+        0x0000000050004f0052005400500052004f004d00500054003a000000
+    End
+    NoSaveCTIWhenDisabled =1
+    Begin
+        Begin Label
+            BackStyle =0
+            FontSize =11
+            BorderColor =8355711
+            ForeColor =6710886
+            FontName ="Calibri"
+            GridlineColor =-2147483609
+            ThemeFontIndex =1
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =0
+            BorderTint =50.0
+            ForeThemeColorIndex =0
+            ForeTint =60.0
+        End
+        Begin Rectangle
+            BorderLineStyle =0
+            Width =850
+            Height =850
+            BorderColor =10921638
+            GridlineColor =-2147483609
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+        End
+        Begin Line
+            BorderLineStyle =0
+            Width =1701
+            GridlineColor =-2147483609
+            BorderThemeColorIndex =0
+        End
+        Begin Image
+            OldBorderStyle =0
+            BorderLineStyle =0
+            SizeMode =3
+            PictureAlignment =2
+            Width =1701
+            Height =1701
+            BorderColor =10921638
+            GridlineColor =-2147483609
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+        End
+        Begin CommandButton
+            Width =1701
+            Height =283
+            FontSize =11
+            FontWeight =400
+            ForeColor =4210752
+            FontName ="Calibri"
+            GridlineColor =-2147483609
+            ForeThemeColorIndex =0
+            ForeTint =75.0
+            UseTheme =1
+            Shape =1
+            Gradient =12
+            BackColor =14461583
+            BackThemeColorIndex =4
+            BackTint =60.0
+            BorderLineStyle =0
+            BorderColor =14461583
+            BorderThemeColorIndex =4
+            BorderTint =60.0
+            ThemeFontIndex =1
+            HoverColor =15189940
+            HoverThemeColorIndex =4
+            HoverTint =40.0
+            PressedColor =9917743
+            PressedThemeColorIndex =4
+            PressedShade =75.0
+            HoverForeColor =4210752
+            HoverForeThemeColorIndex =0
+            HoverForeTint =75.0
+            PressedForeColor =4210752
+            PressedForeThemeColorIndex =0
+            PressedForeTint =75.0
+        End
+        Begin OptionButton
+            BorderLineStyle =0
+            LabelX =230
+            LabelY =-30
+            BorderColor =10921638
+            GridlineColor =-2147483609
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+        End
+        Begin CheckBox
+            BorderLineStyle =0
+            LabelX =230
+            LabelY =-30
+            BorderColor =10921638
+            GridlineColor =-2147483609
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+        End
+        Begin OptionGroup
+            BorderLineStyle =0
+            Width =1701
+            Height =1701
+            BorderColor =10921638
+            GridlineColor =-2147483609
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+        End
+        Begin BoundObjectFrame
+            AddColon = NotDefault
+            SizeMode =3
+            BorderLineStyle =0
+            Width =4536
+            Height =2835
+            LabelX =-1701
+            BorderColor =10921638
+            GridlineColor =-2147483609
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+        End
+        Begin TextBox
+            AddColon = NotDefault
+            FELineBreak = NotDefault
+            BorderLineStyle =0
+            Width =1701
+            LabelX =-1701
+            FontSize =11
+            BorderColor =10921638
+            ForeColor =4210752
+            FontName ="Calibri"
+            AsianLineBreak =1
+            GridlineColor =-2147483609
+            ShowDatePicker =0
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+            ThemeFontIndex =1
+            ForeThemeColorIndex =0
+            ForeTint =75.0
+        End
+        Begin ListBox
+            BorderLineStyle =0
+            Width =1701
+            Height =1417
+            LabelX =-1701
+            FontSize =11
+            ForeColor =4210752
+            BorderColor =10921638
+            FontName ="Calibri"
+            GridlineColor =-2147483609
+            AllowValueListEdits =1
+            InheritValueList =1
+            ThemeFontIndex =1
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+            ForeThemeColorIndex =0
+            ForeTint =75.0
+        End
+        Begin ComboBox
+            AddColon = NotDefault
+            BorderLineStyle =0
+            Width =1701
+            LabelX =-1701
+            FontSize =11
+            BorderColor =10921638
+            ForeColor =3484194
+            FontName ="Calibri"
+            GridlineColor =-2147483609
+            AllowValueListEdits =1
+            InheritValueList =1
+            ThemeFontIndex =1
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+            ForeThemeColorIndex =2
+            ForeShade =50.0
+        End
+        Begin Subform
+            BorderLineStyle =0
+            Width =1701
+            Height =1701
+            GridlineColor =-2147483609
+        End
+        Begin Chart
+            OldBorderStyle =1
+            Width =4536
+            Height =2835
+            BorderColor =10921638
+            ForeColor =3484194
+            GridlineColor =-2147483609
+            ThemeFontIndex =1
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+            ForeThemeColorIndex =2
+            ForeShade =50.0
+        End
+        Begin UnboundObjectFrame
+            OldBorderStyle =1
+            Width =4536
+            Height =2835
+            BorderColor =10921638
+            ForeColor =3484194
+            GridlineColor =-2147483609
+            ThemeFontIndex =1
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+            ForeThemeColorIndex =2
+            ForeShade =50.0
+        End
+        Begin PageBreak
+            Width =283
+        End
+        Begin CustomControl
+            OldBorderStyle =1
+            Width =4536
+            Height =2835
+            BorderColor =10921638
+            GridlineColor =-2147483609
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+        End
+        Begin ToggleButton
+            Width =283
+            Height =283
+            ForeColor =4210752
+            FontName ="Calibri"
+            GridlineColor =-2147483609
+            ForeThemeColorIndex =0
+            ForeTint =75.0
+            UseTheme =1
+            Shape =2
+            Bevel =1
+            BackColor =14461583
+            BackThemeColorIndex =4
+            BackTint =60.0
+            OldBorderStyle =0
+            BorderLineStyle =0
+            BorderColor =14461583
+            BorderThemeColorIndex =4
+            BorderTint =60.0
+            ThemeFontIndex =1
+            HoverColor =15189940
+            HoverThemeColorIndex =4
+            HoverTint =40.0
+            PressedColor =9917743
+            PressedThemeColorIndex =4
+            PressedShade =75.0
+            HoverForeColor =4210752
+            HoverForeThemeColorIndex =0
+            HoverForeTint =75.0
+            PressedForeThemeColorIndex =1
+        End
+        Begin Tab
+            Width =5103
+            Height =3402
+            FontSize =11
+            FontName ="Calibri Light"
+            GridlineColor =-2147483609
+            ThemeFontIndex =0
+            UseTheme =1
+            Shape =3
+            BackColor =14277081
+            BackThemeColorIndex =1
+            BackShade =85.0
+            BorderLineStyle =0
+            BorderColor =11573124
+            BorderThemeColorIndex =2
+            BorderTint =60.0
+            HoverThemeColorIndex =1
+            PressedThemeColorIndex =1
+            HoverForeColor =4210752
+            HoverForeThemeColorIndex =0
+            HoverForeTint =75.0
+            PressedForeColor =4210752
+            PressedForeThemeColorIndex =0
+            PressedForeTint =75.0
+            ForeColor =4210752
+            ForeThemeColorIndex =0
+            ForeTint =75.0
+        End
+        Begin Page
+            Width =1701
+            Height =1701
+            BorderColor =10921638
+            GridlineColor =-2147483609
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+        End
+        Begin Attachment
+            BackStyle =0
+            BorderLineStyle =0
+            PictureSizeMode =3
+            Width =1701
+            Height =1701
+            BorderColor =10921638
+            GridlineColor =-2147483609
+            LabelX =-1701
+            AddColon =0
+            ThemeFontIndex =1
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+        End
+        Begin EmptyCell
+            Height =240
+            GridlineColor =-2147483609
+        End
+        Begin WebBrowser
+            OldBorderStyle =1
+            Width =4536
+            Height =2835
+            BorderColor =10921638
+            GridlineColor =-2147483609
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+        End
+        Begin NavigationControl
+            BorderWidth =1
+            BorderLineStyle =0
+            BorderColor =16777215
+            ForeColor =3484194
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =1
+            GridlineColor =-2147483609
+        End
+        Begin NavigationButton
+            Width =283
+            Height =283
+            ForeColor =4210752
+            GridlineColor =-2147483609
+            HoverColor =15064278
+            HoverThemeColorIndex =2
+            HoverTint =20.0
+            PressedColor =11573124
+            PressedThemeColorIndex =2
+            PressedTint =60.0
+            HoverForeColor =4210752
+            HoverForeThemeColorIndex =0
+            HoverForeTint =75.0
+            PressedForeColor =4210752
+            PressedForeThemeColorIndex =0
+            PressedForeTint =75.0
+            BackThemeColorIndex =1
+            OldBorderStyle =0
+            BorderLineStyle =0
+            BorderColor =13553360
+            BorderThemeColorIndex =3
+            BorderShade =90.0
+            ThemeFontIndex =1
+            TextFontCharSet =177
+            TextFontFamily =0
+            FontName ="Calibri"
+            FontWeight =400
+            FontSize =11
+            ForeThemeColorIndex =0
+            ForeTint =75.0
+        End
+        Begin 
+        End
+        Begin 
+        End
+        Begin 
+        End
+        Begin BreakLevel
+            GroupHeader = NotDefault
+            ControlSource ="idVia"
+        End
+        Begin FormHeader
+            KeepTogether = NotDefault
+            CanGrow = NotDefault
+            CanShrink = NotDefault
+            Height =0
+            BackColor =15064278
+            Name ="CabeçalhoDoRelatório"
+            AlternateBackThemeColorIndex =1
+            AlternateBackShade =95.0
+            BackThemeColorIndex =2
+            BackTint =20.0
+        End
+        Begin PageHeader
+            Height =0
+            Name ="SecçãoDeCabeçalhoDePágina"
+            AlternateBackThemeColorIndex =1
+            AlternateBackShade =95.0
+            BackThemeColorIndex =1
+        End
+        Begin BreakHeader
+            KeepTogether = NotDefault
+            CanGrow = NotDefault
+            CanShrink = NotDefault
+            ForceNewPage =1
+            Height =10305
+            OnFormat ="[Event Procedure]"
+            Name ="CabeçalhoDoGrupo0"
+            AlternateBackColor =16777215
+            AlternateBackThemeColorIndex =1
+            BackThemeColorIndex =1
+            Begin
+                Begin Image
+                    PictureType =2
+                    Top =1980
+                    Width =7533
+                    Height =7775
+                    Name ="Imagem134"
+                    Picture ="Design sem nome (1)"
+
+                    LayoutCachedTop =1980
+                    LayoutCachedWidth =7533
+                    LayoutCachedHeight =9755
+                    TabIndex =19
+                End
+                Begin TextBox
+                    TextAlign =2
+                    IMESentenceMode =3
+                    Left =6585
+                    Top =510
+                    Width =1005
+                    Height =285
+                    FontSize =10
+                    FontWeight =700
+                    BorderColor =0
+                    ForeColor =0
+                    Name ="NumeroGuia"
+                    ControlSource ="IDGuia"
+                    GridlineColor =10921638
+                    ShowDatePicker =1
+
+                    LayoutCachedLeft =6585
+                    LayoutCachedTop =510
+                    LayoutCachedWidth =7590
+                    LayoutCachedHeight =795
+                    BorderThemeColorIndex =0
+                    BorderShade =100.0
+                    ForeTint =100.0
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Label
+                    BackStyle =1
+                    OldBorderStyle =1
+                    TextAlign =2
+                    Left =3285
+                    Top =510
+                    Width =3300
+                    Height =285
+                    FontSize =10
+                    FontWeight =700
+                    BackColor =11250607
+                    BorderColor =0
+                    ForeColor =16777215
+                    Name ="Rótulo32"
+                    Caption ="GUIA PARA ENTRADA DE ROLARIA -"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =3285
+                    LayoutCachedTop =510
+                    LayoutCachedWidth =6585
+                    LayoutCachedHeight =795
+                    BackThemeColorIndex =3
+                    BackShade =75.0
+                    BorderTint =100.0
+                    ForeThemeColorIndex =1
+                    ForeTint =100.0
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Label
+                    OldBorderStyle =1
+                    TextAlign =2
+                    Left =3279
+                    Top =960
+                    Width =4305
+                    Height =615
+                    FontWeight =700
+                    BackColor =8092539
+                    BorderColor =8092539
+                    ForeColor =8092539
+                    Name ="Rótulo34"
+                    Caption ="ESTA GUIA NÃO PODE SER UTILIZADA\015\012COMO DOCUMENTO DE TRANSPORTE"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =3279
+                    LayoutCachedTop =960
+                    LayoutCachedWidth =7584
+                    LayoutCachedHeight =1575
+                    BackThemeColorIndex =-1
+                    BorderThemeColorIndex =-1
+                    BorderTint =100.0
+                    ForeThemeColorIndex =-1
+                    ForeTint =100.0
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Label
+                    Left =3964
+                    Top =1640
+                    Width =3630
+                    Height =315
+                    FontSize =9
+                    Name ="Rótulo35"
+                    Caption ="______ de __________________ de 20_______"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =3964
+                    LayoutCachedTop =1640
+                    LayoutCachedWidth =7594
+                    LayoutCachedHeight =1955
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Rectangle
+                    OldBorderStyle =0
+                    Left =4980
+                    Width =2586
+                    Height =393
+                    BackColor =16777169
+                    Name ="Caixa39"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =4980
+                    LayoutCachedWidth =7566
+                    LayoutCachedHeight =393
+                    BackThemeColorIndex =-1
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Rectangle
+                    BackStyle =0
+                    Top =2085
+                    Width =7594
+                    Height =1260
+                    BorderColor =0
+                    Name ="Caixa27"
+                    GridlineColor =10921638
+                    LayoutCachedTop =2085
+                    LayoutCachedWidth =7594
+                    LayoutCachedHeight =3345
+                    BorderThemeColorIndex =0
+                    BorderShade =100.0
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin TextBox
+                    FontUnderline = NotDefault
+                    OldBorderStyle =0
+                    TextAlign =1
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =1587
+                    Top =2664
+                    Width =1191
+                    Height =295
+                    FontSize =9
+                    FontWeight =700
+                    TabIndex =1
+                    Name ="NIF"
+                    ControlSource ="NIF"
+                    GridlineColor =10921638
+                    ShowDatePicker =1
+
+                    LayoutCachedLeft =1587
+                    LayoutCachedTop =2664
+                    LayoutCachedWidth =2778
+                    LayoutCachedHeight =2959
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                    Begin
+                        Begin Label
+                            Left =285
+                            Top =2655
+                            Width =1470
+                            Height =285
+                            FontSize =9
+                            Name ="Rótulo28"
+                            Caption ="Contribuinte n. º:"
+                            GridlineColor =10921638
+                            LayoutCachedLeft =285
+                            LayoutCachedTop =2655
+                            LayoutCachedWidth =1755
+                            LayoutCachedHeight =2940
+                            GridlineThemeColorIndex =1
+                            GridlineShade =65.0
+                        End
+                    End
+                End
+                Begin TextBox
+                    FontUnderline = NotDefault
+                    OldBorderStyle =0
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =914
+                    Top =3000
+                    Width =3456
+                    Height =285
+                    FontSize =9
+                    FontWeight =700
+                    TabIndex =2
+                    Name ="Morada"
+                    ControlSource ="Morada"
+                    GridlineColor =10921638
+                    ShowDatePicker =1
+
+                    LayoutCachedLeft =914
+                    LayoutCachedTop =3000
+                    LayoutCachedWidth =4370
+                    LayoutCachedHeight =3285
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                    Begin
+                        Begin Label
+                            Left =120
+                            Top =3000
+                            Width =735
+                            Height =225
+                            FontSize =9
+                            Name ="Rótulo31"
+                            Caption ="Morada:"
+                            GridlineColor =10921638
+                            LayoutCachedLeft =120
+                            LayoutCachedTop =3000
+                            LayoutCachedWidth =855
+                            LayoutCachedHeight =3225
+                            GridlineThemeColorIndex =1
+                            GridlineShade =65.0
+                        End
+                    End
+                End
+                Begin Rectangle
+                    BackStyle =0
+                    Top =3405
+                    Width =7594
+                    Height =2985
+                    BorderColor =0
+                    Name ="Caixa41"
+                    GridlineColor =10921638
+                    LayoutCachedTop =3405
+                    LayoutCachedWidth =7594
+                    LayoutCachedHeight =6390
+                    BorderThemeColorIndex =0
+                    BorderShade =100.0
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Rectangle
+                    BackStyle =0
+                    Left =56
+                    Top =3854
+                    Width =2029
+                    Height =720
+                    BorderColor =0
+                    Name ="Caixa43"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =56
+                    LayoutCachedTop =3854
+                    LayoutCachedWidth =2085
+                    LayoutCachedHeight =4574
+                    BorderThemeColorIndex =0
+                    BorderShade =100.0
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Label
+                    OldBorderStyle =1
+                    TextAlign =1
+                    Top =1709
+                    Width =2580
+                    Height =375
+                    FontSize =6
+                    FontWeight =700
+                    BorderColor =0
+                    ForeColor =0
+                    Name ="Rótulo47"
+                    Caption =" MADEIRA CERTIFICADA FSC 100%"
+                    GridlineColor =10921638
+                    LayoutCachedTop =1709
+                    LayoutCachedWidth =2580
+                    LayoutCachedHeight =2084
+                    BorderTint =100.0
+                    ForeTint =100.0
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Label
+                    TextAlign =1
+                    Top =1870
+                    Width =2865
+                    Height =270
+                    FontSize =6
+                    FontWeight =700
+                    ForeColor =0
+                    Name ="Rótulo48"
+                    Caption =" CERTIFICADO: APCER-COC-150294-AP"
+                    GridlineColor =10921638
+                    LayoutCachedTop =1870
+                    LayoutCachedWidth =2865
+                    LayoutCachedHeight =2140
+                    ForeTint =100.0
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Rectangle
+                    BackStyle =0
+                    Left =2154
+                    Top =3853
+                    Width =5374
+                    Height =720
+                    BorderColor =0
+                    Name ="Caixa53"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =2154
+                    LayoutCachedTop =3853
+                    LayoutCachedWidth =7528
+                    LayoutCachedHeight =4573
+                    BorderThemeColorIndex =0
+                    BorderShade =100.0
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Label
+                    Left =2265
+                    Top =4123
+                    Width =3540
+                    Height =315
+                    FontSize =9
+                    Name ="Rótulo54"
+                    Caption ="Quantidade: __________________________"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =2265
+                    LayoutCachedTop =4123
+                    LayoutCachedWidth =5805
+                    LayoutCachedHeight =4438
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Rectangle
+                    BackStyle =0
+                    Left =5788
+                    Top =4152
+                    Width =169
+                    Height =180
+                    BorderColor =10855845
+                    Name ="Caixa56"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =5788
+                    LayoutCachedTop =4152
+                    LayoutCachedWidth =5957
+                    LayoutCachedHeight =4332
+                    BorderThemeColorIndex =-1
+                    BorderShade =100.0
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Label
+                    Left =6014
+                    Top =4095
+                    Width =915
+                    Height =225
+                    FontSize =9
+                    Name ="Rótulo57"
+                    Caption ="Toneladas"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =6014
+                    LayoutCachedTop =4095
+                    LayoutCachedWidth =6929
+                    LayoutCachedHeight =4320
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Rectangle
+                    BackStyle =0
+                    Left =6921
+                    Top =4152
+                    Width =169
+                    Height =180
+                    BorderColor =10855845
+                    Name ="Caixa58"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =6921
+                    LayoutCachedTop =4152
+                    LayoutCachedWidth =7090
+                    LayoutCachedHeight =4332
+                    BorderThemeColorIndex =-1
+                    BorderShade =100.0
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Label
+                    Left =7148
+                    Top =4095
+                    Width =285
+                    Height =225
+                    FontSize =9
+                    Name ="Rótulo59"
+                    Caption ="M3"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =7148
+                    LayoutCachedTop =4095
+                    LayoutCachedWidth =7433
+                    LayoutCachedHeight =4320
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Rectangle
+                    BackStyle =0
+                    Left =510
+                    Top =3972
+                    Width =169
+                    Height =180
+                    Name ="Caixa60"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =510
+                    LayoutCachedTop =3972
+                    LayoutCachedWidth =679
+                    LayoutCachedHeight =4152
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Label
+                    Left =736
+                    Top =3915
+                    Width =750
+                    Height =225
+                    FontSize =9
+                    Name ="Rótulo61"
+                    Caption ="C/ Casca"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =736
+                    LayoutCachedTop =3915
+                    LayoutCachedWidth =1486
+                    LayoutCachedHeight =4140
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Rectangle
+                    BackStyle =0
+                    Left =510
+                    Top =4329
+                    Width =169
+                    Height =180
+                    Name ="Caixa62"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =510
+                    LayoutCachedTop =4329
+                    LayoutCachedWidth =679
+                    LayoutCachedHeight =4509
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Label
+                    Left =736
+                    Top =4272
+                    Width =750
+                    Height =225
+                    FontSize =9
+                    Name ="Rótulo63"
+                    Caption ="S/ Casca"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =736
+                    LayoutCachedTop =4272
+                    LayoutCachedWidth =1486
+                    LayoutCachedHeight =4497
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Rectangle
+                    BackStyle =0
+                    Left =56
+                    Top =4694
+                    Width =7474
+                    Height =675
+                    BorderColor =0
+                    Name ="Caixa64"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =56
+                    LayoutCachedTop =4694
+                    LayoutCachedWidth =7530
+                    LayoutCachedHeight =5369
+                    BorderThemeColorIndex =0
+                    BorderShade =100.0
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Label
+                    Left =113
+                    Top =4741
+                    Width =7410
+                    Height =270
+                    FontSize =9
+                    Name ="Rótulo65"
+                    Caption ="N.º Guia Remessa/Cod AT: _______________________________________________________"
+                        "___"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =113
+                    LayoutCachedTop =4741
+                    LayoutCachedWidth =7523
+                    LayoutCachedHeight =5011
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Label
+                    Left =113
+                    Top =5082
+                    Width =7470
+                    Height =270
+                    FontSize =9
+                    Name ="Rótulo66"
+                    Caption ="Matrícula do Carro: _______ - _______ - _______     Reboque: ___________________"
+                        "__________"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =113
+                    LayoutCachedTop =5082
+                    LayoutCachedWidth =7583
+                    LayoutCachedHeight =5352
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin TextBox
+                    FontUnderline = NotDefault
+                    OldBorderStyle =0
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =1303
+                    Top =5478
+                    Width =1251
+                    FontSize =9
+                    FontWeight =700
+                    TabIndex =3
+                    Name ="Freguesia"
+                    ControlSource ="Freguesia"
+                    GridlineColor =10921638
+                    ShowDatePicker =1
+
+                    LayoutCachedLeft =1303
+                    LayoutCachedTop =5478
+                    LayoutCachedWidth =2554
+                    LayoutCachedHeight =5718
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                    Begin
+                        Begin Label
+                            Left =113
+                            Top =5478
+                            Width =1245
+                            Height =240
+                            FontSize =9
+                            Name ="Rótulo67"
+                            Caption ="Carregamento:"
+                            GridlineColor =10921638
+                            LayoutCachedLeft =113
+                            LayoutCachedTop =5478
+                            LayoutCachedWidth =1358
+                            LayoutCachedHeight =5718
+                            GridlineThemeColorIndex =1
+                            GridlineShade =65.0
+                        End
+                    End
+                End
+                Begin TextBox
+                    FontUnderline = NotDefault
+                    OldBorderStyle =0
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =2154
+                    Top =6045
+                    Width =2661
+                    FontSize =9
+                    FontWeight =700
+                    TabIndex =4
+                    Name ="Fornecedor"
+                    ControlSource ="Fornecedor"
+                    GridlineColor =10921638
+                    ShowDatePicker =1
+
+                    LayoutCachedLeft =2154
+                    LayoutCachedTop =6045
+                    LayoutCachedWidth =4815
+                    LayoutCachedHeight =6285
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                    Begin
+                        Begin Label
+                            Left =113
+                            Top =6045
+                            Width =2220
+                            Height =270
+                            FontSize =9
+                            Name ="Rótulo69"
+                            Caption ="Entregue pelo Fornecedor:"
+                            GridlineColor =10921638
+                            LayoutCachedLeft =113
+                            LayoutCachedTop =6045
+                            LayoutCachedWidth =2333
+                            LayoutCachedHeight =6315
+                            GridlineThemeColorIndex =1
+                            GridlineShade =65.0
+                        End
+                    End
+                End
+                Begin Rectangle
+                    BackStyle =0
+                    Top =6470
+                    Width =7594
+                    Height =2085
+                    BorderColor =0
+                    Name ="Caixa75"
+                    GridlineColor =10921638
+                    LayoutCachedTop =6470
+                    LayoutCachedWidth =7594
+                    LayoutCachedHeight =8555
+                    BorderThemeColorIndex =0
+                    BorderShade =100.0
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin TextBox
+                    FontUnderline = NotDefault
+                    OldBorderStyle =0
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =800
+                    Top =7485
+                    Width =1071
+                    Height =225
+                    FontSize =9
+                    FontWeight =700
+                    TabIndex =5
+                    Name ="Distrito"
+                    ControlSource ="Distrito"
+                    GridlineColor =10921638
+                    ShowDatePicker =1
+
+                    LayoutCachedLeft =800
+                    LayoutCachedTop =7485
+                    LayoutCachedWidth =1871
+                    LayoutCachedHeight =7710
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                    Begin
+                        Begin Label
+                            Left =120
+                            Top =7485
+                            Width =825
+                            Height =225
+                            FontSize =9
+                            Name ="Rótulo80"
+                            Caption ="Distrito:"
+                            GridlineColor =10921638
+                            LayoutCachedLeft =120
+                            LayoutCachedTop =7485
+                            LayoutCachedWidth =945
+                            LayoutCachedHeight =7710
+                            GridlineThemeColorIndex =1
+                            GridlineShade =65.0
+                        End
+                    End
+                End
+                Begin TextBox
+                    FontUnderline = NotDefault
+                    OldBorderStyle =0
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =3012
+                    Top =7485
+                    Width =1071
+                    Height =225
+                    FontSize =9
+                    FontWeight =700
+                    TabIndex =6
+                    Name ="Concelho_proprietarios"
+                    ControlSource ="Concelho_proprietarios"
+                    GridlineColor =10921638
+                    ShowDatePicker =1
+
+                    LayoutCachedLeft =3012
+                    LayoutCachedTop =7485
+                    LayoutCachedWidth =4083
+                    LayoutCachedHeight =7710
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                    Begin
+                        Begin Label
+                            Left =2218
+                            Top =7485
+                            Width =855
+                            Height =225
+                            FontSize =9
+                            Name ="Rótulo81"
+                            Caption ="Concelho:"
+                            GridlineColor =10921638
+                            LayoutCachedLeft =2218
+                            LayoutCachedTop =7485
+                            LayoutCachedWidth =3073
+                            LayoutCachedHeight =7710
+                            GridlineThemeColorIndex =1
+                            GridlineShade =65.0
+                        End
+                    End
+                End
+                Begin TextBox
+                    FontUnderline = NotDefault
+                    OldBorderStyle =0
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =914
+                    Top =7815
+                    Width =951
+                    Height =225
+                    FontSize =9
+                    FontWeight =700
+                    TabIndex =7
+                    Name ="Texto82"
+                    ControlSource ="Freguesia"
+                    GridlineColor =10921638
+                    ShowDatePicker =1
+
+                    LayoutCachedLeft =914
+                    LayoutCachedTop =7815
+                    LayoutCachedWidth =1865
+                    LayoutCachedHeight =8040
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                    Begin
+                        Begin Label
+                            Left =120
+                            Top =7815
+                            Width =930
+                            Height =270
+                            FontSize =9
+                            Name ="Rótulo83"
+                            Caption ="Freguesia:"
+                            GridlineColor =10921638
+                            LayoutCachedLeft =120
+                            LayoutCachedTop =7815
+                            LayoutCachedWidth =1050
+                            LayoutCachedHeight =8085
+                            GridlineThemeColorIndex =1
+                            GridlineShade =65.0
+                        End
+                    End
+                End
+                Begin TextBox
+                    FontUnderline = NotDefault
+                    OldBorderStyle =0
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =793
+                    Top =8236
+                    Width =2676
+                    Height =225
+                    FontSize =9
+                    FontWeight =700
+                    TabIndex =8
+                    Name ="Nome"
+                    ControlSource ="Nome"
+                    GridlineColor =10921638
+                    ShowDatePicker =1
+
+                    LayoutCachedLeft =793
+                    LayoutCachedTop =8236
+                    LayoutCachedWidth =3469
+                    LayoutCachedHeight =8461
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                    Begin
+                        Begin Label
+                            Left =120
+                            Top =8225
+                            Width =675
+                            Height =240
+                            FontSize =9
+                            Name ="Rótulo84"
+                            Caption ="Nome:"
+                            GridlineColor =10921638
+                            LayoutCachedLeft =120
+                            LayoutCachedTop =8225
+                            LayoutCachedWidth =795
+                            LayoutCachedHeight =8465
+                            GridlineThemeColorIndex =1
+                            GridlineShade =65.0
+                        End
+                    End
+                End
+                Begin Label
+                    Left =3495
+                    Top =8675
+                    Width =4125
+                    Height =1245
+                    FontSize =5
+                    Name ="Rótulo87"
+                    Caption ="E ainda,\015\012G) Os trabalhadores não estão impedidos de se associarem livreme"
+                        "nte, escolher \015\012os seus representantes ou de negociar coletivamente com o "
+                        "seu empregador;\015\012H) Proíbe o uso de trabalho forçado;\015\012I) Os trabalh"
+                        "adores que estão abaixo de idade mínima legal – 15 anos – ou da idade\015\012de "
+                        "frequência obrigatória da escola, escolhendo a mais exigente, não são permitidos"
+                        ";        \015\012J) Aos trabalhadores não são negadas iguais oportunidades de em"
+                        "prego\015\012e igual tratamento; \015\012K) As condições de trabalho não comprom"
+                        "etem a segurança ou a saúde dos trabalhadores."
+                    GridlineColor =10921638
+                    LayoutCachedLeft =3495
+                    LayoutCachedTop =8675
+                    LayoutCachedWidth =7620
+                    LayoutCachedHeight =9920
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin TextBox
+                    FontUnderline = NotDefault
+                    OldBorderStyle =0
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =170
+                    Top =2381
+                    Width =4206
+                    Height =285
+                    FontWeight =700
+                    TabIndex =9
+                    Name ="Nome_destinatarios1"
+                    ControlSource ="Nome_destinatarios1"
+                    GridlineColor =10921638
+                    ShowDatePicker =1
+
+                    LayoutCachedLeft =170
+                    LayoutCachedTop =2381
+                    LayoutCachedWidth =4376
+                    LayoutCachedHeight =2666
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                    Begin
+                        Begin Label
+                            Left =170
+                            Top =2154
+                            Width =1185
+                            Height =285
+                            FontSize =9
+                            Name ="Rótulo90"
+                            Caption ="Destinatário:"
+                            GridlineColor =10921638
+                            LayoutCachedLeft =170
+                            LayoutCachedTop =2154
+                            LayoutCachedWidth =1355
+                            LayoutCachedHeight =2439
+                            GridlineThemeColorIndex =1
+                            GridlineShade =65.0
+                        End
+                    End
+                End
+                Begin TextBox
+                    FontUnderline = NotDefault
+                    OldBorderStyle =0
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =737
+                    Top =3465
+                    Width =6786
+                    Height =390
+                    FontSize =8
+                    FontWeight =700
+                    TabIndex =10
+                    Name ="Tipo"
+                    ControlSource ="Tipo"
+
+                    LayoutCachedLeft =737
+                    LayoutCachedTop =3465
+                    LayoutCachedWidth =7523
+                    LayoutCachedHeight =3855
+                    Begin
+                        Begin Label
+                            Left =120
+                            Top =3472
+                            Width =720
+                            Height =270
+                            FontSize =9
+                            Name ="Rótulo103"
+                            Caption ="Rolaria:"
+                            LayoutCachedLeft =120
+                            LayoutCachedTop =3472
+                            LayoutCachedWidth =840
+                            LayoutCachedHeight =3742
+                        End
+                    End
+                End
+                Begin TextBox
+                    FontUnderline = NotDefault
+                    OldBorderStyle =0
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =3741
+                    Top =6630
+                    Height =315
+                    FontSize =9
+                    FontWeight =700
+                    TabIndex =11
+                    ForeColor =0
+                    Name ="Número da UGF"
+                    ControlSource ="Número da UGF"
+                    EventProcPrefix ="Número_da_UGF"
+
+                    LayoutCachedLeft =3741
+                    LayoutCachedTop =6630
+                    LayoutCachedWidth =5442
+                    LayoutCachedHeight =6945
+                    ForeTint =100.0
+                    Begin
+                        Begin Label
+                            Left =60
+                            Top =6648
+                            Width =2115
+                            Height =315
+                            FontSize =9
+                            FontWeight =700
+                            Name ="Rótulo104"
+                            Caption ="ORIGEM DA MADEIRA:"
+                            LayoutCachedLeft =60
+                            LayoutCachedTop =6648
+                            LayoutCachedWidth =2175
+                            LayoutCachedHeight =6963
+                        End
+                    End
+                End
+                Begin Label
+                    FontUnderline = NotDefault
+                    Left =2430
+                    Top =6630
+                    Width =1575
+                    Height =315
+                    FontSize =9
+                    FontWeight =700
+                    ForeColor =0
+                    Name ="Rótulo105"
+                    Caption ="Cerna Portugal  /"
+                    LayoutCachedLeft =2430
+                    LayoutCachedTop =6630
+                    LayoutCachedWidth =4005
+                    LayoutCachedHeight =6945
+                    ForeTint =100.0
+                End
+                Begin TextBox
+                    FontUnderline = NotDefault
+                    OldBorderStyle =0
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =1870
+                    Top =6916
+                    Height =315
+                    FontSize =9
+                    FontWeight =700
+                    TabIndex =12
+                    Name ="Número do Certificado"
+                    ControlSource ="Número do Certificado"
+                    EventProcPrefix ="Número_do_Certificado"
+
+                    LayoutCachedLeft =1870
+                    LayoutCachedTop =6916
+                    LayoutCachedWidth =3571
+                    LayoutCachedHeight =7231
+                    Begin
+                        Begin Label
+                            Left =120
+                            Top =6930
+                            Width =2115
+                            Height =315
+                            FontSize =9
+                            Name ="Rótulo109"
+                            Caption ="Nome da Propriedade:"
+                            LayoutCachedLeft =120
+                            LayoutCachedTop =6930
+                            LayoutCachedWidth =2235
+                            LayoutCachedHeight =7245
+                        End
+                    End
+                End
+                Begin TextBox
+                    Visible = NotDefault
+                    OldBorderStyle =0
+                    TextFontFamily =2
+                    IMESentenceMode =3
+                    Left =4478
+                    Top =7880
+                    Width =2946
+                    Height =285
+                    FontSize =30
+                    TabIndex =13
+                    Name ="Código de Barras"
+                    ControlSource ="=\"*\" & [CodigoBarras] & \"*\""
+                    FontName ="Libre Barcode 39"
+                    EventProcPrefix ="Código_de_Barras"
+
+                    LayoutCachedLeft =4478
+                    LayoutCachedTop =7880
+                    LayoutCachedWidth =7424
+                    LayoutCachedHeight =8165
+                    ThemeFontIndex =-1
+                End
+                Begin TextBox
+                    FontUnderline = NotDefault
+                    OldBorderStyle =0
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =3459
+                    Top =5499
+                    Width =3081
+                    Height =285
+                    FontSize =9
+                    FontWeight =700
+                    TabIndex =14
+                    Name ="Texto113"
+                    ControlSource ="Morada"
+                    GridlineColor =10921638
+                    ShowDatePicker =1
+
+                    LayoutCachedLeft =3459
+                    LayoutCachedTop =5499
+                    LayoutCachedWidth =6540
+                    LayoutCachedHeight =5784
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                    Begin
+                        Begin Label
+                            Left =2777
+                            Top =5507
+                            Width =735
+                            Height =225
+                            FontSize =9
+                            Name ="Rótulo114"
+                            Caption ="Morada:"
+                            GridlineColor =10921638
+                            LayoutCachedLeft =2777
+                            LayoutCachedTop =5507
+                            LayoutCachedWidth =3512
+                            LayoutCachedHeight =5732
+                            GridlineThemeColorIndex =1
+                            GridlineShade =65.0
+                        End
+                    End
+                End
+                Begin TextBox
+                    Visible = NotDefault
+                    OldBorderStyle =0
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =5490
+                    Top =8160
+                    Height =315
+                    FontSize =9
+                    TabIndex =15
+                    Name ="CodigoBarras"
+                    ControlSource ="CodigoBarras"
+
+                    LayoutCachedLeft =5490
+                    LayoutCachedTop =8160
+                    LayoutCachedWidth =7191
+                    LayoutCachedHeight =8475
+                End
+                Begin TextBox
+                    OldBorderStyle =0
+                    TextAlign =2
+                    BackStyle =0
+                    IMESentenceMode =3
+                    Left =5100
+                    Top =60
+                    Width =2331
+                    Height =270
+                    FontSize =10
+                    FontWeight =700
+                    TabIndex =16
+                    ForeColor =0
+                    Name ="NomeVia"
+                    ControlSource ="NomeVia"
+
+                    LayoutCachedLeft =5100
+                    LayoutCachedTop =60
+                    LayoutCachedWidth =7431
+                    LayoutCachedHeight =330
+                    ForeThemeColorIndex =-1
+                    ForeTint =100.0
+                End
+                Begin TextBox
+                    Visible = NotDefault
+                    IMESentenceMode =3
+                    Left =3968
+                    Top =8163
+                    Width =501
+                    Height =315
+                    TabIndex =17
+                    Name ="IDVia"
+                    ControlSource ="IDVia"
+
+                    LayoutCachedLeft =3968
+                    LayoutCachedTop =8163
+                    LayoutCachedWidth =4469
+                    LayoutCachedHeight =8478
+                End
+                Begin Label
+                    Left =5385
+                    Top =8160
+                    Width =1785
+                    Height =315
+                    FontSize =9
+                    Name ="Rótulo122"
+                    Caption ="N.º Compra: ________"
+                    GridlineColor =10921638
+                    LayoutCachedLeft =5385
+                    LayoutCachedTop =8160
+                    LayoutCachedWidth =7170
+                    LayoutCachedHeight =8475
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Label
+                    Top =8670
+                    Width =3405
+                    Height =1635
+                    FontSize =5
+                    Name ="Rótulo127"
+                    Caption ="A madeira fornecida por esta Guia para Entrada de Rolaria não provém de:\015\012"
+                        "A) Corte de madeira ilegal ou comércio ilegal de produtos florestais ou madeirei"
+                        "ros;\015\012B) Violação de direitos tradicionais e humanos em operações floresta"
+                        "is;\015\012C) Destruição de atributos de alto valor de conservação em operações "
+                        "florestais;\015\012D) Conversão significativa de florestas em plantações ou uso "
+                        "não florestal;\015\012E) Introdução de organismos geneticamente modificados em o"
+                        "perações florestais;\015\012F) Violação de qualquer uma das Convenções da OIT (I"
+                        "LO Core Conventions),\015\012conforme definido na Declaração da OIT sobre Princí"
+                        "pios e Direitos Fundamentais no Trabalho, 1998.\015\012"
+                    GridlineColor =10921638
+                    LayoutCachedTop =8670
+                    LayoutCachedWidth =3405
+                    LayoutCachedHeight =10305
+                    GridlineThemeColorIndex =1
+                    GridlineShade =65.0
+                End
+                Begin Image
+                    BackStyle =0
+                    PictureType =2
+                    Width =3056
+                    Height =1596
+                    Name ="Imagem128"
+                    Picture ="2_logo_cores-small-01"
+
+                    LayoutCachedWidth =3056
+                    LayoutCachedHeight =1596
+                    TabIndex =18
+                End
+                Begin Label
+                    FontUnderline = NotDefault
+                    Left =4980
+                    Top =2550
+                    Width =2385
+                    Height =315
+                    FontSize =13
+                    FontWeight =700
+                    ForeColor =0
+                    Name ="Rótulo130"
+                    Caption ="Contrato Nº: 59573.1"
+                    LayoutCachedLeft =4980
+                    LayoutCachedTop =2550
+                    LayoutCachedWidth =7365
+                    LayoutCachedHeight =2865
+                    ForeTint =100.0
+                End
+                Begin Rectangle
+                    BackStyle =0
+                    OldBorderStyle =3
+                    BorderLineStyle =2
+                    Left =4692
+                    Top =2141
+                    Width =2848
+                    Height =1147
+                    Name ="Caixa131"
+                    LayoutCachedLeft =4692
+                    LayoutCachedTop =2141
+                    LayoutCachedWidth =7540
+                    LayoutCachedHeight =3288
+                End
+            End
+        End
+        Begin Section
+            KeepTogether = NotDefault
+            CanGrow = NotDefault
+            CanShrink = NotDefault
+            Height =0
+            OnFormat ="[Event Procedure]"
+            Name ="Detalhe"
+            AlternateBackColor =15921906
+            AlternateBackThemeColorIndex =1
+            AlternateBackShade =95.0
+            BackThemeColorIndex =1
+        End
+    End
+End
+CodeBehindForm
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+Option Compare Database
+
+Private Sub CabeçalhoDoGrupo0_Format(Cancel As Integer, FormatCount As Integer)
+    ' Faz a leitura da caixa de texto invisível que criámos no design
+    Select Case Me.idVia
+        Case 1 ' Original
+            Me.Caixa39.BackColor = RGB(123, 123, 123) ' Cinza
+            Me.NomeVia.ForeColor = RGB(255, 255, 255) ' Texto Branco
+            
+            ' MOSTRAR o código de barras e o texto numérico apenas na primeira página
+            Me![Código de Barras].Visible = True
+            Me.CodigoBarras.Visible = True
+            
+            ' OCULTAR o Rótulo122 na primeira página (Original)
+            Me.Rótulo122.Visible = False
+            
+        Case 2 ' Duplicado
+            Me.Caixa39.BackColor = RGB(255, 221, 255) ' Rosa
+            Me.NomeVia.ForeColor = RGB(0, 0, 0) ' Texto Preto
+            
+            ' OCULTAR o código de barras e o texto numérico
+            Me![Código de Barras].Visible = False
+            Me.CodigoBarras.Visible = False
+            
+            ' MOSTRAR o Rótulo122 nas cópias
+            Me.Rótulo122.Visible = True
+            
+        Case 3 ' Triplicado
+            Me.Caixa39.BackColor = RGB(209, 255, 255) ' Azul
+            Me.NomeVia.ForeColor = RGB(0, 0, 0) ' Texto Preto
+            
+            ' OCULTAR o código de barras e o texto numérico
+            Me![Código de Barras].Visible = False
+            Me.CodigoBarras.Visible = False
+            
+            ' MOSTRAR o Rótulo122 nas cópias
+            Me.Rótulo122.Visible = True
+            
+        Case 4 ' Quadruplicado
+            Me.Caixa39.BackColor = RGB(230, 223, 235) ' Cinza
+            Me.NomeVia.ForeColor = RGB(0, 0, 0) ' Texto Preto
+            
+            ' OCULTAR o código de barras e o texto numérico
+            Me![Código de Barras].Visible = False
+            Me.CodigoBarras.Visible = False
+            
+            ' MOSTRAR o Rótulo122 nas cópias
+            Me.Rótulo122.Visible = True
+            
+        Case Else
+            Me.Caixa39.BackColor = RGB(120, 120, 120) ' Cinza de Segurança
+            Me.NomeVia.ForeColor = RGB(0, 0, 0)
+            Me![Código de Barras].Visible = True
+            Me.CodigoBarras.Visible = True
+            Me.Rótulo122.Visible = True
+    End Select
+End Sub
+
+Private Sub Detalhe_Format(Cancel As Integer, FormatCount As Integer)
+    
+End Sub

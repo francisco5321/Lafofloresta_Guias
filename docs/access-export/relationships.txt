@@ -1,0 +1,25 @@
+﻿RELATION: CodigosBarrasguias
+  Table=CodigosBarras  ForeignTable=guias  Attributes=2
+  Field: IDCodigo -> ForeignField: IDCodigo
+
+RELATION: destinatariosguias
+  Table=destinatarios  ForeignTable=guias  Attributes=2
+  Field: IDDestinatario -> ForeignField: IDDestinatario
+
+RELATION: MSysNavPaneGroupCategoriesMSysNavPaneGroups
+  Table=MSysNavPaneGroupCategories  ForeignTable=MSysNavPaneGroups  Attributes=4352
+  Field: Id -> ForeignField: GroupCategoryID
+
+RELATION: MSysNavPaneGroupsMSysNavPaneGroupToObjects
+  Table=MSysNavPaneGroups  ForeignTable=MSysNavPaneGroupToObjects  Attributes=4352
+  Field: Id -> ForeignField: GroupID
+
+RELATION: proprietariosguias
+  Table=proprietarios  ForeignTable=guias  Attributes=2
+  Field: IDProprietario -> ForeignField: IDProprietario
+
+RELATION: Rolariaguias
+  Table=Rolaria  ForeignTable=guias  Attributes=2
+  Field: IDRolaria -> ForeignField: IDRolaria
+
+

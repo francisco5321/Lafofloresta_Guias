@@ -1,0 +1,67 @@
+﻿=== DATA SAMPLE: CodigosBarras ===
+IDCodigo | Código de Barras | Número do Certificado | Número da UGF
+1 | CE54081V0 | UGFPT21523 | GFA-FM/COC-003058
+2 | CE54081V0 | UGFPT21523 | GFA-FM/COC-003058
+3 | CE54081V1 | UGFPT21523 | GFA-FM/COC-003058
+4 | CE54081V2 | UGFPT21523 | GFA-FM/COC-003058
+5 | CE54081V3 | UGFPT21523 | GFA-FM/COC-003058
+6 | CE54081V4 | UGFPT21523 | GFA-FM/COC-003058
+7 | CE54081V5 | UGFPT21523 | GFA-FM/COC-003058
+8 | CE54081V6 | UGFPT21523 | GFA-FM/COC-003058
+9 | CE54081V7 | UGFPT21523 | GFA-FM/COC-003058
+10 | CE54081V8 | UGFPT21523 | GFA-FM/COC-003058
+11 | CE54081V9 | UGFPT21523 | GFA-FM/COC-003058
+
+=== DATA SAMPLE: destinatarios ===
+IDDestinatario | Nome | NIF | Morada | Concelho
+17 | Luso Finsa - Indústria e Comércio de Madeiras S.A | 501133747 | Estrada Nacional Nº 234, Km 92,7 3520-055 Nelas | Nelas
+18 | Mariano Ramos - Madeiras, Lda | 507609182 | Zona Industrial do Alto do Padrão, Lote 42 3200-133 Coimbra | Lousã
+19 | Sonae Arauco Portugal, S.A | 500058580 | Lugar de Água Levada-Espinho 3530-066 Espinho Mgl | Mangualde
+20 | ALTRI ABASTECIMENTO DE MADEIRA. SA | 513253998 | Mangualde | Mangualde
+
+=== DATA SAMPLE: guias ===
+IDGuia | IDDestinatario | IDProprietario | IDCodigo | IDRolaria | Fornecedor
+1 |  | 2 |  |  | Lafofloresta
+2 | 5 | 2 | 0 | 0 | 
+3 | 10 |  | 2 | 2 | 
+4 | 10 | 0 | 5 | 2 | 
+5 | 10 | 0 | 1 | 2 | Sombras da Natureza. Lda
+6 | 10 | 0 | 2 | 1 | Francisco. Lda
+7 | 10 | 0 | 1 | 1 | Francisco. Lda
+8 | 10 | 0 | 2 | 4 | Francisco. Lda
+9 | 10 | 0 | 1 | 1 | Francisco. Lda
+10 | 10 | 0 | 1 | 1 | Francisco. Lda
+11 | 0 | 1 | 0 | 0 | 
+12 | 10 | 1 | 1 | 1 | Francisco. Lda
+13 | 10 | 1 | 1 | 1 | 
+14 | 10 | 1 | 1 | 1 | 
+15 | 10 | 1 | 1 | 1 | Francisco. Lda
+
+=== DATA SAMPLE: proprietarios ===
+IDProprietario | Nome | Distrito | Concelho | Freguesia | CodigoProp | Parcela
+1 | Francisco | Viseu | Vouzela | Campia | 12334534 | 3
+2 | Francisco | Viseu | Vouzela | Campia | 123 | 5
+3 | Clarinda Augusta Dias Batista | Viseu | Vouzela | Campia | 5456-1 | 5
+4 | FRANCISCO VITORINO | VISEU | VOUZELA | CAMPIA | 12345 | 5
+5 | Angeles Hernandez | Viseu | Vouzela | Campia | 4223 | 23
+6 | FRANCISCO VITORINO | VISEU | VOUZELA | CAMPIA | 2311 | 2526
+7 | fra | a | a | a |  | 
+
+=== DATA SAMPLE: Rolaria ===
+IDRolaria | Tipo
+1 | Eucalipto Globulus
+2 | Eucalipto Nitens
+3 | Pinheiro Bravo
+4 | Outros Folhosos
+5 | Pinheiro
+6 | Pinheiro
+7 | 23
+
+=== DATA SAMPLE: Vias ===
+idVia | NomeVia
+1 | ORIGINAL
+2 | DUPLICADO
+3 | TRIPLICADO
+4 | QUADRIPLICADO
+
+

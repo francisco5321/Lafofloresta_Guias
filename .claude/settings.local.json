@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(jobs)",
+      "Bash(ls -la \"C:\\\\Lafofloresta\\\\DB_guias.accdb\")",
+      "Read(//c/Lafofloresta/**)"
+    ]
+  }
+}

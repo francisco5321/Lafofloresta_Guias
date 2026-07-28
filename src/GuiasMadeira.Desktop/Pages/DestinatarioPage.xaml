@@ -1,0 +1,27 @@
+<Page x:Class="GuiasMadeira.Desktop.Pages.DestinatarioPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Destinatários">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Border Style="{StaticResource Card}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="Novo Destinatário" Style="{StaticResource PageTitle}"/>
+
+                <TextBlock Text="NOME" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="NomeBox"/>
+
+                <TextBlock Text="NIF" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="NifBox"/>
+
+                <TextBlock Text="MORADA" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="MoradaBox"/>
+
+                <TextBlock Text="CONCELHO" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="ConcelhoBox"/>
+
+                <Button x:Name="GuardarButton" Content="Guardar" Style="{StaticResource PrimaryButton}"
+                        Margin="0,8,0,0" Click="Guardar_Click"/>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,48 @@
+﻿TABLE: CodigosBarras  (RecordCount=11)
+  FIELD: IDCodigo | Type=4 | Size=4 | Required=False | AllowZeroLen=False | Default= | Attrs=FixedSize,AutoIncrement
+  FIELD: Código de Barras | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  FIELD: Número do Certificado | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  FIELD: Número da UGF | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  INDEX: PrimaryKey | Primary=True | Unique=True | Fields=IDCodigo
+
+TABLE: destinatarios  (RecordCount=4)
+  FIELD: IDDestinatario | Type=4 | Size=4 | Required=False | AllowZeroLen=False | Default= | Attrs=FixedSize,AutoIncrement
+  FIELD: Nome | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  FIELD: NIF | Type=4 | Size=4 | Required=False | AllowZeroLen=False | Default=0 | Attrs=FixedSize
+  FIELD: Morada | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  FIELD: Concelho | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  INDEX: PrimaryKey | Primary=True | Unique=True | Fields=IDDestinatario
+
+TABLE: guias  (RecordCount=6)
+  FIELD: IDGuia | Type=4 | Size=4 | Required=False | AllowZeroLen=False | Default= | Attrs=FixedSize,AutoIncrement
+  FIELD: IDDestinatario | Type=4 | Size=4 | Required=False | AllowZeroLen=False | Default=0 | Attrs=FixedSize
+  FIELD: IDProprietario | Type=4 | Size=4 | Required=False | AllowZeroLen=False | Default=0 | Attrs=FixedSize
+  FIELD: IDCodigo | Type=4 | Size=4 | Required=False | AllowZeroLen=False | Default=0 | Attrs=FixedSize
+  FIELD: IDRolaria | Type=4 | Size=4 | Required=False | AllowZeroLen=False | Default=0 | Attrs=FixedSize
+  FIELD: Fornecedor | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  INDEX: DestinatarioID | Primary=False | Unique=False | Fields=IDDestinatario
+  INDEX: ID | Primary=False | Unique=False | Fields=IDCodigo
+  INDEX: PrimaryKey | Primary=True | Unique=True | Fields=IDGuia
+  INDEX: ProprietarioID | Primary=False | Unique=False | Fields=IDProprietario
+
+TABLE: proprietarios  (RecordCount=7)
+  FIELD: IDProprietario | Type=4 | Size=4 | Required=False | AllowZeroLen=False | Default= | Attrs=FixedSize,AutoIncrement
+  FIELD: Nome | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  FIELD: Distrito | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  FIELD: Concelho | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  FIELD: Freguesia | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  FIELD: CodigoProp | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  FIELD: Parcela | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  INDEX: PrimaryKey | Primary=True | Unique=True | Fields=IDProprietario
+
+TABLE: Rolaria  (RecordCount=7)
+  FIELD: IDRolaria | Type=4 | Size=4 | Required=False | AllowZeroLen=False | Default= | Attrs=FixedSize,AutoIncrement
+  FIELD: Tipo | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  INDEX: PrimaryKey | Primary=True | Unique=True | Fields=IDRolaria
+
+TABLE: Vias  (RecordCount=4)
+  FIELD: idVia | Type=4 | Size=4 | Required=False | AllowZeroLen=False | Default= | Attrs=FixedSize,AutoIncrement
+  FIELD: NomeVia | Type=10 | Size=255 | Required=False | AllowZeroLen=True | Default= | Attrs=
+  INDEX: PrimaryKey | Primary=True | Unique=True | Fields=idVia
+
+

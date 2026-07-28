@@ -1,0 +1,61 @@
+﻿QUERY: Consulta1
+SQL:
+SELECT destinatarios.IDDestinatario, destinatarios.Nome
+FROM destinatarios;
+
+----------------------------------------
+QUERY: Consulta2
+SQL:
+SELECT proprietarios.IDProprietario, proprietarios.Nome
+FROM proprietarios;
+
+----------------------------------------
+QUERY: Cópia de Consulta1
+SQL:
+SELECT destinatarios.IDDestinatario, destinatarios.Nome, destinatarios.NIF, destinatarios.Morada, destinatarios.Concelho
+FROM destinatarios;
+
+----------------------------------------
+QUERY: destinatarios_para_guias
+SQL:
+SELECT IDDestinatario, Nome, NIF, Morada, Concelho
+FROM destinatarios;
+
+----------------------------------------
+QUERY: Guia_Propriedades
+SQL:
+SELECT proprietarios.IDProprietario, proprietarios.Nome, proprietarios.Distrito, proprietarios.Concelho, proprietarios.Freguesia, proprietarios.CodigoProp, proprietarios.NomePropriedade, proprietarios.Parcela
+FROM proprietarios;
+
+----------------------------------------
+QUERY: Guia_Propriedades_novo
+SQL:
+SELECT proprietarios.IDProprietario, proprietarios.NomePropriedade, proprietarios.Nome, proprietarios.Distrito, proprietarios.Concelho, proprietarios.Freguesia, proprietarios.CodigoProp, proprietarios.Parcela
+FROM proprietarios;
+
+----------------------------------------
+QUERY: Guia_proprietario
+SQL:
+SELECT proprietarios.IDProprietario, proprietarios.Nome, proprietarios.Distrito, proprietarios.Concelho, proprietarios.Freguesia, proprietarios.CodigoProp, proprietarios.Parcela
+FROM proprietarios;
+
+----------------------------------------
+QUERY: Guia_Rolaria
+SQL:
+SELECT Rolaria.IDRolaria, Rolaria.Tipo
+FROM Rolaria;
+
+----------------------------------------
+QUERY: Guias_codigo_barras
+SQL:
+SELECT CodigosBarras.IDCodigo, CodigosBarras.[Código de Barras], CodigosBarras.[Número do Certificado], CodigosBarras.[Número da UGF]
+FROM CodigosBarras;
+
+----------------------------------------
+QUERY: Relatorio
+SQL:
+SELECT Q.IDGuia, Q.IDDestinatario, Q.IDProprietario, Q.IDCodigo, Q.IDRolaria, Q.Fornecedor, Vias.IDVia, Vias.NomeVia, Q.NIF, Q.Morada, Q.Concelho, Q.Nome_destinatarios, Q.Nome_destinatarios1, Q.Freguesia, Q.Parcela, Q.CodigoProp, Q.Distrito, Q.Concelho_proprietarios, Q.Nome, Q.Tipo, Q.[Número da UGF], Q.[Número do Certificado], Q.CodigoBarras
+FROM (SELECT guias.IDGuia, guias.IDDestinatario, guias.IDProprietario, guias.IDCodigo, guias.IDRolaria, guias.Fornecedor, destinatarios.NIF, destinatarios.Morada, destinatarios.Concelho, destinatarios.Nome AS Nome_destinatarios, destinatarios.Nome AS Nome_destinatarios1, proprietarios.Freguesia, proprietarios.Parcela, proprietarios.CodigoProp, proprietarios.Distrito, proprietarios.Concelho AS Concelho_proprietarios, proprietarios.Nome, Rolaria.Tipo, CodigosBarras.[Número da UGF], CodigosBarras.[Número do Certificado], CodigosBarras.[Código de Barras] AS CodigoBarras FROM (((guias LEFT JOIN destinatarios ON guias.IDDestinatario = destinatarios.IDDestinatario) LEFT JOIN proprietarios ON guias.IDProprietario = proprietarios.IDProprietario) LEFT JOIN Rolaria ON guias.IDRolaria = Rolaria.IDRolaria) LEFT JOIN CodigosBarras ON guias.IDCodigo = CodigosBarras.IDCodigo)  AS Q, Vias;
+
+----------------------------------------
+

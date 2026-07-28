@@ -1,0 +1,313 @@
+﻿Version =21
+VersionRequired =20
+PublishOption =1
+Checksum =-1958411894
+Begin Form
+    AutoResize = NotDefault
+    PopUp = NotDefault
+    RecordSelectors = NotDefault
+    NavigationButtons = NotDefault
+    DividingLines = NotDefault
+    AllowDesignChanges = NotDefault
+    DefaultView =0
+    PictureAlignment =2
+    DatasheetGridlinesBehavior =3
+    GridY =10
+    Width =5102
+    DatasheetFontHeight =11
+    ItemSuffix =9
+    Left =23025
+    Top =2775
+    Right =28260
+    Bottom =11055
+    DatasheetGridlinesColor =15132391
+    DatasheetFontName ="Calibri"
+    AllowDatasheetView =0
+    FilterOnLoad =0
+    ShowPageMargins =0
+    DisplayOnSharePointSite =1
+    DatasheetAlternateBackColor =15921906
+    DatasheetGridlinesColor12 =0
+    DatasheetBackThemeColorIndex =1
+    BorderThemeColorIndex =3
+    ThemeFontIndex =1
+    ForeThemeColorIndex =0
+    AlternateBackThemeColorIndex =1
+    AlternateBackShade =95.0
+    PrtDevNamesW = Begin
+        0x04001b0032000100000000000000000000000000000000000000000000000000 ,
+        0x0000000000000000000000000000000000000000000000000000000000000000 ,
+        0x0000000000000000000000000000000000000000000000000000000000000000 ,
+        0x0000000050004f0052005400500052004f004d00500054003a000000
+    End
+    NoSaveCTIWhenDisabled =1
+    Begin
+        Begin Label
+            BackStyle =0
+            FontSize =11
+            BorderColor =8355711
+            ForeColor =6710886
+            FontName ="Calibri"
+            GridlineColor =10921638
+            ThemeFontIndex =1
+            BackThemeColorIndex =1
+            BorderThemeColorIndex =0
+            BorderTint =50.0
+            ForeThemeColorIndex =0
+            ForeTint =60.0
+            GridlineThemeColorIndex =1
+            GridlineShade =65.0
+        End
+        Begin CommandButton
+            Width =1701
+            Height =283
+            FontSize =11
+            FontWeight =400
+            ForeColor =4210752
+            FontName ="Calibri"
+            GridlineColor =10921638
+            ForeThemeColorIndex =0
+            ForeTint =75.0
+            GridlineThemeColorIndex =1
+            GridlineShade =65.0
+            UseTheme =1
+            Shape =1
+            Gradient =12
+            BackColor =14461583
+            BackThemeColorIndex =4
+            BackTint =60.0
+            BorderLineStyle =0
+            BorderColor =14461583
+            BorderThemeColorIndex =4
+            BorderTint =60.0
+            ThemeFontIndex =1
+            HoverColor =15189940
+            HoverThemeColorIndex =4
+            HoverTint =40.0
+            PressedColor =9917743
+            PressedThemeColorIndex =4
+            PressedShade =75.0
+            HoverForeColor =4210752
+            HoverForeThemeColorIndex =0
+            HoverForeTint =75.0
+            PressedForeColor =4210752
+            PressedForeThemeColorIndex =0
+            PressedForeTint =75.0
+        End
+        Begin OptionButton
+            BorderLineStyle =0
+            LabelX =230
+            LabelY =-30
+            BorderColor =10921638
+            GridlineColor =10921638
+            BorderThemeColorIndex =1
+            BorderShade =65.0
+            GridlineThemeColorIndex =1
+            GridlineShade =65.0
+        End
+        Begin Section
+            Height =8220
+            Name ="Detalhe"
+            AlternateBackColor =15921906
+            AlternateBackThemeColorIndex =1
+            AlternateBackShade =95.0
+            BackThemeColorIndex =1
+            Begin
+                Begin Label
+                    OverlapFlags =85
+                    TextAlign =2
+                    Left =285
+                    Top =165
+                    Width =4590
+                    Height =405
+                    FontSize =18
+                    FontWeight =700
+                    Name ="Rótulo0"
+                    Caption ="GESTÃO DE GUIAS FLORESTAIS"
+                    LayoutCachedLeft =285
+                    LayoutCachedTop =165
+                    LayoutCachedWidth =4875
+                    LayoutCachedHeight =570
+                End
+                Begin CommandButton
+                    OverlapFlags =85
+                    Left =1980
+                    Top =7365
+                    Width =1125
+                    Height =570
+                    Name ="btn_sair"
+                    Caption ="Sair"
+                    OnClickEmMacro = Begin
+                        Version =196611
+                        ColumnsShown =8
+                        Begin
+                            Action ="Quit"
+                            Argument ="0"
+                        End
+                        Begin
+                            Comment ="_AXL:<?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"no\"?>\015\012<UserI"
+                                "nterfaceMacro For=\"btn_sair\" xmlns=\"http://schemas.microsoft.com/office/acces"
+                                "sservices/2009/11/application\"><Statements><Action Name=\"QuitAccess\"><Argumen"
+                                "t Name=\"Options\">Prompt</Argume"
+                        End
+                        Begin
+                            Comment ="_AXL:nt></Action></Statements></UserInterfaceMacro>"
+                        End
+                    End
+
+                    LayoutCachedLeft =1980
+                    LayoutCachedTop =7365
+                    LayoutCachedWidth =3105
+                    LayoutCachedHeight =7935
+                    WebImagePaddingLeft =2
+                    WebImagePaddingTop =2
+                    WebImagePaddingRight =1
+                    WebImagePaddingBottom =1
+                End
+                Begin CommandButton
+                    OverlapFlags =85
+                    Left =1419
+                    Top =1695
+                    Width =2265
+                    Height =570
+                    TabIndex =1
+                    Name ="btn_guia"
+                    Caption ="Nova Guia"
+                    OnClick ="[Event Procedure]"
+
+                    LayoutCachedLeft =1419
+                    LayoutCachedTop =1695
+                    LayoutCachedWidth =3684
+                    LayoutCachedHeight =2265
+                    WebImagePaddingLeft =2
+                    WebImagePaddingTop =2
+                    WebImagePaddingRight =1
+                    WebImagePaddingBottom =1
+                End
+                Begin CommandButton
+                    OverlapFlags =85
+                    Left =1419
+                    Top =2829
+                    Width =2265
+                    Height =570
+                    TabIndex =2
+                    Name ="btn_destinatarios"
+                    Caption ="Destinatários"
+                    OnClick ="[Event Procedure]"
+
+                    LayoutCachedLeft =1419
+                    LayoutCachedTop =2829
+                    LayoutCachedWidth =3684
+                    LayoutCachedHeight =3399
+                    WebImagePaddingLeft =2
+                    WebImagePaddingTop =2
+                    WebImagePaddingRight =1
+                    WebImagePaddingBottom =1
+                End
+                Begin CommandButton
+                    OverlapFlags =85
+                    Left =1419
+                    Top =3963
+                    Width =2265
+                    Height =555
+                    TabIndex =3
+                    Name ="btn_add_propri"
+                    Caption ="Proprietários"
+                    OnClickEmMacro = Begin
+                        Version =196611
+                        ColumnsShown =8
+                        Begin
+                            Action ="OpenForm"
+                            Argument ="Novo_Proprietário"
+                            Argument ="0"
+                            Argument =""
+                            Argument =""
+                            Argument ="-1"
+                            Argument ="0"
+                        End
+                        Begin
+                            Comment ="_AXL:<?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"no\"?>\015\012<UserI"
+                                "nterfaceMacro For=\"btn_add_propri\" xmlns=\"http://schemas.microsoft.com/office"
+                                "/accessservices/2009/11/application\"><Statements><Action Name=\"OpenForm\"><Arg"
+                                "ument Name=\"FormName\">Novo_Prop"
+                        End
+                        Begin
+                            Comment ="_AXL:rietário</Argument></Action></Statements></UserInterfaceMacro>"
+                        End
+                    End
+
+                    LayoutCachedLeft =1419
+                    LayoutCachedTop =3963
+                    LayoutCachedWidth =3684
+                    LayoutCachedHeight =4518
+                    WebImagePaddingLeft =2
+                    WebImagePaddingTop =2
+                    WebImagePaddingRight =1
+                    WebImagePaddingBottom =1
+                End
+                Begin CommandButton
+                    OverlapFlags =85
+                    Left =1419
+                    Top =5102
+                    Width =2265
+                    Height =570
+                    TabIndex =4
+                    Name ="btn_add_rolaria"
+                    Caption ="Rolarias"
+                    OnClick ="[Event Procedure]"
+
+                    LayoutCachedLeft =1419
+                    LayoutCachedTop =5102
+                    LayoutCachedWidth =3684
+                    LayoutCachedHeight =5672
+                    WebImagePaddingLeft =2
+                    WebImagePaddingTop =2
+                    WebImagePaddingRight =1
+                    WebImagePaddingBottom =1
+                End
+                Begin CommandButton
+                    OverlapFlags =85
+                    Left =1425
+                    Top =6240
+                    Width =2265
+                    Height =570
+                    TabIndex =5
+                    Name ="Comando8"
+                    Caption ="Pesquisar Guias"
+                    OnClick ="[Event Procedure]"
+
+                    LayoutCachedLeft =1425
+                    LayoutCachedTop =6240
+                    LayoutCachedWidth =3690
+                    LayoutCachedHeight =6810
+                    WebImagePaddingLeft =2
+                    WebImagePaddingTop =2
+                    WebImagePaddingRight =1
+                    WebImagePaddingBottom =1
+                End
+            End
+        End
+    End
+End
+CodeBehindForm
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+Option Compare Database
+
+Private Sub btn_add_rolaria_Click()
+    DoCmd.OpenForm "Rolaria"
+End Sub
+
+Private Sub btn_destinatarios_Click()
+    DoCmd.OpenForm "Novo_Destinatario"
+End Sub
+
+Private Sub btn_guia_Click()
+    DoCmd.OpenForm "guias", , , , acFormAdd
+End Sub
+
+Private Sub Comando8_Click()
+    DoCmd.OpenForm "Pesquisar_Guia", , , , acFormAdd
+End Sub
