@@ -1,5 +1,6 @@
 using System.Windows;
 using GuiasMadeira.Desktop.Pages;
+using GuiasMadeira.Desktop.Services;
 
 namespace GuiasMadeira.Desktop;
 
@@ -12,6 +13,52 @@ public partial class MainWindow
         SizeToScreen();
         NavGuia.IsChecked = true;
         Loaded += (_, _) => InvalidateVisual();
+        Loaded += MainWindow_Loaded;
+
+        AppNavigation.NavigateToSection = secao =>
+        {
+            switch (secao)
+            {
+                case "Destinatarios":
+                    NavDestinatarios.IsChecked = true;
+                    break;
+                case "Proprietarios":
+                    NavProprietarios.IsChecked = true;
+                    break;
+                case "Rolarias":
+                    NavRolarias.IsChecked = true;
+                    break;
+                case "CodigosBarras":
+                    NavImportarCodigosBarras.IsChecked = true;
+                    break;
+                case "Guias":
+                    NavPesquisar.IsChecked = true;
+                    break;
+            }
+        };
+
+        AppNavigation.NavigateToPage = page => NavigateTo(page);
+        AppNavigation.RefreshCounts = () => _ = RefreshCountsAsync();
+    }
+
+    private async void MainWindow_Loaded(object sender, RoutedEventArgs e) => await RefreshCountsAsync();
+
+    private async Task RefreshCountsAsync()
+    {
+        try
+        {
+            DestinatariosCountText.Text = (await AppServices.Destinatarios.CountAsync()).ToString();
+            ProprietariosCountText.Text = (await AppServices.Proprietarios.CountAsync()).ToString();
+            RolariasCountText.Text = (await AppServices.Rolarias.CountAsync()).ToString();
+        }
+        catch
+        {
+            // Contadores são só um extra informativo; se a ligação falhar aqui,
+            // o próprio ecrã de destino já mostra o erro de ligação de forma mais clara.
+            DestinatariosCountText.Text = "–";
+            ProprietariosCountText.Text = "–";
+            RolariasCountText.Text = "–";
+        }
     }
 
     private void SizeToScreen()

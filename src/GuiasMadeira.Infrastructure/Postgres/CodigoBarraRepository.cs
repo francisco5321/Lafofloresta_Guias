@@ -1,5 +1,6 @@
 using Dapper;
 using GuiasMadeira.Domain.Entities;
+using Npgsql;
 
 namespace GuiasMadeira.Infrastructure.Postgres;
 
@@ -50,5 +51,37 @@ public sealed class CodigoBarraRepository
             codigosBarras,
             cancellationToken: cancellationToken);
         return await connection.ExecuteAsync(command);
+    }
+
+    public async Task UpdateAsync(CodigoBarra codigoBarra, CancellationToken cancellationToken = default)
+    {
+        await using var connection = connectionFactory.CreateConnection();
+        var command = new CommandDefinition(
+            """
+            UPDATE codigos_barras
+            SET codigo = @Codigo, numero_certificado = @NumeroCertificado, numero_ugf = @NumeroUgf
+            WHERE id = @Id
+            """,
+            codigoBarra,
+            cancellationToken: cancellationToken);
+        await connection.ExecuteAsync(command);
+    }
+
+    public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+    {
+        await using var connection = connectionFactory.CreateConnection();
+        var command = new CommandDefinition(
+            "DELETE FROM codigos_barras WHERE id = @id",
+            new { id },
+            cancellationToken: cancellationToken);
+        try
+        {
+            await connection.ExecuteAsync(command);
+        }
+        catch (PostgresException ex) when (ex.SqlState == PostgresErrorCodes.ForeignKeyViolation)
+        {
+            throw new RegistoEmUsoException(
+                "Não é possível apagar esta vinheta: está associada a guias existentes.");
+        }
     }
 }

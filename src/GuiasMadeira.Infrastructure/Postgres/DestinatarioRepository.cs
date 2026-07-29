@@ -1,5 +1,6 @@
 using Dapper;
 using GuiasMadeira.Domain.Entities;
+using Npgsql;
 
 namespace GuiasMadeira.Infrastructure.Postgres;
 
@@ -26,6 +27,13 @@ public sealed class DestinatarioRepository
         return result.AsList();
     }
 
+    public async Task<int> CountAsync(CancellationToken cancellationToken = default)
+    {
+        await using var connection = connectionFactory.CreateConnection();
+        var command = new CommandDefinition("SELECT count(*) FROM destinatarios", cancellationToken: cancellationToken);
+        return await connection.ExecuteScalarAsync<int>(command);
+    }
+
     public async Task<int> InsertAsync(Destinatario destinatario, CancellationToken cancellationToken = default)
     {
         await using var connection = connectionFactory.CreateConnection();
@@ -38,5 +46,37 @@ public sealed class DestinatarioRepository
             destinatario,
             cancellationToken: cancellationToken);
         return await connection.ExecuteScalarAsync<int>(command);
+    }
+
+    public async Task UpdateAsync(Destinatario destinatario, CancellationToken cancellationToken = default)
+    {
+        await using var connection = connectionFactory.CreateConnection();
+        var command = new CommandDefinition(
+            """
+            UPDATE destinatarios
+            SET nome = @Nome, nif = @Nif, morada = @Morada, concelho = @Concelho
+            WHERE id = @Id
+            """,
+            destinatario,
+            cancellationToken: cancellationToken);
+        await connection.ExecuteAsync(command);
+    }
+
+    public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+    {
+        await using var connection = connectionFactory.CreateConnection();
+        var command = new CommandDefinition(
+            "DELETE FROM destinatarios WHERE id = @id",
+            new { id },
+            cancellationToken: cancellationToken);
+        try
+        {
+            await connection.ExecuteAsync(command);
+        }
+        catch (PostgresException ex) when (ex.SqlState == PostgresErrorCodes.ForeignKeyViolation)
+        {
+            throw new RegistoEmUsoException(
+                "Não é possível apagar este destinatário: está associado a guias existentes.");
+        }
     }
 }

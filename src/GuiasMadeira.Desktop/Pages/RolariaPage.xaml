@@ -2,17 +2,115 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Rolarias">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Border Style="{StaticResource Card}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40">
-            <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="Nova Rolaria" Style="{StaticResource PageTitle}"/>
+    <Grid Margin="40">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-                <TextBlock Text="TIPO DE ROLARIA" Style="{StaticResource FieldLabel}"/>
-                <TextBox x:Name="TipoBox"/>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,16">
+            <TextBlock Text="Dados" Style="{StaticResource BreadcrumbLink}"/>
+            <Path Style="{StaticResource BreadcrumbSeparator}"/>
+            <TextBlock Text="Rolarias" Style="{StaticResource BreadcrumbLink}"/>
+            <Path Style="{StaticResource BreadcrumbSeparator}"/>
+            <TextBlock x:Name="BreadcrumbCurrentText" Text="Nova rolaria" Style="{StaticResource BreadcrumbCurrent}"/>
+        </StackPanel>
 
-                <Button x:Name="GuardarButton" Content="GUARDAR" Style="{StaticResource PrimaryButton}"
-                        Margin="0,8,0,0" Click="Guardar_Click"/>
-            </StackPanel>
-        </Border>
-    </ScrollViewer>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="440"/>
+                <ColumnDefinition Width="24"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top">
+                <Border Style="{StaticResource Card}" Width="Auto" Height="Auto" HorizontalAlignment="Stretch">
+                    <StackPanel>
+
+                        <Border x:Name="ToastBorder" Style="{StaticResource Toast}">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconCheck}" Stroke="{StaticResource AccentBrush}" StrokeThickness="2.2"
+                                      StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                                      Width="14" Height="14" Stretch="Uniform" Margin="0,0,8,0"/>
+                                <TextBlock x:Name="ToastText" Text="Rolaria guardada" Foreground="{StaticResource AccentPressedBrush}" FontWeight="SemiBold" FontSize="13"/>
+                            </StackPanel>
+                        </Border>
+
+                        <TextBlock x:Name="FormTitleText" Text="Nova rolaria" Style="{StaticResource PageTitle}"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconRecycle}"/>
+                            <TextBlock Text="Tipo de rolaria" Style="{StaticResource FieldLabel}" Margin="0"/>
+                        </StackPanel>
+                        <TextBox x:Name="TipoBox"/>
+                        <TextBlock x:Name="TipoError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0" HorizontalAlignment="Center">
+                            <Button x:Name="GuardarButton" Content="Guardar" Style="{StaticResource PrimaryButton}" Click="Guardar_Click"/>
+                            <Button x:Name="CancelarEdicaoButton" Content="Cancelar edição" Style="{StaticResource SecondaryButton}"
+                                    Margin="10,0,0,0" Visibility="Collapsed" Click="CancelarEdicao_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </ScrollViewer>
+
+            <Border Grid.Column="2" Style="{StaticResource Card}" Width="Auto" Height="Auto"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Rolarias registadas" Style="{StaticResource PageTitle}" FontSize="18" Margin="0,0,0,14"/>
+
+                    <StackPanel Grid.Row="1" Margin="0,0,0,4">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <Path Style="{StaticResource FieldIconStroke}" Data="{StaticResource IconSearch}"/>
+                            <TextBlock Text="Pesquisar" Style="{StaticResource FieldLabel}" Margin="0"/>
+                        </StackPanel>
+                        <TextBox x:Name="PesquisaBox" Margin="0,0,0,12" TextChanged="Pesquisa_TextChanged"/>
+                    </StackPanel>
+
+                    <Border x:Name="ListaEmptyState" Grid.Row="2" Style="{StaticResource EmptyState}" VerticalAlignment="Top">
+                        <StackPanel HorizontalAlignment="Center">
+                            <Path Data="{StaticResource IconEmptyBox}" Stroke="{StaticResource TextMutedBrush}" StrokeThickness="1.6"
+                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                                  Width="28" Height="28" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                            <TextBlock Text="Ainda não há rolarias registadas." Style="{StaticResource HelperText}" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <DataGrid x:Name="ListaGrid" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True"
+                              CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
+                              GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="{StaticResource BorderBrush}"
+                              RowBackground="{StaticResource SurfaceBrush}" AlternatingRowBackground="{StaticResource BackgroundBrush}"
+                              BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                              ColumnHeaderStyle="{StaticResource ListGridHeader}" CellStyle="{StaticResource ListGridCell}"
+                              HeadersVisibility="Column" RowHeaderWidth="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Tipo" Binding="{Binding Tipo}" Width="*"/>
+                            <DataGridTemplateColumn Header="" Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Style="{StaticResource GhostIconButton}" ToolTip="Editar" Click="Editar_Click">
+                                                <Path Data="{StaticResource IconEdit}" Fill="{StaticResource TextMutedBrush}"
+                                                      Width="15" Height="15" Stretch="Uniform"/>
+                                            </Button>
+                                            <Button Style="{StaticResource GhostIconButton}" ToolTip="Apagar" Click="Apagar_Click">
+                                                <Path Data="{StaticResource IconTrash}" Fill="{StaticResource ErrorBrush}"
+                                                      Width="15" Height="15" Stretch="Uniform"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
 </Page>

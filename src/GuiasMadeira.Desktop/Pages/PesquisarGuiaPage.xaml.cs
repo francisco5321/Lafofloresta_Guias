@@ -1,21 +1,35 @@
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using GuiasMadeira.Desktop.Services;
+using GuiasMadeira.Domain.Entities;
 
 namespace GuiasMadeira.Desktop.Pages;
 
 public partial class PesquisarGuiaPage
 {
+    private ICollectionView? listaView;
+
     public PesquisarGuiaPage()
     {
         InitializeComponent();
         Loaded += PesquisarGuiaPage_Loaded;
     }
 
-    private async void PesquisarGuiaPage_Loaded(object sender, RoutedEventArgs e)
+    private async void PesquisarGuiaPage_Loaded(object sender, RoutedEventArgs e) => await CarregarListaAsync();
+
+    private async Task CarregarListaAsync()
     {
         try
         {
-            GuiaCombo.ItemsSource = await AppServices.Guias.ListAllIdsAsync();
+            var guias = await AppServices.Guias.ListResumoAsync();
+            listaView = CollectionViewSource.GetDefaultView(guias);
+            listaView.Filter = FiltrarLista;
+            ListaGrid.ItemsSource = listaView;
+
+            ListaEmptyState.Visibility = guias.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            ListaGrid.Visibility = guias.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
         }
         catch (Exception ex)
         {
@@ -24,20 +38,39 @@ public partial class PesquisarGuiaPage
         }
     }
 
-    private async void Pesquisar_Click(object sender, RoutedEventArgs e)
+    private bool FiltrarLista(object obj)
     {
-        if (GuiaCombo.SelectedItem is not int idGuia)
+        if (obj is not GuiaResumo guia)
         {
-            MessageBox.Show("Por favor, selecione uma guia na lista antes de continuar.",
-                "Seleção obrigatória", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            GuiaCombo.Focus();
+            return false;
+        }
+
+        var termo = PesquisaBox.Text?.Trim();
+        if (string.IsNullOrEmpty(termo))
+        {
+            return true;
+        }
+
+        return guia.Id.ToString().Contains(termo, StringComparison.OrdinalIgnoreCase)
+            || Contem(guia.DestinatarioNome, termo) || Contem(guia.DestinatarioNif, termo)
+            || Contem(guia.ProprietarioNome, termo) || Contem(guia.Fornecedor, termo);
+    }
+
+    private static bool Contem(string? valor, string termo) =>
+        !string.IsNullOrEmpty(valor) && valor.Contains(termo, StringComparison.OrdinalIgnoreCase);
+
+    private void Pesquisa_TextChanged(object sender, TextChangedEventArgs e) => listaView?.Refresh();
+
+    private async void PreVisualizar_Click(object sender, RoutedEventArgs e)
+    {
+        if (((FrameworkElement)sender).DataContext is not GuiaResumo guia)
+        {
             return;
         }
 
-        PesquisarButton.IsEnabled = false;
         try
         {
-            var encontrada = await GuiaPrintService.PreviewAsync(idGuia);
+            var encontrada = await GuiaPrintService.PreviewAsync(guia.Id);
             if (!encontrada)
             {
                 MessageBox.Show("Guia não encontrada.", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -48,10 +81,42 @@ public partial class PesquisarGuiaPage
             MessageBox.Show($"Ocorreu um erro ao abrir a guia.\n\n{ex.Message}",
                 "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-        finally
-        {
-            PesquisarButton.IsEnabled = true;
-        }
     }
 
+    private void Editar_Click(object sender, RoutedEventArgs e)
+    {
+        if (((FrameworkElement)sender).DataContext is not GuiaResumo guia)
+        {
+            return;
+        }
+
+        AppNavigation.NavigateToPage?.Invoke(new GuiaPage(guia));
+    }
+
+    private async void Apagar_Click(object sender, RoutedEventArgs e)
+    {
+        if (((FrameworkElement)sender).DataContext is not GuiaResumo guia)
+        {
+            return;
+        }
+
+        var confirmar = MessageBox.Show(
+            $"Tens a certeza que queres apagar a guia nº {guia.Id}? Esta ação não pode ser desfeita.",
+            "Confirmar eliminação", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        if (confirmar != MessageBoxResult.Yes)
+        {
+            return;
+        }
+
+        try
+        {
+            await AppServices.Guias.DeleteAsync(guia.Id);
+            await CarregarListaAsync();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Ocorreu um erro ao apagar a guia.\n\n{ex.Message}",
+                "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
 }

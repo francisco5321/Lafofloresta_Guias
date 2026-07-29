@@ -1,31 +1,139 @@
 <Page x:Class="GuiasMadeira.Desktop.Pages.GuiaPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="Nova Guia">
+      Title="Nova guia">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Border Style="{StaticResource Card}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40">
+        <Border Style="{StaticResource Card}" Width="560" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40">
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="Nova Guia" Style="{StaticResource PageTitle}"/>
-                <TextBlock Style="{StaticResource HelperText}" Margin="0,-12,0,20"
-                           Text="Escolha o destinatário, o proprietário, o código de barras e a rolaria — o resto dos dados já vem da base de dados."/>
 
-                <TextBlock Text="DESTINATÁRIO" Style="{StaticResource FieldLabel}"/>
-                <ComboBox x:Name="DestinatarioCombo" DisplayMemberPath="Nome" IsTextSearchEnabled="True"/>
+                <!-- Breadcrumb -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                    <TextBlock Text="Gestão" Style="{StaticResource BreadcrumbLink}"/>
+                    <Path Style="{StaticResource BreadcrumbSeparator}"/>
+                    <TextBlock Text="Guias" Style="{StaticResource BreadcrumbLink}"/>
+                    <Path Style="{StaticResource BreadcrumbSeparator}"/>
+                    <TextBlock x:Name="BreadcrumbCurrentText" Text="Nova guia" Style="{StaticResource BreadcrumbCurrent}"/>
+                </StackPanel>
 
-                <TextBlock Text="PROPRIETÁRIO" Style="{StaticResource FieldLabel}"/>
-                <ComboBox x:Name="ProprietarioCombo" DisplayMemberPath="Nome" IsTextSearchEnabled="True"/>
+                <!-- Toast de confirmação -->
+                <Border x:Name="ToastBorder" Style="{StaticResource Toast}">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Data="{StaticResource IconCheck}" Stroke="{StaticResource AccentBrush}" StrokeThickness="2.2"
+                              StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                              Width="14" Height="14" Stretch="Uniform" Margin="0,0,8,0"/>
+                        <TextBlock x:Name="ToastText" Text="Guia criada" Foreground="{StaticResource AccentPressedBrush}" FontWeight="SemiBold" FontSize="13"/>
+                    </StackPanel>
+                </Border>
 
-                <TextBlock Text="CÓDIGO DE BARRAS" Style="{StaticResource FieldLabel}"/>
-                <ComboBox x:Name="CodigoBarraCombo" DisplayMemberPath="Codigo" IsTextSearchEnabled="True"/>
+                <TextBlock x:Name="PageTitleText" Text="Nova guia" Style="{StaticResource PageTitle}" Margin="0,0,0,8"/>
+                <TextBlock Style="{StaticResource HelperText}" Margin="0,0,0,20"
+                           Text="Escolhe o destinatário, o proprietário, o código de barras e a rolaria — o resto dos dados já vem da base de dados."/>
 
-                <TextBlock Text="TIPO DE ROLARIA" Style="{StaticResource FieldLabel}"/>
-                <ComboBox x:Name="RolariaCombo" DisplayMemberPath="Tipo" IsTextSearchEnabled="True"/>
+                <!-- Barra de progresso -->
+                <Border Style="{StaticResource ProgressTrack}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="ProgressFillColumn" Width="0*"/>
+                            <ColumnDefinition x:Name="ProgressRemainderColumn" Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Style="{StaticResource ProgressFill}"/>
+                    </Grid>
+                </Border>
+                <TextBlock x:Name="ProgressText" Style="{StaticResource HelperText}" Margin="0,6,0,20"
+                           Text="0 de 5 campos preenchidos"/>
 
-                <TextBlock Text="FORNECEDOR" Style="{StaticResource FieldLabel}"/>
-                <TextBox x:Name="FornecedorBox"/>
+                <!-- Destinatário -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                    <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconPerson}"/>
+                    <TextBlock Text="Destinatário" Style="{StaticResource FieldLabel}" Margin="0"/>
+                </StackPanel>
+                <ComboBox x:Name="DestinatarioCombo" Style="{StaticResource SuccessComboBox}"
+                          DisplayMemberPath="Nome" IsTextSearchEnabled="True" SelectionChanged="Campo_Changed"/>
+                <Border x:Name="DestinatarioEmptyState" Style="{StaticResource EmptyState}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Path Data="{StaticResource IconEmptyBox}" Stroke="{StaticResource TextMutedBrush}" StrokeThickness="1.6"
+                              StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                              Width="28" Height="28" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                        <TextBlock Text="Ainda não há destinatários registados." Style="{StaticResource HelperText}"
+                                   TextAlignment="Center" Margin="0,0,0,12"/>
+                        <Button Content="Adicionar destinatário" Style="{StaticResource SecondaryButton}" Click="AdicionarDestinatario_Click"/>
+                    </StackPanel>
+                </Border>
 
-                <Button x:Name="ImprimirButton" Content="Imprimir / Pré-visualizar Guia"
-                        Style="{StaticResource PrimaryButton}" Margin="0,8,0,0" Click="Imprimir_Click"/>
+                <!-- Proprietário -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                    <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTree}"/>
+                    <TextBlock Text="Proprietário" Style="{StaticResource FieldLabel}" Margin="0"/>
+                </StackPanel>
+                <ComboBox x:Name="ProprietarioCombo" Style="{StaticResource SuccessComboBox}"
+                          DisplayMemberPath="Nome" IsTextSearchEnabled="True" SelectionChanged="Campo_Changed"/>
+                <Border x:Name="ProprietarioEmptyState" Style="{StaticResource EmptyState}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Path Data="{StaticResource IconEmptyBox}" Stroke="{StaticResource TextMutedBrush}" StrokeThickness="1.6"
+                              StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                              Width="28" Height="28" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                        <TextBlock Text="Ainda não há proprietários registados." Style="{StaticResource HelperText}"
+                                   TextAlignment="Center" Margin="0,0,0,12"/>
+                        <Button Content="Adicionar proprietário" Style="{StaticResource SecondaryButton}" Click="AdicionarProprietario_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Código de barras -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                    <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconBarcode}"/>
+                    <TextBlock Text="Código de barras" Style="{StaticResource FieldLabel}" Margin="0"/>
+                </StackPanel>
+                <ComboBox x:Name="CodigoBarraCombo" Style="{StaticResource SuccessComboBox}"
+                          DisplayMemberPath="Codigo" IsTextSearchEnabled="True" SelectionChanged="Campo_Changed"/>
+                <Border x:Name="CodigoBarraEmptyState" Style="{StaticResource EmptyState}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Path Data="{StaticResource IconEmptyBox}" Stroke="{StaticResource TextMutedBrush}" StrokeThickness="1.6"
+                              StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                              Width="28" Height="28" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                        <TextBlock Text="Ainda não há códigos de barras importados." Style="{StaticResource HelperText}"
+                                   TextAlignment="Center" Margin="0,0,0,12"/>
+                        <Button Content="Importar vinhetas" Style="{StaticResource SecondaryButton}" Click="ImportarCodigosBarras_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Rolaria -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                    <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconRecycle}"/>
+                    <TextBlock Text="Tipo de rolaria" Style="{StaticResource FieldLabel}" Margin="0"/>
+                </StackPanel>
+                <ComboBox x:Name="RolariaCombo" Style="{StaticResource SuccessComboBox}"
+                          DisplayMemberPath="Tipo" IsTextSearchEnabled="True" SelectionChanged="Campo_Changed"/>
+                <Border x:Name="RolariaEmptyState" Style="{StaticResource EmptyState}">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Path Data="{StaticResource IconEmptyBox}" Stroke="{StaticResource TextMutedBrush}" StrokeThickness="1.6"
+                              StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                              Width="28" Height="28" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                        <TextBlock Text="Ainda não há tipos de rolaria registados." Style="{StaticResource HelperText}"
+                                   TextAlignment="Center" Margin="0,0,0,12"/>
+                        <Button Content="Adicionar rolaria" Style="{StaticResource SecondaryButton}" Click="AdicionarRolaria_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Fornecedor (opcional) -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                    <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTruck}"/>
+                    <TextBlock Text="Fornecedor (opcional)" Style="{StaticResource FieldLabel}" Margin="0"/>
+                </StackPanel>
+                <TextBox x:Name="FornecedorBox" TextChanged="Campo_Changed"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0,8,0,0" HorizontalAlignment="Center">
+                    <Button x:Name="ImprimirButton" Style="{StaticResource PrimaryButton}"
+                            Click="Imprimir_Click" IsEnabled="False">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource IconPrinter}" Fill="White" Width="16" Height="16" Stretch="Uniform" Margin="0,0,8,0"/>
+                            <TextBlock x:Name="ImprimirButtonText" Text="Pré-visualizar guia" Foreground="White" FontWeight="Bold" FontSize="15"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="CancelarEdicaoButton" Content="Cancelar" Style="{StaticResource SecondaryButton}"
+                            Margin="10,0,0,0" Visibility="Collapsed" Click="CancelarEdicao_Click"/>
+                </StackPanel>
+                <TextBlock x:Name="MicrocopyText" Style="{StaticResource HelperText}" TextAlignment="Center" Margin="0,8,0,0"/>
+
             </StackPanel>
         </Border>
     </ScrollViewer>

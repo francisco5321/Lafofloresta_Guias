@@ -36,6 +36,61 @@ public sealed class GuiaRepository
         return result.AsList();
     }
 
+    public async Task<IReadOnlyList<GuiaResumo>> ListResumoAsync(CancellationToken cancellationToken = default)
+    {
+        await using var connection = connectionFactory.CreateConnection();
+        var command = new CommandDefinition(
+            """
+            SELECT
+                g.id AS Id,
+                d.id AS DestinatarioId,
+                d.nome AS DestinatarioNome,
+                d.nif AS DestinatarioNif,
+                p.id AS ProprietarioId,
+                p.nome AS ProprietarioNome,
+                c.id AS CodigoBarraId,
+                c.codigo AS CodigoBarraCodigo,
+                r.id AS RolariaId,
+                r.tipo AS RolariaTipo,
+                g.fornecedor AS Fornecedor,
+                g.criado_em AS CriadoEm
+            FROM guias g
+            LEFT JOIN destinatarios d ON g.destinatario_id = d.id
+            LEFT JOIN proprietarios p ON g.proprietario_id = p.id
+            LEFT JOIN rolarias r ON g.rolaria_id = r.id
+            LEFT JOIN codigos_barras c ON g.codigo_barra_id = c.id
+            ORDER BY g.id DESC
+            """,
+            cancellationToken: cancellationToken);
+        var result = await connection.QueryAsync<GuiaResumo>(command);
+        return result.AsList();
+    }
+
+    public async Task UpdateAsync(Guia guia, CancellationToken cancellationToken = default)
+    {
+        await using var connection = connectionFactory.CreateConnection();
+        var command = new CommandDefinition(
+            """
+            UPDATE guias
+            SET destinatario_id = @DestinatarioId, proprietario_id = @ProprietarioId,
+                codigo_barra_id = @CodigoBarraId, rolaria_id = @RolariaId, fornecedor = @Fornecedor
+            WHERE id = @Id
+            """,
+            guia,
+            cancellationToken: cancellationToken);
+        await connection.ExecuteAsync(command);
+    }
+
+    public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+    {
+        await using var connection = connectionFactory.CreateConnection();
+        var command = new CommandDefinition(
+            "DELETE FROM guias WHERE id = @id",
+            new { id },
+            cancellationToken: cancellationToken);
+        await connection.ExecuteAsync(command);
+    }
+
     /// <summary>
     /// Equivalente à query "Relatorio" do Access (sem o produto cartesiano com Vias).
     /// </summary>

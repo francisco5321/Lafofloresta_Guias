@@ -24,23 +24,56 @@
                 </StackPanel>
 
                 <StackPanel>
-                    <TextBlock Text="GESTÃO" Foreground="{StaticResource SidebarTextMutedBrush}"
+                    <TextBlock Text="Gestão" Foreground="{StaticResource SidebarTextMutedBrush}"
                                FontSize="11" FontWeight="SemiBold" Margin="30,0,0,8"/>
                     <RadioButton x:Name="NavGuia" GroupName="MainNav" Style="{StaticResource NavItem}"
-                                 Content="Nova Guia" Checked="NavGuia_Checked"/>
+                                 Content="Nova guia" Checked="NavGuia_Checked"/>
                     <RadioButton x:Name="NavPesquisar" GroupName="MainNav" Style="{StaticResource NavItem}"
-                                 Content="Pesquisar Guias" Checked="NavPesquisar_Checked"/>
+                                 Content="Gerir guias" Checked="NavPesquisar_Checked"/>
 
-                    <TextBlock Text="DADOS" Foreground="{StaticResource SidebarTextMutedBrush}"
+                    <TextBlock Text="Dados" Foreground="{StaticResource SidebarTextMutedBrush}"
                                FontSize="11" FontWeight="SemiBold" Margin="30,24,0,8"/>
                     <RadioButton x:Name="NavDestinatarios" GroupName="MainNav" Style="{StaticResource NavItem}"
-                                 Content="Destinatários" Checked="NavDestinatarios_Checked"/>
+                                 Checked="NavDestinatarios_Checked">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Destinatários" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" Style="{StaticResource NavBadge}">
+                                <TextBlock x:Name="DestinatariosCountText" Style="{StaticResource NavBadgeText}" Text="…"/>
+                            </Border>
+                        </Grid>
+                    </RadioButton>
                     <RadioButton x:Name="NavProprietarios" GroupName="MainNav" Style="{StaticResource NavItem}"
-                                 Content="Proprietários" Checked="NavProprietarios_Checked"/>
+                                 Checked="NavProprietarios_Checked">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Proprietários" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" Style="{StaticResource NavBadge}">
+                                <TextBlock x:Name="ProprietariosCountText" Style="{StaticResource NavBadgeText}" Text="…"/>
+                            </Border>
+                        </Grid>
+                    </RadioButton>
                     <RadioButton x:Name="NavRolarias" GroupName="MainNav" Style="{StaticResource NavItem}"
-                                 Content="Rolarias" Checked="NavRolarias_Checked"/>
+                                 Checked="NavRolarias_Checked">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Rolarias" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" Style="{StaticResource NavBadge}">
+                                <TextBlock x:Name="RolariasCountText" Style="{StaticResource NavBadgeText}" Text="…"/>
+                            </Border>
+                        </Grid>
+                    </RadioButton>
                     <RadioButton x:Name="NavImportarCodigosBarras" GroupName="MainNav" Style="{StaticResource NavItem}"
-                                 Content="Importar Vinhetas" Checked="NavImportarCodigosBarras_Checked"/>
+                                 Content="Importar vinhetas" Checked="NavImportarCodigosBarras_Checked"/>
                 </StackPanel>
             </DockPanel>
         </Border>
