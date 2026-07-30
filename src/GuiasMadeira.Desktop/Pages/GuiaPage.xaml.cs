@@ -42,6 +42,7 @@ public partial class GuiaPage
             ugfsPorCodigo = ugfs
                 .Where(u => !string.IsNullOrWhiteSpace(u.Codigo))
                 .ToDictionary(u => u.Codigo, u => u, StringComparer.OrdinalIgnoreCase);
+            AplicarLimiteUgf(certificados);
 
             DestinatarioCombo.ItemsSource = destinatarios;
             DestinatarioEmptyState.Visibility = destinatarios.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
@@ -101,12 +102,27 @@ public partial class GuiaPage
         var ugfBloqueado = ObterUgfBloqueado();
         if (ugfBloqueado is not null)
         {
-            CertificadoUgfError.Text = $"O UGF \"{ugfBloqueado.Codigo}\" já atingiu o limite de toneladas (+20%) e está bloqueado. Escolhe outro certificado.";
+            CertificadoUgfError.Text = ugfBloqueado.LimiteGuiasAtingido
+                ? $"Limite de guias atingido para o certificado \"{ugfBloqueado.Codigo}\" ({ugfBloqueado.GuiasCriadas}/{ugfBloqueado.NumeroMaximoGuias}). Escolhe outro certificado."
+                : $"O UGF \"{ugfBloqueado.Codigo}\" já atingiu o limite de toneladas (+20%) e está bloqueado. Escolhe outro certificado.";
             CertificadoUgfError.Visibility = Visibility.Visible;
+            CertificadoAvisoTolerancia.Visibility = Visibility.Collapsed;
         }
         else
         {
             CertificadoUgfError.Visibility = Visibility.Collapsed;
+
+            var ugfEmAviso = ObterUgfEmAvisoDeGuias();
+            if (ugfEmAviso is not null)
+            {
+                CertificadoAvisoTolerancia.Text =
+                    $"Atenção: as guias já criadas para \"{ugfEmAviso.Codigo}\" estão a consumir a tolerância de 20% ({ugfEmAviso.GuiasCriadas}/{ugfEmAviso.NumeroMaximoGuias}).";
+                CertificadoAvisoTolerancia.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                CertificadoAvisoTolerancia.Visibility = Visibility.Collapsed;
+            }
         }
 
         ImprimirButton.IsEnabled = camposObrigatoriosFaltam == 0 && ugfBloqueado is null;
@@ -126,7 +142,19 @@ public partial class GuiaPage
             return null;
         }
 
-        return ugfsPorCodigo.TryGetValue(certificado.NumeroCertificado, out var ugf) && ugf.Estado == EstadoUgf.Bloqueado
+        return ugfsPorCodigo.TryGetValue(certificado.NumeroCertificado, out var ugf) && (ugf.Estado == EstadoUgf.Bloqueado || ugf.LimiteGuiasAtingido)
+            ? ugf
+            : null;
+    }
+
+    private UgfResumo? ObterUgfEmAvisoDeGuias()
+    {
+        if (CertificadoCombo.SelectedItem is not CertificadoResumo certificado)
+        {
+            return null;
+        }
+
+        return ugfsPorCodigo.TryGetValue(certificado.NumeroCertificado, out var ugf) && ugf.LimiteGuiasEmTolerancia
             ? ugf
             : null;
     }
@@ -231,6 +259,7 @@ public partial class GuiaPage
         try
         {
             var certificados = await AppServices.CodigosBarras.ListCertificadosDisponiveisAsync(guiaEmEdicao?.Id);
+            AplicarLimiteUgf(certificados);
             CertificadoCombo.ItemsSource = certificados;
             CertificadoEmptyState.Visibility = certificados.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
             CertificadoCombo.Visibility = certificados.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
@@ -238,6 +267,21 @@ public partial class GuiaPage
         catch
         {
             // Se falhar aqui, o próprio Guardar/Imprimir já mostrou o erro relevante.
+        }
+    }
+
+    /// <summary>
+    /// O número "X disponíveis" mostrado no seletor de certificado deve refletir o limite real de
+    /// guias — não só as vinhetas físicas, mas também o limite por toneladas/carga média definido
+    /// em Limites UGF (o menor dos dois, ver CertificadoResumo.DisponiveisEfetivo).
+    /// </summary>
+    private void AplicarLimiteUgf(IReadOnlyList<CertificadoResumo> certificados)
+    {
+        foreach (var certificado in certificados)
+        {
+            certificado.GuiasRestantesUgf = ugfsPorCodigo.TryGetValue(certificado.NumeroCertificado, out var ugf)
+                ? ugf.GuiasRestantes
+                : null;
         }
     }
 

@@ -60,6 +60,13 @@
                         <TextBox x:Name="CertificadoBox" TextChanged="CertificadoBox_TextChanged"/>
                         <TextBlock x:Name="CertificadoError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
 
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                            <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTruck}"/>
+                            <TextBlock Text="Valor médio da carga (toneladas, opcional)" Style="{StaticResource FieldLabel}" Margin="0"/>
+                        </StackPanel>
+                        <TextBox x:Name="CargaMediaBox" TextChanged="CertificadoBox_TextChanged"/>
+                        <TextBlock x:Name="CargaMediaError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
+
                         <Border Background="{StaticResource BackgroundBrush}" BorderBrush="{StaticResource BorderBrush}"
                                 BorderThickness="1" CornerRadius="8" Padding="14,12" Margin="0,4,0,16">
                             <StackPanel>
@@ -79,10 +86,29 @@
                                                    Foreground="{StaticResource TextPrimaryBrush}"/>
                                     </StackPanel>
                                 </Grid>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                                     <TextBlock Text="Estado: " Style="{StaticResource FieldLabel}" Margin="0"/>
                                     <TextBlock x:Name="EstadoText" Text="—" FontWeight="Bold"/>
                                 </StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Guias possíveis" Style="{StaticResource FieldLabel}" Margin="0,0,0,2"/>
+                                        <TextBlock x:Name="GuiasMaximoText" Text="—" FontSize="18" FontWeight="Bold"
+                                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Guias criadas / restantes" Style="{StaticResource FieldLabel}" Margin="0,0,0,2"/>
+                                        <TextBlock x:Name="GuiasCriadasText" Text="—" FontSize="18" FontWeight="Bold"
+                                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                                    </StackPanel>
+                                </Grid>
+                                <TextBlock x:Name="GuiasAvisoText" Style="{StaticResource HelperText}"
+                                           Foreground="{StaticResource WarningBrush}" FontWeight="SemiBold"
+                                           TextWrapping="Wrap" Margin="0,8,0,0" Visibility="Collapsed"/>
                             </StackPanel>
                         </Border>
 
@@ -96,7 +122,7 @@
             </ScrollViewer>
 
             <Border Grid.Column="2" Style="{StaticResource Card}" Width="Auto" Height="Auto"
-                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -140,6 +166,7 @@
                             <DataGridTextColumn Header="Certificado (ton)" Binding="{Binding ToneladasCertificado, StringFormat='0.000'}" Width="*"/>
                             <DataGridTextColumn Header="Disponível" Binding="{Binding ToneladasDisponiveis, StringFormat='0.000'}" Width="*"/>
                             <DataGridTextColumn Header="Disponível +20%" Binding="{Binding ToneladasDisponiveisComTolerancia, StringFormat='0.000'}" Width="*"/>
+                            <DataGridTextColumn Header="Guias" Binding="{Binding GuiasRotulo}" Width="80"/>
                             <DataGridTemplateColumn Header="Estado" Width="90">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -148,7 +175,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="" Width="110">
+                            <DataGridTemplateColumn Header="" Width="130">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">

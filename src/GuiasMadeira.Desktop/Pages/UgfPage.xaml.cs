@@ -20,6 +20,7 @@ public partial class UgfPage
 
     private int? editingId;
     private decimal importadasAtual;
+    private int guiasCriadasAtual;
     private bool isCarregandoSelecao;
     private List<UgfResumo> ugfsCarregados = new();
     private ICollectionView? listaView;
@@ -60,6 +61,7 @@ public partial class UgfPage
                 if (atual is not null)
                 {
                     importadasAtual = atual.ToneladasImportadas;
+                    guiasCriadasAtual = atual.GuiasCriadas;
                     AtualizarPreview();
                 }
             }
@@ -96,7 +98,9 @@ public partial class UgfPage
             // para criar um UGF novo com este código, sem apagar o que já está selecionado.
             editingId = null;
             importadasAtual = 0m;
+            guiasCriadasAtual = 0;
             CertificadoBox.Clear();
+            CargaMediaBox.Clear();
             LimparErros();
             AtualizarPreview();
 
@@ -111,6 +115,7 @@ public partial class UgfPage
     {
         editingId = ugf.Id;
         importadasAtual = ugf.ToneladasImportadas;
+        guiasCriadasAtual = ugf.GuiasCriadas;
 
         isCarregandoSelecao = true;
         CodigoCombo.SelectedItem = ugf.Codigo;
@@ -118,6 +123,7 @@ public partial class UgfPage
         isCarregandoSelecao = false;
 
         CertificadoBox.Text = ugf.ToneladasCertificado.ToString("0.###", CultureInfo.InvariantCulture);
+        CargaMediaBox.Text = ugf.CargaMediaToneladas?.ToString("0.###", CultureInfo.InvariantCulture) ?? string.Empty;
         LimparErros();
         AtualizarPreview();
 
@@ -133,6 +139,7 @@ public partial class UgfPage
     {
         editingId = null;
         importadasAtual = 0m;
+        guiasCriadasAtual = 0;
 
         isCarregandoSelecao = true;
         CodigoCombo.SelectedItem = null;
@@ -140,6 +147,7 @@ public partial class UgfPage
         isCarregandoSelecao = false;
 
         CertificadoBox.Clear();
+        CargaMediaBox.Clear();
         LimparErros();
         AtualizarPreview();
 
@@ -155,11 +163,43 @@ public partial class UgfPage
     {
         if (TentarConverterDecimal(CertificadoBox.Text, out var certificado) && certificado > 0)
         {
-            var preview = new UgfResumo { Codigo = string.Empty, ToneladasCertificado = certificado, ToneladasImportadas = importadasAtual };
+            decimal? cargaMedia = TentarConverterDecimal(CargaMediaBox.Text, out var valorCargaMedia) && valorCargaMedia > 0
+                ? valorCargaMedia
+                : null;
+
+            var preview = new UgfResumo
+            {
+                Codigo = string.Empty,
+                ToneladasCertificado = certificado,
+                ToneladasImportadas = importadasAtual,
+                CargaMediaToneladas = cargaMedia,
+                GuiasCriadas = guiasCriadasAtual
+            };
+
             DisponivelText.Text = preview.ToneladasDisponiveis.ToString("0.000", CultureInfo.InvariantCulture);
             DisponivelToleranciaText.Text = preview.ToneladasDisponiveisComTolerancia.ToString("0.000", CultureInfo.InvariantCulture);
             EstadoText.Text = preview.Estado.ToString();
             EstadoText.Foreground = (Brush)EstadoCorConverter.Convert(preview.Estado, typeof(Brush), null, CultureInfo.InvariantCulture);
+
+            GuiasMaximoText.Text = preview.NumeroMaximoGuias?.ToString(CultureInfo.InvariantCulture) ?? "—";
+            GuiasCriadasText.Text = preview.NumeroMaximoGuias is not null
+                ? $"{preview.GuiasCriadas} / {preview.GuiasRestantes}"
+                : $"{preview.GuiasCriadas} / —";
+
+            if (preview.LimiteGuiasAtingido)
+            {
+                GuiasAvisoText.Text = "Limite de guias atingido para este certificado (teto dos 120%). Não é possível criar mais guias.";
+                GuiasAvisoText.Visibility = Visibility.Visible;
+            }
+            else if (preview.LimiteGuiasEmTolerancia)
+            {
+                GuiasAvisoText.Text = "A aproximar-se do limite: as guias já criadas estão a consumir a tolerância de 20%.";
+                GuiasAvisoText.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                GuiasAvisoText.Visibility = Visibility.Collapsed;
+            }
         }
         else
         {
@@ -167,6 +207,9 @@ public partial class UgfPage
             DisponivelToleranciaText.Text = "—";
             EstadoText.Text = "—";
             EstadoText.Foreground = (Brush)FindResource("TextMutedBrush");
+            GuiasMaximoText.Text = "—";
+            GuiasCriadasText.Text = "—";
+            GuiasAvisoText.Visibility = Visibility.Collapsed;
         }
     }
 
@@ -201,12 +244,27 @@ public partial class UgfPage
             valido = false;
         }
 
+        decimal? cargaMedia = null;
+        if (!string.IsNullOrWhiteSpace(CargaMediaBox.Text))
+        {
+            if (TentarConverterDecimal(CargaMediaBox.Text, out var valorCargaMedia) && valorCargaMedia > 0)
+            {
+                cargaMedia = valorCargaMedia;
+            }
+            else
+            {
+                CargaMediaError.Text = "Escreve um valor de carga média válido, ou deixa em branco";
+                CargaMediaError.Visibility = Visibility.Visible;
+                valido = false;
+            }
+        }
+
         if (!valido)
         {
             return;
         }
 
-        var ugf = new Ugf { Codigo = codigo!, ToneladasCertificado = certificado };
+        var ugf = new Ugf { Codigo = codigo!, ToneladasCertificado = certificado, CargaMediaToneladas = cargaMedia };
 
         GuardarButton.IsEnabled = false;
         try
@@ -349,5 +407,6 @@ public partial class UgfPage
     {
         CodigoError.Visibility = Visibility.Collapsed;
         CertificadoError.Visibility = Visibility.Collapsed;
+        CargaMediaError.Visibility = Visibility.Collapsed;
     }
 }

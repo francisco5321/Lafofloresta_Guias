@@ -21,10 +21,21 @@ public sealed class UgfRepository
                 u.id AS Id,
                 u.codigo AS Codigo,
                 u.toneladas_certificado AS ToneladasCertificado,
-                COALESCE(SUM(e.toneladas), 0) AS ToneladasImportadas
+                u.carga_media_toneladas AS CargaMediaToneladas,
+                COALESCE(entradas.total, 0) AS ToneladasImportadas,
+                COALESCE(guias.total, 0) AS GuiasCriadas
             FROM ugfs u
-            LEFT JOIN ugf_entradas e ON e.ugf_id = u.id
-            GROUP BY u.id, u.codigo, u.toneladas_certificado
+            LEFT JOIN (
+                SELECT ugf_id, SUM(toneladas) AS total
+                FROM ugf_entradas
+                GROUP BY ugf_id
+            ) entradas ON entradas.ugf_id = u.id
+            LEFT JOIN (
+                SELECT c.numero_certificado AS codigo, COUNT(*) AS total
+                FROM codigos_barras c
+                JOIN guias g ON g.codigo_barra_id = c.id
+                GROUP BY c.numero_certificado
+            ) guias ON guias.codigo = u.codigo
             ORDER BY u.codigo
             """,
             cancellationToken: cancellationToken);
@@ -37,8 +48,8 @@ public sealed class UgfRepository
         await using var connection = connectionFactory.CreateConnection();
         var command = new CommandDefinition(
             """
-            INSERT INTO ugfs (codigo, toneladas_certificado)
-            VALUES (@Codigo, @ToneladasCertificado)
+            INSERT INTO ugfs (codigo, toneladas_certificado, carga_media_toneladas)
+            VALUES (@Codigo, @ToneladasCertificado, @CargaMediaToneladas)
             RETURNING id
             """,
             ugf,
@@ -50,7 +61,11 @@ public sealed class UgfRepository
     {
         await using var connection = connectionFactory.CreateConnection();
         var command = new CommandDefinition(
-            "UPDATE ugfs SET codigo = @Codigo, toneladas_certificado = @ToneladasCertificado WHERE id = @Id",
+            """
+            UPDATE ugfs
+            SET codigo = @Codigo, toneladas_certificado = @ToneladasCertificado, carga_media_toneladas = @CargaMediaToneladas
+            WHERE id = @Id
+            """,
             ugf,
             cancellationToken: cancellationToken);
         await connection.ExecuteAsync(command);

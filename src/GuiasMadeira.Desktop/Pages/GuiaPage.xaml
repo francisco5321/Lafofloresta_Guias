@@ -96,6 +96,9 @@
                     </StackPanel>
                 </Border>
                 <TextBlock x:Name="CertificadoUgfError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
+                <TextBlock x:Name="CertificadoAvisoTolerancia" Style="{StaticResource HelperText}"
+                           Foreground="{StaticResource WarningBrush}" FontWeight="SemiBold"
+                           Visibility="Collapsed" Margin="0,-12,0,16"/>
 
                 <!-- Rolaria -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,4">

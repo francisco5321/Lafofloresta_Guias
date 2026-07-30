@@ -5,6 +5,7 @@ public sealed class Ugf
     public int Id { get; set; }
     public string Codigo { get; set; } = string.Empty;
     public decimal ToneladasCertificado { get; set; }
+    public decimal? CargaMediaToneladas { get; set; }
 
     public override string ToString() => Codigo;
 }

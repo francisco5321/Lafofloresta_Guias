@@ -59,8 +59,12 @@ CREATE UNIQUE INDEX IF NOT EXISTS ux_guias_codigo_barra ON guias (codigo_barra_i
 CREATE TABLE IF NOT EXISTS ugfs (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     codigo TEXT NOT NULL UNIQUE,
-    toneladas_certificado NUMERIC(12,3) NOT NULL
+    toneladas_certificado NUMERIC(12,3) NOT NULL,
+    carga_media_toneladas NUMERIC(12,3) NULL
 );
+
+-- Para bases de dados criadas antes deste campo existir.
+ALTER TABLE ugfs ADD COLUMN IF NOT EXISTS carga_media_toneladas NUMERIC(12,3) NULL;
 
 CREATE TABLE IF NOT EXISTS ugf_entradas (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
