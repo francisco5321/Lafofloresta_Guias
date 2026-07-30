@@ -74,6 +74,8 @@
                     </RadioButton>
                     <RadioButton x:Name="NavImportarCodigosBarras" GroupName="MainNav" Style="{StaticResource NavItem}"
                                  Content="Importar vinhetas" Checked="NavImportarCodigosBarras_Checked"/>
+                    <RadioButton x:Name="NavUgf" GroupName="MainNav" Style="{StaticResource NavItem}"
+                                 Content="Limites UGF" Checked="NavUgf_Checked"/>
                 </StackPanel>
             </DockPanel>
         </Border>

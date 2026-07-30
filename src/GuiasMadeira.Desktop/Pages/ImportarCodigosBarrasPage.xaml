@@ -182,6 +182,7 @@
                                   RowBackground="{StaticResource SurfaceBrush}" AlternatingRowBackground="{StaticResource BackgroundBrush}"
                                   BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" MinHeight="220"
                                   ColumnHeaderStyle="{StaticResource ListGridHeader}" CellStyle="{StaticResource ListGridCell}"
+                                  RowStyle="{StaticResource ListGridRow}"
                                   HeadersVisibility="Column" RowHeaderWidth="0">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Código de barras" Binding="{Binding Codigo}" Width="2*"/>

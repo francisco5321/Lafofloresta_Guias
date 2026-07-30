@@ -49,6 +49,7 @@
                           RowBackground="{StaticResource SurfaceBrush}" AlternatingRowBackground="{StaticResource BackgroundBrush}"
                           BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" MinHeight="320"
                           ColumnHeaderStyle="{StaticResource ListGridHeader}" CellStyle="{StaticResource ListGridCell}"
+                          RowStyle="{StaticResource ListGridRow}"
                           HeadersVisibility="Column" RowHeaderWidth="0">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Nº guia" Binding="{Binding Id}" Width="70"/>

@@ -14,6 +14,7 @@ public static class AppServices
     public static RolariaRepository Rolarias { get; private set; } = null!;
     public static CodigoBarraRepository CodigosBarras { get; private set; } = null!;
     public static GuiaRepository Guias { get; private set; } = null!;
+    public static UgfRepository Ugfs { get; private set; } = null!;
     public static GuiaReportGenerator ReportGenerator { get; private set; } = null!;
 
     public static void Initialize(string connectionString)
@@ -24,6 +25,7 @@ public static class AppServices
         Rolarias = new RolariaRepository(connectionFactory);
         CodigosBarras = new CodigoBarraRepository(connectionFactory);
         Guias = new GuiaRepository(connectionFactory);
+        Ugfs = new UgfRepository(connectionFactory);
         ReportGenerator = new GuiaReportGenerator();
     }
 }

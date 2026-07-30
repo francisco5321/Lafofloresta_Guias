@@ -13,6 +13,8 @@
     <SolidColorBrush x:Key="TextMutedBrush" Color="#6B7370"/>
     <SolidColorBrush x:Key="ErrorBrush" Color="#C0392B"/>
     <SolidColorBrush x:Key="ErrorSoftBrush" Color="#FBEAE8"/>
+    <SolidColorBrush x:Key="WarningBrush" Color="#B8860B"/>
+    <SolidColorBrush x:Key="WarningSoftBrush" Color="#FBF1DD"/>
 
     <!-- Paleta da barra lateral (cor plana, sem gradiente) -->
     <SolidColorBrush x:Key="SidebarBrush" Color="#153328"/>
@@ -267,6 +269,76 @@
         </Setter>
     </Style>
 
+    <!-- ComboBox editável (IsEditable=True): estilo próprio e independente do ComboBox normal acima,
+         porque um ComboBox editável exige uma parte chamada "PART_EditableTextBox" que o ComboBox
+         normal não tem — construir isto como estilo à parte evita mexer no ComboBox usado em todo
+         o resto da aplicação. -->
+    <Style x:Key="EditableComboBox" TargetType="ComboBox">
+        <Setter Property="Padding" Value="10,8"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+        <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Margin" Value="0,0,0,16"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="24"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="Bg" Grid.ColumnSpan="2" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6"/>
+                        <TextBox x:Name="PART_EditableTextBox" Grid.Column="0"
+                                 Margin="{TemplateBinding Padding}" VerticalAlignment="Center"
+                                 Background="Transparent" Foreground="{TemplateBinding Foreground}">
+                            <TextBox.Template>
+                                <ControlTemplate TargetType="TextBox">
+                                    <ScrollViewer x:Name="PART_ContentHost" Background="Transparent"/>
+                                </ControlTemplate>
+                            </TextBox.Template>
+                        </TextBox>
+                        <ToggleButton x:Name="ToggleButton" Grid.Column="1"
+                                      IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                      ClickMode="Press" Focusable="False" Background="Transparent" BorderThickness="0">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <Path Data="M 0 0 L 4 4 L 8 0 Z" Fill="{StaticResource TextMutedBrush}"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <Popup x:Name="Popup" Grid.ColumnSpan="2" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}"
+                               AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
+                            <Border MinWidth="{TemplateBinding ActualWidth}" MaxHeight="260"
+                                    Background="{StaticResource SurfaceBrush}"
+                                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                                    CornerRadius="6" Margin="0,4,0,0">
+                                <ScrollViewer SnapsToDevicePixels="True" Padding="0,4">
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Bg" Property="BorderBrush" Value="{StaticResource AccentBrush}"/>
+                            <Setter TargetName="Bg" Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="ComboBoxItem">
         <Setter Property="Padding" Value="10,8"/>
         <Setter Property="Template">
@@ -460,6 +532,30 @@
                     <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
                         <ContentPresenter VerticalAlignment="Center"/>
                     </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Linha das grids de listagem: molde totalmente próprio (em vez de só Triggers sobre o
+         estilo por omissão) porque o azul de seleção do Windows vem do próprio ControlTemplate
+         do tema, e um Trigger simples de Background não chega para o substituir. Sem cabeçalho de
+         linha nem RowDetails, porque nenhuma das grids desta app usa esses dois. -->
+    <Style x:Key="ListGridRow" TargetType="DataGridRow">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridRow">
+                    <Border x:Name="RowBg" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <DataGridCellsPresenter/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="RowBg" Property="Background" Value="{StaticResource BackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="RowBg" Property="Background" Value="{StaticResource AccentSoftBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

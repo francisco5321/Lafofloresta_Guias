@@ -78,6 +78,8 @@ public partial class MainWindow
 
     private void NavImportarCodigosBarras_Checked(object sender, RoutedEventArgs e) => NavigateTo(new ImportarCodigosBarrasPage());
 
+    private void NavUgf_Checked(object sender, RoutedEventArgs e) => NavigateTo(new UgfPage());
+
     private void NavPesquisar_Checked(object sender, RoutedEventArgs e) => NavigateTo(new PesquisarGuiaPage());
 
     private void NavigateTo(System.Windows.Controls.Page page)

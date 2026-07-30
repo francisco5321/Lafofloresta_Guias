@@ -121,6 +121,7 @@
                               RowBackground="{StaticResource SurfaceBrush}" AlternatingRowBackground="{StaticResource BackgroundBrush}"
                               BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
                               ColumnHeaderStyle="{StaticResource ListGridHeader}" CellStyle="{StaticResource ListGridCell}"
+                              RowStyle="{StaticResource ListGridRow}"
                               HeadersVisibility="Column" RowHeaderWidth="0">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Nome" Binding="{Binding Nome}" Width="2*"/>

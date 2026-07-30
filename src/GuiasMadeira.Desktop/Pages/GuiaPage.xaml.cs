@@ -11,6 +11,7 @@ public partial class GuiaPage
     private const int TotalCampos = 5;
 
     private readonly GuiaResumo? guiaEmEdicao;
+    private Dictionary<string, UgfResumo> ugfsPorCodigo = new(StringComparer.OrdinalIgnoreCase);
 
     public GuiaPage()
     {
@@ -35,8 +36,12 @@ public partial class GuiaPage
         {
             var destinatarios = await AppServices.Destinatarios.ListAllAsync();
             var proprietarios = await AppServices.Proprietarios.ListAllAsync();
-            var codigosBarras = await AppServices.CodigosBarras.ListAllAsync();
+            var certificados = await AppServices.CodigosBarras.ListCertificadosDisponiveisAsync(guiaEmEdicao?.Id);
             var rolarias = await AppServices.Rolarias.ListAllAsync();
+            var ugfs = await AppServices.Ugfs.ListResumoAsync();
+            ugfsPorCodigo = ugfs
+                .Where(u => !string.IsNullOrWhiteSpace(u.Codigo))
+                .ToDictionary(u => u.Codigo, u => u, StringComparer.OrdinalIgnoreCase);
 
             DestinatarioCombo.ItemsSource = destinatarios;
             DestinatarioEmptyState.Visibility = destinatarios.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
@@ -46,9 +51,9 @@ public partial class GuiaPage
             ProprietarioEmptyState.Visibility = proprietarios.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
             ProprietarioCombo.Visibility = proprietarios.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
 
-            CodigoBarraCombo.ItemsSource = codigosBarras;
-            CodigoBarraEmptyState.Visibility = codigosBarras.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-            CodigoBarraCombo.Visibility = codigosBarras.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
+            CertificadoCombo.ItemsSource = certificados;
+            CertificadoEmptyState.Visibility = certificados.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            CertificadoCombo.Visibility = certificados.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
 
             RolariaCombo.ItemsSource = rolarias;
             RolariaEmptyState.Visibility = rolarias.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
@@ -58,7 +63,8 @@ public partial class GuiaPage
             {
                 DestinatarioCombo.SelectedItem = destinatarios.FirstOrDefault(d => d.Id == guiaEmEdicao.DestinatarioId);
                 ProprietarioCombo.SelectedItem = proprietarios.FirstOrDefault(p => p.Id == guiaEmEdicao.ProprietarioId);
-                CodigoBarraCombo.SelectedItem = codigosBarras.FirstOrDefault(c => c.Id == guiaEmEdicao.CodigoBarraId);
+                CertificadoCombo.SelectedItem = certificados.FirstOrDefault(
+                    c => string.Equals(c.NumeroCertificado, guiaEmEdicao.CodigoBarraNumeroCertificado, StringComparison.OrdinalIgnoreCase));
                 RolariaCombo.SelectedItem = rolarias.FirstOrDefault(r => r.Id == guiaEmEdicao.RolariaId);
             }
 
@@ -78,7 +84,7 @@ public partial class GuiaPage
         var preenchidos = 0;
         if (DestinatarioCombo.SelectedItem is not null) preenchidos++;
         if (ProprietarioCombo.SelectedItem is not null) preenchidos++;
-        if (CodigoBarraCombo.SelectedItem is not null) preenchidos++;
+        if (CertificadoCombo.SelectedItem is not null) preenchidos++;
         if (RolariaCombo.SelectedItem is not null) preenchidos++;
         if (!string.IsNullOrWhiteSpace(FornecedorBox.Text)) preenchidos++;
 
@@ -89,15 +95,40 @@ public partial class GuiaPage
         var camposObrigatoriosFaltam = 0;
         if (DestinatarioCombo.SelectedItem is null) camposObrigatoriosFaltam++;
         if (ProprietarioCombo.SelectedItem is null) camposObrigatoriosFaltam++;
-        if (CodigoBarraCombo.SelectedItem is null) camposObrigatoriosFaltam++;
+        if (CertificadoCombo.SelectedItem is null) camposObrigatoriosFaltam++;
         if (RolariaCombo.SelectedItem is null) camposObrigatoriosFaltam++;
 
-        ImprimirButton.IsEnabled = camposObrigatoriosFaltam == 0;
+        var ugfBloqueado = ObterUgfBloqueado();
+        if (ugfBloqueado is not null)
+        {
+            CertificadoUgfError.Text = $"O UGF \"{ugfBloqueado.Codigo}\" já atingiu o limite de toneladas (+20%) e está bloqueado. Escolhe outro certificado.";
+            CertificadoUgfError.Visibility = Visibility.Visible;
+        }
+        else
+        {
+            CertificadoUgfError.Visibility = Visibility.Collapsed;
+        }
+
+        ImprimirButton.IsEnabled = camposObrigatoriosFaltam == 0 && ugfBloqueado is null;
         MicrocopyText.Text = camposObrigatoriosFaltam == 0
-            ? string.Empty
+            ? (ugfBloqueado is null ? string.Empty : "Não é possível imprimir: certificado com UGF bloqueado")
             : camposObrigatoriosFaltam == 1
                 ? "Falta 1 campo para poderes imprimir"
                 : $"Faltam {camposObrigatoriosFaltam} campos para poderes imprimir";
+    }
+
+    private UgfResumo? ObterUgfBloqueado()
+    {
+        // O código UGF (formato "UGFPT#####") está gravado no mesmo valor que identifica o
+        // certificado — ver CodigoBarraRepository.ListNumerosUgfExistentesAsync.
+        if (CertificadoCombo.SelectedItem is not CertificadoResumo certificado)
+        {
+            return null;
+        }
+
+        return ugfsPorCodigo.TryGetValue(certificado.NumeroCertificado, out var ugf) && ugf.Estado == EstadoUgf.Bloqueado
+            ? ugf
+            : null;
     }
 
     private async void Imprimir_Click(object sender, RoutedEventArgs e)
@@ -105,9 +136,9 @@ public partial class GuiaPage
         var destinatario = DestinatarioCombo.SelectedItem as Destinatario;
         var proprietario = ProprietarioCombo.SelectedItem as Proprietario;
         var rolaria = RolariaCombo.SelectedItem as Rolaria;
-        var codigoBarra = CodigoBarraCombo.SelectedItem as CodigoBarra;
+        var certificado = CertificadoCombo.SelectedItem as CertificadoResumo;
 
-        if (destinatario is null || proprietario is null || rolaria is null)
+        if (destinatario is null || proprietario is null || rolaria is null || certificado is null || ObterUgfBloqueado() is not null)
         {
             return;
         }
@@ -117,7 +148,6 @@ public partial class GuiaPage
             Id = guiaEmEdicao?.Id ?? 0,
             DestinatarioId = destinatario.Id,
             ProprietarioId = proprietario.Id,
-            CodigoBarraId = codigoBarra?.Id,
             RolariaId = rolaria.Id,
             Fornecedor = string.IsNullOrWhiteSpace(FornecedorBox.Text) ? null : FornecedorBox.Text.Trim()
         };
@@ -129,12 +159,43 @@ public partial class GuiaPage
             var estavaEmEdicao = guiaEmEdicao is not null;
             if (guiaEmEdicao is not null)
             {
-                await AppServices.Guias.UpdateAsync(guia);
+                var certificadoInalterado = string.Equals(
+                    certificado.NumeroCertificado, guiaEmEdicao.CodigoBarraNumeroCertificado, StringComparison.OrdinalIgnoreCase);
+
+                bool sucesso;
+                if (certificadoInalterado)
+                {
+                    guia.CodigoBarraId = guiaEmEdicao.CodigoBarraId;
+                    await AppServices.Guias.UpdateAsync(guia);
+                    sucesso = true;
+                }
+                else
+                {
+                    sucesso = await AppServices.Guias.AtualizarComCertificadoAsync(guia, certificado.NumeroCertificado);
+                }
+
+                if (!sucesso)
+                {
+                    MessageBox.Show("Já não há vinhetas disponíveis para este certificado. Escolhe outro.",
+                        "Sem vinhetas disponíveis", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    await RecarregarCertificadosAsync();
+                    return;
+                }
+
                 idGuia = guiaEmEdicao.Id;
             }
             else
             {
-                idGuia = await AppServices.Guias.InsertAsync(guia);
+                var novoId = await AppServices.Guias.InsertComCertificadoAsync(guia, certificado.NumeroCertificado);
+                if (novoId is null)
+                {
+                    MessageBox.Show("Já não há vinhetas disponíveis para este certificado. Escolhe outro.",
+                        "Sem vinhetas disponíveis", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    await RecarregarCertificadosAsync();
+                    return;
+                }
+
+                idGuia = novoId.Value;
             }
 
             ToastBorder.Visibility = Visibility.Visible;
@@ -162,6 +223,21 @@ public partial class GuiaPage
         finally
         {
             AtualizarEstado();
+        }
+    }
+
+    private async Task RecarregarCertificadosAsync()
+    {
+        try
+        {
+            var certificados = await AppServices.CodigosBarras.ListCertificadosDisponiveisAsync(guiaEmEdicao?.Id);
+            CertificadoCombo.ItemsSource = certificados;
+            CertificadoEmptyState.Visibility = certificados.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            CertificadoCombo.Visibility = certificados.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
+        }
+        catch
+        {
+            // Se falhar aqui, o próprio Guardar/Imprimir já mostrou o erro relevante.
         }
     }
 

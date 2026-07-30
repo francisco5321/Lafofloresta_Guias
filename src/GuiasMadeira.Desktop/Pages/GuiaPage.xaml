@@ -27,7 +27,7 @@
 
                 <TextBlock x:Name="PageTitleText" Text="Nova guia" Style="{StaticResource PageTitle}" Margin="0,0,0,8"/>
                 <TextBlock Style="{StaticResource HelperText}" Margin="0,0,0,20"
-                           Text="Escolhe o destinatário, o proprietário, o código de barras e a rolaria — o resto dos dados já vem da base de dados."/>
+                           Text="Escolhe o destinatário, o proprietário, o número de certificado e a rolaria — a vinheta é atribuída automaticamente e o resto dos dados já vem da base de dados."/>
 
                 <!-- Barra de progresso -->
                 <Border Style="{StaticResource ProgressTrack}">
@@ -78,23 +78,24 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Código de barras -->
+                <!-- Número de certificado (a vinheta concreta é atribuída automaticamente) -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
                     <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconBarcode}"/>
-                    <TextBlock Text="Código de barras" Style="{StaticResource FieldLabel}" Margin="0"/>
+                    <TextBlock Text="Número de certificado" Style="{StaticResource FieldLabel}" Margin="0"/>
                 </StackPanel>
-                <ComboBox x:Name="CodigoBarraCombo" Style="{StaticResource SuccessComboBox}"
-                          DisplayMemberPath="Codigo" IsTextSearchEnabled="True" SelectionChanged="Campo_Changed"/>
-                <Border x:Name="CodigoBarraEmptyState" Style="{StaticResource EmptyState}">
+                <ComboBox x:Name="CertificadoCombo" Style="{StaticResource SuccessComboBox}"
+                          DisplayMemberPath="Rotulo" IsTextSearchEnabled="True" SelectionChanged="Campo_Changed"/>
+                <Border x:Name="CertificadoEmptyState" Style="{StaticResource EmptyState}">
                     <StackPanel HorizontalAlignment="Center">
                         <Path Data="{StaticResource IconEmptyBox}" Stroke="{StaticResource TextMutedBrush}" StrokeThickness="1.6"
                               StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
                               Width="28" Height="28" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,8"/>
-                        <TextBlock Text="Ainda não há códigos de barras importados." Style="{StaticResource HelperText}"
+                        <TextBlock Text="Ainda não há certificados com vinhetas disponíveis." Style="{StaticResource HelperText}"
                                    TextAlignment="Center" Margin="0,0,0,12"/>
                         <Button Content="Importar vinhetas" Style="{StaticResource SecondaryButton}" Click="ImportarCodigosBarras_Click"/>
                     </StackPanel>
                 </Border>
+                <TextBlock x:Name="CertificadoUgfError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
 
                 <!-- Rolaria -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,4">

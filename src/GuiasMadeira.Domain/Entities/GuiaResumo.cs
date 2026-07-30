@@ -17,6 +17,7 @@ public sealed class GuiaResumo
 
     public int? CodigoBarraId { get; set; }
     public string? CodigoBarraCodigo { get; set; }
+    public string? CodigoBarraNumeroCertificado { get; set; }
 
     public int? RolariaId { get; set; }
     public string? RolariaTipo { get; set; }
