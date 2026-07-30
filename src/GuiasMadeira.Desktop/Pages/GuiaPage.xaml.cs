@@ -184,7 +184,6 @@ public partial class GuiaPage
         try
         {
             int idGuia;
-            var estavaEmEdicao = guiaEmEdicao is not null;
             if (guiaEmEdicao is not null)
             {
                 var certificadoInalterado = string.Equals(
@@ -237,11 +236,8 @@ public partial class GuiaPage
                     "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
-            if (estavaEmEdicao)
-            {
-                AppNavigation.NavigateToSection?.Invoke("Guias");
-                return;
-            }
+            Window.GetWindow(this)?.Close();
+            return;
         }
         catch (Exception ex)
         {
@@ -285,18 +281,24 @@ public partial class GuiaPage
         }
     }
 
-    private void AdicionarDestinatario_Click(object sender, RoutedEventArgs e) =>
-        AppNavigation.NavigateToSection?.Invoke("Destinatarios");
+    private void AdicionarDestinatario_Click(object sender, RoutedEventArgs e) => FecharENavegarPara("Destinatarios");
 
-    private void AdicionarProprietario_Click(object sender, RoutedEventArgs e) =>
-        AppNavigation.NavigateToSection?.Invoke("Proprietarios");
+    private void AdicionarProprietario_Click(object sender, RoutedEventArgs e) => FecharENavegarPara("Proprietarios");
 
-    private void AdicionarRolaria_Click(object sender, RoutedEventArgs e) =>
-        AppNavigation.NavigateToSection?.Invoke("Rolarias");
+    private void AdicionarRolaria_Click(object sender, RoutedEventArgs e) => FecharENavegarPara("Rolarias");
 
-    private void ImportarCodigosBarras_Click(object sender, RoutedEventArgs e) =>
-        AppNavigation.NavigateToSection?.Invoke("CodigosBarras");
+    private void ImportarCodigosBarras_Click(object sender, RoutedEventArgs e) => FecharENavegarPara("CodigosBarras");
 
-    private void CancelarEdicao_Click(object sender, RoutedEventArgs e) =>
-        AppNavigation.NavigateToSection?.Invoke("Guias");
+    /// <summary>
+    /// Fecha este modal e só depois pede à janela principal para mudar de secção — como a GuiaPage
+    /// já não vive na MainFrame, deixar o modal aberto por cima do ecrã que muda por baixo seria
+    /// confuso.
+    /// </summary>
+    private void FecharENavegarPara(string seccao)
+    {
+        Window.GetWindow(this)?.Close();
+        AppNavigation.NavigateToSection?.Invoke(seccao);
+    }
+
+    private void CancelarEdicao_Click(object sender, RoutedEventArgs e) => Window.GetWindow(this)?.Close();
 }

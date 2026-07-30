@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Effects;
 using GuiasMadeira.Desktop.Services;
 using GuiasMadeira.Domain.Entities;
 
@@ -83,14 +84,46 @@ public partial class PesquisarGuiaPage
         }
     }
 
-    private void Editar_Click(object sender, RoutedEventArgs e)
+    private async void CriarGuia_Click(object sender, RoutedEventArgs e) =>
+        await AbrirModalAsync(new GuiaModalWindow());
+
+    private async void Editar_Click(object sender, RoutedEventArgs e)
     {
         if (((FrameworkElement)sender).DataContext is not GuiaResumo guia)
         {
             return;
         }
 
-        AppNavigation.NavigateToPage?.Invoke(new GuiaPage(guia));
+        await AbrirModalAsync(new GuiaModalWindow(guia));
+    }
+
+    /// <summary>
+    /// Mostra o modal com a janela principal ligeiramente desfocada por baixo — realça o modal
+    /// em vez de o deixar como mais uma janela solta sobreposta.
+    /// </summary>
+    private async Task AbrirModalAsync(Window modal)
+    {
+        var mainWindow = Window.GetWindow(this);
+        var blur = new BlurEffect { Radius = 14 };
+        if (mainWindow is not null)
+        {
+            mainWindow.Effect = blur;
+        }
+
+        try
+        {
+            modal.Owner = mainWindow;
+            modal.ShowDialog();
+        }
+        finally
+        {
+            if (mainWindow is not null)
+            {
+                mainWindow.Effect = null;
+            }
+        }
+
+        await CarregarListaAsync();
     }
 
     private async void Apagar_Click(object sender, RoutedEventArgs e)

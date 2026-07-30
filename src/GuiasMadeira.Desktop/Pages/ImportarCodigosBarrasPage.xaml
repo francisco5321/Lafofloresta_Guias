@@ -100,7 +100,7 @@
             </Grid>
         </Border>
 
-        <Border Grid.Row="1" Style="{StaticResource Card}" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" Margin="0,24,0,0">
+        <Border Grid.Row="1" Style="{StaticResource Card}" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" Margin="0,24,0,0" ClipToBounds="True">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="360"/>
@@ -188,7 +188,7 @@
                                 <DataGridTextColumn Header="Código de barras" Binding="{Binding Codigo}" Width="2*"/>
                                 <DataGridTextColumn Header="Nº certificado" Binding="{Binding NumeroCertificado}" Width="*"/>
                                 <DataGridTextColumn Header="Nº UGF" Binding="{Binding NumeroUgf}" Width="*"/>
-                                <DataGridTemplateColumn Header="" Width="80">
+                                <DataGridTemplateColumn Header="" Width="100">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">

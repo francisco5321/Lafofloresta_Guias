@@ -54,7 +54,7 @@
                 </Border>
             </ScrollViewer>
 
-            <Border Grid.Column="2" Style="{StaticResource Card}" Width="Auto" Height="Auto"
+            <Border Grid.Column="2" Style="{StaticResource Card}" Width="Auto" Height="Auto" ClipToBounds="True"
                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -92,7 +92,7 @@
                               HeadersVisibility="Column" RowHeaderWidth="0">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Tipo" Binding="{Binding Tipo}" Width="*"/>
-                            <DataGridTemplateColumn Header="" Width="80">
+                            <DataGridTemplateColumn Header="" Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">

@@ -1,5 +1,3 @@
-using System.Windows.Controls;
-
 namespace GuiasMadeira.Desktop.Services;
 
 /// <summary>
@@ -9,12 +7,6 @@ namespace GuiasMadeira.Desktop.Services;
 public static class AppNavigation
 {
     public static Action<string>? NavigateToSection { get; set; }
-
-    /// <summary>
-    /// Navega para uma página concreta (ex. GuiaPage em modo de edição) sem alterar o item
-    /// selecionado na barra lateral, porque a navegação não corresponde a uma secção própria.
-    /// </summary>
-    public static Action<Page>? NavigateToPage { get; set; }
 
     /// <summary>
     /// Atualiza os contadores da barra lateral depois de uma criação/edição/eliminação.

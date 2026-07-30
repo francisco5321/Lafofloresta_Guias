@@ -11,7 +11,7 @@ public partial class MainWindow
         InitializeComponent();
         WindowState = WindowState.Normal;
         SizeToScreen();
-        NavGuia.IsChecked = true;
+        NavPesquisar.IsChecked = true;
         Loaded += (_, _) => InvalidateVisual();
         Loaded += MainWindow_Loaded;
 
@@ -37,7 +37,6 @@ public partial class MainWindow
             }
         };
 
-        AppNavigation.NavigateToPage = page => NavigateTo(page);
         AppNavigation.RefreshCounts = () => _ = RefreshCountsAsync();
     }
 
@@ -67,8 +66,6 @@ public partial class MainWindow
         Width = Math.Clamp(workArea.Width * 0.8, MinWidth, 1280);
         Height = Math.Clamp(workArea.Height * 0.85, MinHeight, 900);
     }
-
-    private void NavGuia_Checked(object sender, RoutedEventArgs e) => NavigateTo(new GuiaPage());
 
     private void NavDestinatarios_Checked(object sender, RoutedEventArgs e) => NavigateTo(new DestinatarioPage());
 

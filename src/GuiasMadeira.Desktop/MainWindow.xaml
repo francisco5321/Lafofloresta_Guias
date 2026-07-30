@@ -26,8 +26,6 @@
                 <StackPanel>
                     <TextBlock Text="Gestão" Foreground="{StaticResource SidebarTextMutedBrush}"
                                FontSize="11" FontWeight="SemiBold" Margin="30,0,0,8"/>
-                    <RadioButton x:Name="NavGuia" GroupName="MainNav" Style="{StaticResource NavItem}"
-                                 Content="Nova guia" Checked="NavGuia_Checked"/>
                     <RadioButton x:Name="NavPesquisar" GroupName="MainNav" Style="{StaticResource NavItem}"
                                  Content="Gerir guias" Checked="NavPesquisar_Checked"/>
 

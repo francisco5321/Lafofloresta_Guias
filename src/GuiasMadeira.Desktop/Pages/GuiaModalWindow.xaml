@@ -1,0 +1,70 @@
+<Window x:Class="GuiasMadeira.Desktop.Pages.GuiaModalWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Nova guia" Width="900" Height="700"
+        WindowStartupLocation="Manual"
+        WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize"
+        ShowInTaskbar="False" Background="Transparent" Opacity="0">
+    <!-- A janela cobre toda a área da janela principal (ver Loaded no code-behind), com um fundo
+         ligeiramente escurecido à volta do cartão — um clique nessa área fecha a modal. Tem de ter
+         alguma opacidade (não Transparent puro): com AllowsTransparency=True, o Windows faz o
+         hit-test pelo alfa real do pixel, e um pixel 100% transparente deixa o clique atravessar
+         para a janela por baixo em vez de chegar a este Grid. -->
+    <Grid x:Name="RootGrid" Background="#33000000" MouseLeftButtonDown="RootGrid_MouseLeftButtonDown">
+        <Border x:Name="CardBorder" Width="700" Height="900" CornerRadius="14"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                RenderTransformOrigin="0.5,0.5">
+            <Border.RenderTransform>
+                <ScaleTransform x:Name="CardScale" ScaleX="0.95" ScaleY="0.95"/>
+            </Border.RenderTransform>
+            <Border.Effect>
+                <DropShadowEffect Color="#1F2320" Opacity="0.18" BlurRadius="18" ShadowDepth="3" Direction="270"/>
+            </Border.Effect>
+            <Border.Clip>
+                <RectangleGeometry Rect="0,0,700,900" RadiusX="14" RadiusY="14"/>
+            </Border.Clip>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Cabeçalho: mesma cor e separador da barra lateral, para a modal ler-se como
+                     parte da mesma aplicação em vez de uma janela solta. -->
+                <Border Grid.Row="0" Background="{StaticResource SidebarBrush}">
+                    <DockPanel Margin="20,0,10,0" Height="56">
+                        <Image DockPanel.Dock="Left" Source="/Resources/logo_branco.png" Height="26" Stretch="Uniform"
+                               VerticalAlignment="Center" Margin="0,0,10,0"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <Button x:Name="FecharButton" DockPanel.Dock="Right" Width="34" Height="34"
+                                Background="Transparent" BorderThickness="0" Cursor="Hand" Click="Fechar_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="Bg" Background="{TemplateBinding Background}" CornerRadius="8">
+                                        <Path Data="{StaticResource IconClose}" Stroke="White" StrokeThickness="1.8"
+                                              StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                              Width="13" Height="13" Stretch="Uniform"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Bg" Property="Background" Value="{StaticResource SidebarHoverBrush}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <TextBlock x:Name="HeaderTitleText" Text="Nova guia" VerticalAlignment="Center"
+                                   Foreground="White" FontSize="15" FontWeight="Bold"/>
+                    </DockPanel>
+                </Border>
+                <Rectangle Grid.Row="0" VerticalAlignment="Bottom" Height="1" Fill="{StaticResource SidebarBorderBrush}"/>
+
+                <Frame Grid.Row="1" x:Name="ContentFrame" NavigationUIVisibility="Hidden"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
