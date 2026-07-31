@@ -10,7 +10,6 @@ namespace GuiasMadeira.Desktop.Pages;
 
 public partial class RolariaPage
 {
-    private int? editingId;
     private ICollectionView? listaView;
 
     public RolariaPage()
@@ -53,83 +52,23 @@ public partial class RolariaPage
 
     private void Pesquisa_TextChanged(object sender, TextChangedEventArgs e) => listaView?.Refresh();
 
-    private async void Guardar_Click(object sender, RoutedEventArgs e)
+    private async void CriarRolaria_Click(object sender, RoutedEventArgs e)
     {
-        TipoError.Visibility = Visibility.Collapsed;
-
-        if (string.IsNullOrWhiteSpace(TipoBox.Text))
-        {
-            TipoError.Text = "Escreve o tipo de rolaria";
-            TipoError.Visibility = Visibility.Visible;
-            TipoBox.Focus();
-            return;
-        }
-
-        var rolaria = new Rolaria { Tipo = TipoBox.Text.Trim() };
-
-        GuardarButton.IsEnabled = false;
-        try
-        {
-            if (editingId is int id)
-            {
-                rolaria.Id = id;
-                await AppServices.Rolarias.UpdateAsync(rolaria);
-                ToastText.Text = "Rolaria atualizada";
-            }
-            else
-            {
-                await AppServices.Rolarias.InsertAsync(rolaria);
-                ToastText.Text = "Rolaria guardada";
-            }
-
-            ToastBorder.Visibility = Visibility.Visible;
-            EntrarModoCriacao();
-            TipoBox.Focus();
-            await CarregarListaAsync();
-            AppNavigation.RefreshCounts?.Invoke();
-            await Task.Delay(1600);
-            ToastBorder.Visibility = Visibility.Collapsed;
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Ocorreu um erro ao guardar a rolaria.\n\n{ex.Message}",
-                "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        finally
-        {
-            GuardarButton.IsEnabled = true;
-        }
+        ModalHelper.ShowModal(this, new FormModalWindow(new RolariaFormPage(), "Nova rolaria"));
+        await CarregarListaAsync();
+        AppNavigation.RefreshCounts?.Invoke();
     }
 
-    private void Editar_Click(object sender, RoutedEventArgs e)
+    private async void Editar_Click(object sender, RoutedEventArgs e)
     {
         if (((FrameworkElement)sender).DataContext is not Rolaria rolaria)
         {
             return;
         }
 
-        editingId = rolaria.Id;
-        TipoBox.Text = rolaria.Tipo;
-        TipoError.Visibility = Visibility.Collapsed;
-
-        FormTitleText.Text = "Editar rolaria";
-        BreadcrumbCurrentText.Text = "Editar rolaria";
-        GuardarButton.Content = "Guardar alterações";
-        CancelarEdicaoButton.Visibility = Visibility.Visible;
-        TipoBox.Focus();
-    }
-
-    private void CancelarEdicao_Click(object sender, RoutedEventArgs e) => EntrarModoCriacao();
-
-    private void EntrarModoCriacao()
-    {
-        editingId = null;
-        TipoBox.Clear();
-        TipoError.Visibility = Visibility.Collapsed;
-        FormTitleText.Text = "Nova rolaria";
-        BreadcrumbCurrentText.Text = "Nova rolaria";
-        GuardarButton.Content = "Guardar";
-        CancelarEdicaoButton.Visibility = Visibility.Collapsed;
+        ModalHelper.ShowModal(this, new FormModalWindow(new RolariaFormPage(rolaria), "Editar rolaria"));
+        await CarregarListaAsync();
+        AppNavigation.RefreshCounts?.Invoke();
     }
 
     private async void Apagar_Click(object sender, RoutedEventArgs e)
@@ -150,12 +89,6 @@ public partial class RolariaPage
         try
         {
             await AppServices.Rolarias.DeleteAsync(rolaria.Id);
-
-            if (editingId == rolaria.Id)
-            {
-                EntrarModoCriacao();
-            }
-
             await CarregarListaAsync();
             AppNavigation.RefreshCounts?.Invoke();
         }

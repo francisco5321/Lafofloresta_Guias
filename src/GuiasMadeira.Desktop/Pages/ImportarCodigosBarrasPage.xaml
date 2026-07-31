@@ -102,112 +102,61 @@
 
         <Border Grid.Row="1" Style="{StaticResource Card}" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" Margin="0,24,0,0" ClipToBounds="True">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="360"/>
-                    <ColumnDefinition Width="24"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                <StackPanel Grid.Column="0" VerticalAlignment="Top">
-                    <Border x:Name="VinhetaToastBorder" Style="{StaticResource Toast}">
-                        <StackPanel Orientation="Horizontal">
-                            <Path Data="{StaticResource IconCheck}" Stroke="{StaticResource AccentBrush}" StrokeThickness="2.2"
-                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
-                                  Width="14" Height="14" Stretch="Uniform" Margin="0,0,8,0"/>
-                            <TextBlock x:Name="VinhetaToastText" Text="Vinheta atualizada" Foreground="{StaticResource AccentPressedBrush}" FontWeight="SemiBold" FontSize="13"/>
-                        </StackPanel>
-                    </Border>
+                <TextBlock Grid.Row="0" Text="Vinhetas registadas" Style="{StaticResource PageTitle}" FontSize="18" Margin="0,0,0,14"/>
 
-                    <TextBlock Text="Editar vinheta" Style="{StaticResource PageTitle}" FontSize="20"/>
-                    <TextBlock x:Name="VinhetaAjudaText" Style="{StaticResource HelperText}" Margin="0,0,0,16"
-                               Text="Escolhe uma vinheta na lista ao lado para editar ou apagar."/>
-
+                <StackPanel Grid.Row="1" Margin="0,0,0,4">
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                        <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconBarcode}"/>
-                        <TextBlock Text="Código de barras" Style="{StaticResource FieldLabel}" Margin="0"/>
+                        <Path Style="{StaticResource FieldIconStroke}" Data="{StaticResource IconSearch}"/>
+                        <TextBlock Text="Pesquisar" Style="{StaticResource FieldLabel}" Margin="0"/>
                     </StackPanel>
-                    <TextBox x:Name="VinhetaCodigoBox" IsEnabled="False"/>
-                    <TextBlock x:Name="VinhetaCodigoError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
-
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                        <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTag}"/>
-                        <TextBlock Text="Nº certificado (opcional)" Style="{StaticResource FieldLabel}" Margin="0"/>
-                    </StackPanel>
-                    <TextBox x:Name="VinhetaNumeroCertificadoBox" IsEnabled="False"/>
-
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                        <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTag}"/>
-                        <TextBlock Text="Nº UGF (opcional)" Style="{StaticResource FieldLabel}" Margin="0"/>
-                    </StackPanel>
-                    <TextBox x:Name="VinhetaNumeroUgfBox" IsEnabled="False"/>
-
-                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0" HorizontalAlignment="Center">
-                        <Button x:Name="VinhetaGuardarButton" Content="Guardar alterações" Style="{StaticResource PrimaryButton}"
-                                IsEnabled="False" Click="VinhetaGuardar_Click"/>
-                        <Button x:Name="VinhetaCancelarButton" Content="Cancelar" Style="{StaticResource SecondaryButton}"
-                                Margin="10,0,0,0" Visibility="Collapsed" Click="VinhetaCancelar_Click"/>
-                    </StackPanel>
+                    <TextBox x:Name="VinhetaPesquisaBox" Margin="0,0,0,12" TextChanged="VinhetaPesquisa_TextChanged"/>
                 </StackPanel>
 
-                <Border Grid.Column="2" VerticalAlignment="Top">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <TextBlock Grid.Row="0" Text="Vinhetas registadas" Style="{StaticResource PageTitle}" FontSize="18" Margin="0,0,0,14"/>
-
-                        <StackPanel Grid.Row="1" Margin="0,0,0,4">
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                                <Path Style="{StaticResource FieldIconStroke}" Data="{StaticResource IconSearch}"/>
-                                <TextBlock Text="Pesquisar" Style="{StaticResource FieldLabel}" Margin="0"/>
-                            </StackPanel>
-                            <TextBox x:Name="VinhetaPesquisaBox" Margin="0,0,0,12" TextChanged="VinhetaPesquisa_TextChanged"/>
-                        </StackPanel>
-
-                        <Border x:Name="VinhetaListaEmptyState" Grid.Row="2" Style="{StaticResource EmptyState}" VerticalAlignment="Top">
-                            <StackPanel HorizontalAlignment="Center">
-                                <Path Data="{StaticResource IconEmptyBox}" Stroke="{StaticResource TextMutedBrush}" StrokeThickness="1.6"
-                                      StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
-                                      Width="28" Height="28" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,8"/>
-                                <TextBlock Text="Ainda não há vinhetas importadas." Style="{StaticResource HelperText}" TextAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
-
-                        <DataGrid x:Name="VinhetaListaGrid" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True"
-                                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
-                                  GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="{StaticResource BorderBrush}"
-                                  RowBackground="{StaticResource SurfaceBrush}" AlternatingRowBackground="{StaticResource BackgroundBrush}"
-                                  BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" MinHeight="220"
-                                  ColumnHeaderStyle="{StaticResource ListGridHeader}" CellStyle="{StaticResource ListGridCell}"
-                                  RowStyle="{StaticResource ListGridRow}"
-                                  HeadersVisibility="Column" RowHeaderWidth="0">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Código de barras" Binding="{Binding Codigo}" Width="2*"/>
-                                <DataGridTextColumn Header="Nº certificado" Binding="{Binding NumeroCertificado}" Width="*"/>
-                                <DataGridTextColumn Header="Nº UGF" Binding="{Binding NumeroUgf}" Width="*"/>
-                                <DataGridTemplateColumn Header="" Width="100">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Button Style="{StaticResource GhostIconButton}" ToolTip="Editar" Click="VinhetaEditar_Click">
-                                                    <Path Data="{StaticResource IconEdit}" Fill="{StaticResource TextMutedBrush}"
-                                                          Width="15" Height="15" Stretch="Uniform"/>
-                                                </Button>
-                                                <Button Style="{StaticResource GhostIconButton}" ToolTip="Apagar" Click="VinhetaApagar_Click">
-                                                    <Path Data="{StaticResource IconTrash}" Fill="{StaticResource ErrorBrush}"
-                                                          Width="15" Height="15" Stretch="Uniform"/>
-                                                </Button>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
+                <Border x:Name="VinhetaListaEmptyState" Grid.Row="2" Style="{StaticResource EmptyState}" VerticalAlignment="Top">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Path Data="{StaticResource IconEmptyBox}" Stroke="{StaticResource TextMutedBrush}" StrokeThickness="1.6"
+                              StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                              Width="28" Height="28" Stretch="Uniform" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                        <TextBlock Text="Ainda não há vinhetas importadas." Style="{StaticResource HelperText}" TextAlignment="Center"/>
+                    </StackPanel>
                 </Border>
+
+                <DataGrid x:Name="VinhetaListaGrid" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True"
+                          CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
+                          GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="{StaticResource BorderBrush}"
+                          RowBackground="{StaticResource SurfaceBrush}" AlternatingRowBackground="{StaticResource BackgroundBrush}"
+                          BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" MinHeight="320"
+                          ColumnHeaderStyle="{StaticResource ListGridHeader}" CellStyle="{StaticResource ListGridCell}"
+                          RowStyle="{StaticResource ListGridRow}"
+                          HeadersVisibility="Column" RowHeaderWidth="0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Código de barras" Binding="{Binding Codigo}" Width="2*"/>
+                        <DataGridTextColumn Header="Nº certificado" Binding="{Binding NumeroCertificado}" Width="*"/>
+                        <DataGridTextColumn Header="Nº UGF" Binding="{Binding NumeroUgf}" Width="*"/>
+                        <DataGridTemplateColumn Header="" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Style="{StaticResource GhostIconButton}" ToolTip="Editar" Click="VinhetaEditar_Click">
+                                            <Path Data="{StaticResource IconEdit}" Fill="{StaticResource TextMutedBrush}"
+                                                  Width="15" Height="15" Stretch="Uniform"/>
+                                        </Button>
+                                        <Button Style="{StaticResource GhostIconButton}" ToolTip="Apagar" Click="VinhetaApagar_Click">
+                                            <Path Data="{StaticResource IconTrash}" Fill="{StaticResource ErrorBrush}"
+                                                  Width="15" Height="15" Stretch="Uniform"/>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </Border>
     </Grid>

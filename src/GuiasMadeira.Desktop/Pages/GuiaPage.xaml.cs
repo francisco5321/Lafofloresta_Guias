@@ -22,8 +22,6 @@ public partial class GuiaPage
     public GuiaPage(GuiaResumo guiaParaEditar) : this()
     {
         guiaEmEdicao = guiaParaEditar;
-        BreadcrumbCurrentText.Text = "Editar guia";
-        PageTitleText.Text = "Editar guia";
         ToastText.Text = "Guia atualizada";
         ImprimirButtonText.Text = "Guardar alterações";
         CancelarEdicaoButton.Visibility = Visibility.Visible;

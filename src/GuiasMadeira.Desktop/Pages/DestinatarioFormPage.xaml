@@ -1,0 +1,68 @@
+<Page x:Class="GuiasMadeira.Desktop.Pages.DestinatarioFormPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="{StaticResource SurfaceBrush}"
+      Title="Novo destinatário">
+    <!-- Sem título/cartão próprios: esta página só é usada dentro do FormModalWindow, cujo
+         cabeçalho já mostra "Novo destinatário"/"Editar destinatário". -->
+    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+        <StackPanel Margin="36,28">
+
+            <Border x:Name="ToastBorder" Style="{StaticResource Toast}">
+                <StackPanel Orientation="Horizontal">
+                    <Path Data="{StaticResource IconCheck}" Stroke="{StaticResource AccentBrush}" StrokeThickness="2.2"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                          Width="14" Height="14" Stretch="Uniform" Margin="0,0,8,0"/>
+                    <TextBlock x:Name="ToastText" Text="Destinatário guardado" Foreground="{StaticResource AccentPressedBrush}" FontWeight="SemiBold" FontSize="13"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Barra de progresso -->
+            <Border Style="{StaticResource ProgressTrack}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="ProgressFillColumn" Width="0*"/>
+                        <ColumnDefinition x:Name="ProgressRemainderColumn" Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Style="{StaticResource ProgressFill}"/>
+                </Grid>
+            </Border>
+            <TextBlock x:Name="ProgressText" Style="{StaticResource HelperText}" Margin="0,6,0,20"
+                       Text="0 de 4 campos preenchidos"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconPerson}"/>
+                <TextBlock Text="Nome" Style="{StaticResource FieldLabel}" Margin="0"/>
+            </StackPanel>
+            <TextBox x:Name="NomeBox" TextChanged="Campo_Changed"/>
+            <TextBlock x:Name="NomeError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTag}"/>
+                <TextBlock Text="NIF" Style="{StaticResource FieldLabel}" Margin="0"/>
+            </StackPanel>
+            <TextBox x:Name="NifBox" TextChanged="Campo_Changed"/>
+            <TextBlock x:Name="NifError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconPin}"/>
+                <TextBlock Text="Morada" Style="{StaticResource FieldLabel}" Margin="0"/>
+            </StackPanel>
+            <TextBox x:Name="MoradaBox" TextChanged="Campo_Changed"/>
+            <TextBlock x:Name="MoradaError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconPin}"/>
+                <TextBlock Text="Concelho" Style="{StaticResource FieldLabel}" Margin="0"/>
+            </StackPanel>
+            <TextBox x:Name="ConcelhoBox" TextChanged="Campo_Changed"/>
+            <TextBlock x:Name="ConcelhoError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0" HorizontalAlignment="Center">
+                <Button x:Name="GuardarButton" Content="Guardar" Style="{StaticResource PrimaryButton}" Click="Guardar_Click"/>
+                <Button x:Name="CancelarEdicaoButton" Content="Cancelar edição" Style="{StaticResource SecondaryButton}"
+                        Margin="10,0,0,0" Visibility="Collapsed" Click="Cancelar_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

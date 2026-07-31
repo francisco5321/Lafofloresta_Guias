@@ -10,7 +10,6 @@ namespace GuiasMadeira.Desktop.Pages;
 
 public partial class ProprietarioPage
 {
-    private int? editingId;
     private ICollectionView? listaView;
 
     public ProprietarioPage()
@@ -63,80 +62,23 @@ public partial class ProprietarioPage
 
     private void Pesquisa_TextChanged(object sender, TextChangedEventArgs e) => listaView?.Refresh();
 
-    private async void Guardar_Click(object sender, RoutedEventArgs e)
+    private async void CriarProprietario_Click(object sender, RoutedEventArgs e)
     {
-        if (!Validar(out var proprietario))
-        {
-            return;
-        }
-
-        GuardarButton.IsEnabled = false;
-        try
-        {
-            if (editingId is int id)
-            {
-                proprietario.Id = id;
-                await AppServices.Proprietarios.UpdateAsync(proprietario);
-                ToastText.Text = "Proprietário atualizado";
-            }
-            else
-            {
-                await AppServices.Proprietarios.InsertAsync(proprietario);
-                ToastText.Text = "Proprietário guardado";
-            }
-
-            ToastBorder.Visibility = Visibility.Visible;
-            EntrarModoCriacao();
-            NomeBox.Focus();
-            await CarregarListaAsync();
-            AppNavigation.RefreshCounts?.Invoke();
-            await Task.Delay(1600);
-            ToastBorder.Visibility = Visibility.Collapsed;
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Ocorreu um erro ao guardar o proprietário.\n\n{ex.Message}",
-                "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        finally
-        {
-            GuardarButton.IsEnabled = true;
-        }
+        ModalHelper.ShowModal(this, new FormModalWindow(new ProprietarioFormPage(), "Novo proprietário"));
+        await CarregarListaAsync();
+        AppNavigation.RefreshCounts?.Invoke();
     }
 
-    private void Editar_Click(object sender, RoutedEventArgs e)
+    private async void Editar_Click(object sender, RoutedEventArgs e)
     {
         if (((FrameworkElement)sender).DataContext is not Proprietario proprietario)
         {
             return;
         }
 
-        editingId = proprietario.Id;
-        NomeBox.Text = proprietario.Nome;
-        DistritoBox.Text = proprietario.Distrito;
-        ConcelhoBox.Text = proprietario.Concelho;
-        FreguesiaBox.Text = proprietario.Freguesia;
-        CodigoPropBox.Text = proprietario.CodigoProp;
-        ParcelaBox.Text = proprietario.Parcela;
-        LimparErros();
-
-        FormTitleText.Text = "Editar proprietário";
-        BreadcrumbCurrentText.Text = "Editar proprietário";
-        GuardarButton.Content = "Guardar alterações";
-        CancelarEdicaoButton.Visibility = Visibility.Visible;
-        NomeBox.Focus();
-    }
-
-    private void CancelarEdicao_Click(object sender, RoutedEventArgs e) => EntrarModoCriacao();
-
-    private void EntrarModoCriacao()
-    {
-        editingId = null;
-        LimparCampos();
-        FormTitleText.Text = "Novo proprietário";
-        BreadcrumbCurrentText.Text = "Novo proprietário";
-        GuardarButton.Content = "Guardar";
-        CancelarEdicaoButton.Visibility = Visibility.Collapsed;
+        ModalHelper.ShowModal(this, new FormModalWindow(new ProprietarioFormPage(proprietario), "Editar proprietário"));
+        await CarregarListaAsync();
+        AppNavigation.RefreshCounts?.Invoke();
     }
 
     private async void Apagar_Click(object sender, RoutedEventArgs e)
@@ -157,12 +99,6 @@ public partial class ProprietarioPage
         try
         {
             await AppServices.Proprietarios.DeleteAsync(proprietario.Id);
-
-            if (editingId == proprietario.Id)
-            {
-                EntrarModoCriacao();
-            }
-
             await CarregarListaAsync();
             AppNavigation.RefreshCounts?.Invoke();
         }
@@ -175,75 +111,5 @@ public partial class ProprietarioPage
             MessageBox.Show($"Ocorreu um erro ao apagar o proprietário.\n\n{ex.Message}",
                 "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-    }
-
-    private bool Validar(out Proprietario proprietario)
-    {
-        LimparErros();
-        proprietario = new Proprietario();
-        var valido = true;
-
-        if (string.IsNullOrWhiteSpace(NomeBox.Text))
-        {
-            MostrarErro(NomeError, NomeBox, "Escreve o nome do proprietário");
-            valido = false;
-        }
-
-        if (string.IsNullOrWhiteSpace(DistritoBox.Text))
-        {
-            MostrarErro(DistritoError, valido ? DistritoBox : null, "Escreve o distrito");
-            valido = false;
-        }
-
-        if (string.IsNullOrWhiteSpace(ConcelhoBox.Text))
-        {
-            MostrarErro(ConcelhoError, valido ? ConcelhoBox : null, "Escreve o concelho");
-            valido = false;
-        }
-
-        if (string.IsNullOrWhiteSpace(FreguesiaBox.Text))
-        {
-            MostrarErro(FreguesiaError, valido ? FreguesiaBox : null, "Escreve a freguesia");
-            valido = false;
-        }
-
-        if (!valido)
-        {
-            return false;
-        }
-
-        proprietario.Nome = NomeBox.Text.Trim();
-        proprietario.Distrito = DistritoBox.Text.Trim();
-        proprietario.Concelho = ConcelhoBox.Text.Trim();
-        proprietario.Freguesia = FreguesiaBox.Text.Trim();
-        proprietario.CodigoProp = string.IsNullOrWhiteSpace(CodigoPropBox.Text) ? null : CodigoPropBox.Text.Trim();
-        proprietario.Parcela = string.IsNullOrWhiteSpace(ParcelaBox.Text) ? null : ParcelaBox.Text.Trim();
-        return true;
-    }
-
-    private static void MostrarErro(TextBlock erro, TextBox? campoParaFoco, string mensagem)
-    {
-        erro.Text = mensagem;
-        erro.Visibility = Visibility.Visible;
-        campoParaFoco?.Focus();
-    }
-
-    private void LimparErros()
-    {
-        foreach (var erro in new[] { NomeError, DistritoError, ConcelhoError, FreguesiaError })
-        {
-            erro.Visibility = Visibility.Collapsed;
-        }
-    }
-
-    private void LimparCampos()
-    {
-        NomeBox.Clear();
-        DistritoBox.Clear();
-        ConcelhoBox.Clear();
-        FreguesiaBox.Clear();
-        CodigoPropBox.Clear();
-        ParcelaBox.Clear();
-        LimparErros();
     }
 }

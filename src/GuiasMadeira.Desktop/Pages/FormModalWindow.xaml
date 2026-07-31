@@ -1,21 +1,26 @@
-<Window x:Class="GuiasMadeira.Desktop.Pages.GuiaModalWindow"
+<Window x:Class="GuiasMadeira.Desktop.Pages.FormModalWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Nova guia" Width="900" Height="700"
+        Title="Formulário" Width="900" Height="700"
         WindowStartupLocation="Manual"
         WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize"
         ShowInTaskbar="False" Background="Transparent" Opacity="0">
-    <!-- A janela cobre toda a área da janela principal (ver Loaded no code-behind), com um fundo
+    <!-- A janela cobre toda a área útil do ecrã (ver PosicionarNoEcra no code-behind), com um fundo
          ligeiramente escurecido à volta do cartão — um clique nessa área fecha a modal. Tem de ter
          alguma opacidade (não Transparent puro): com AllowsTransparency=True, o Windows faz o
          hit-test pelo alfa real do pixel, e um pixel 100% transparente deixa o clique atravessar
          para a janela por baixo em vez de chegar a este Grid. -->
     <Grid x:Name="RootGrid" Background="#33000000" MouseLeftButtonDown="RootGrid_MouseLeftButtonDown">
-        <Border x:Name="CardBorder" Width="700" Height="900" CornerRadius="14"
+        <!-- Altura ao gosto do conteúdo (sem valor fixo): cada formulário tem um número de campos
+             diferente, e um valor fixo adivinhado às cegas já falhou duas vezes (Guia demasiado
+             alto, Proprietário demasiado baixo). O Clip acompanha o tamanho real via SizeChanged
+             no code-behind. -->
+        <Border x:Name="CardBorder" Width="700" CornerRadius="14"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 Background="{StaticResource SurfaceBrush}"
                 BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
-                RenderTransformOrigin="0.5,0.5">
+                RenderTransformOrigin="0.5,0.5"
+                SizeChanged="CardBorder_SizeChanged">
             <Border.RenderTransform>
                 <ScaleTransform x:Name="CardScale" ScaleX="0.95" ScaleY="0.95"/>
             </Border.RenderTransform>
@@ -23,13 +28,13 @@
                 <DropShadowEffect Color="#1F2320" Opacity="0.18" BlurRadius="18" ShadowDepth="3" Direction="270"/>
             </Border.Effect>
             <Border.Clip>
-                <RectangleGeometry Rect="0,0,700,900" RadiusX="14" RadiusY="14"/>
+                <RectangleGeometry x:Name="CardClip" RadiusX="14" RadiusY="14"/>
             </Border.Clip>
 
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!-- Cabeçalho: mesma cor e separador da barra lateral, para a modal ler-se como
@@ -57,7 +62,7 @@
                                 </ControlTemplate>
                             </Button.Template>
                         </Button>
-                        <TextBlock x:Name="HeaderTitleText" Text="Nova guia" VerticalAlignment="Center"
+                        <TextBlock x:Name="HeaderTitleText" Text="Formulário" VerticalAlignment="Center"
                                    Foreground="White" FontSize="15" FontWeight="Bold"/>
                     </DockPanel>
                 </Border>

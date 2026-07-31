@@ -22,7 +22,6 @@ public partial class ImportarCodigosBarrasPage
     }
 
     private readonly List<LinhaImportacao> linhas = new();
-    private int? editingVinhetaId;
     private ICollectionView? vinhetasView;
 
     public ImportarCodigosBarrasPage()
@@ -74,91 +73,15 @@ public partial class ImportarCodigosBarrasPage
 
     private void VinhetaPesquisa_TextChanged(object sender, TextChangedEventArgs e) => vinhetasView?.Refresh();
 
-    private void VinhetaEditar_Click(object sender, RoutedEventArgs e)
+    private async void VinhetaEditar_Click(object sender, RoutedEventArgs e)
     {
         if (((FrameworkElement)sender).DataContext is not CodigoBarra codigoBarra)
         {
             return;
         }
 
-        editingVinhetaId = codigoBarra.Id;
-        VinhetaCodigoBox.Text = codigoBarra.Codigo;
-        VinhetaNumeroCertificadoBox.Text = codigoBarra.NumeroCertificado;
-        VinhetaNumeroUgfBox.Text = codigoBarra.NumeroUgf;
-        VinhetaCodigoError.Visibility = Visibility.Collapsed;
-
-        VinhetaAjudaText.Text = $"A editar a vinheta \"{codigoBarra.Codigo}\".";
-        VinhetaCodigoBox.IsEnabled = true;
-        VinhetaNumeroCertificadoBox.IsEnabled = true;
-        VinhetaNumeroUgfBox.IsEnabled = true;
-        VinhetaGuardarButton.IsEnabled = true;
-        VinhetaCancelarButton.Visibility = Visibility.Visible;
-        VinhetaCodigoBox.Focus();
-    }
-
-    private void VinhetaCancelar_Click(object sender, RoutedEventArgs e) => SairModoEdicaoVinheta();
-
-    private void SairModoEdicaoVinheta()
-    {
-        editingVinhetaId = null;
-        VinhetaCodigoBox.Clear();
-        VinhetaNumeroCertificadoBox.Clear();
-        VinhetaNumeroUgfBox.Clear();
-        VinhetaCodigoError.Visibility = Visibility.Collapsed;
-
-        VinhetaAjudaText.Text = "Escolhe uma vinheta na lista ao lado para editar ou apagar.";
-        VinhetaCodigoBox.IsEnabled = false;
-        VinhetaNumeroCertificadoBox.IsEnabled = false;
-        VinhetaNumeroUgfBox.IsEnabled = false;
-        VinhetaGuardarButton.IsEnabled = false;
-        VinhetaCancelarButton.Visibility = Visibility.Collapsed;
-    }
-
-    private async void VinhetaGuardar_Click(object sender, RoutedEventArgs e)
-    {
-        if (editingVinhetaId is not int id)
-        {
-            return;
-        }
-
-        VinhetaCodigoError.Visibility = Visibility.Collapsed;
-        if (string.IsNullOrWhiteSpace(VinhetaCodigoBox.Text))
-        {
-            VinhetaCodigoError.Text = "Escreve o código de barras";
-            VinhetaCodigoError.Visibility = Visibility.Visible;
-            VinhetaCodigoBox.Focus();
-            return;
-        }
-
-        var codigoBarra = new CodigoBarra
-        {
-            Id = id,
-            Codigo = VinhetaCodigoBox.Text.Trim(),
-            NumeroCertificado = string.IsNullOrWhiteSpace(VinhetaNumeroCertificadoBox.Text) ? null : VinhetaNumeroCertificadoBox.Text.Trim(),
-            NumeroUgf = string.IsNullOrWhiteSpace(VinhetaNumeroUgfBox.Text) ? null : VinhetaNumeroUgfBox.Text.Trim()
-        };
-
-        VinhetaGuardarButton.IsEnabled = false;
-        try
-        {
-            await AppServices.CodigosBarras.UpdateAsync(codigoBarra);
-
-            VinhetaToastText.Text = "Vinheta atualizada";
-            VinhetaToastBorder.Visibility = Visibility.Visible;
-            SairModoEdicaoVinheta();
-            await CarregarVinhetasAsync();
-            await Task.Delay(1600);
-            VinhetaToastBorder.Visibility = Visibility.Collapsed;
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Ocorreu um erro ao guardar a vinheta.\n\n{ex.Message}",
-                "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        finally
-        {
-            VinhetaGuardarButton.IsEnabled = true;
-        }
+        ModalHelper.ShowModal(this, new FormModalWindow(new VinhetaFormPage(codigoBarra), "Editar vinheta"));
+        await CarregarVinhetasAsync();
     }
 
     private async void VinhetaApagar_Click(object sender, RoutedEventArgs e)
@@ -179,12 +102,6 @@ public partial class ImportarCodigosBarrasPage
         try
         {
             await AppServices.CodigosBarras.DeleteAsync(codigoBarra.Id);
-
-            if (editingVinhetaId == codigoBarra.Id)
-            {
-                SairModoEdicaoVinheta();
-            }
-
             await CarregarVinhetasAsync();
         }
         catch (RegistoEmUsoException ex)

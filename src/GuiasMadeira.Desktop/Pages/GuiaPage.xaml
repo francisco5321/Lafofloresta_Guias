@@ -1,33 +1,26 @@
 <Page x:Class="GuiasMadeira.Desktop.Pages.GuiaPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="{StaticResource SurfaceBrush}"
       Title="Nova guia">
+    <!-- Sem título/breadcrumb/cartão próprios: esta página só é usada dentro do FormModalWindow,
+         cujo cabeçalho já mostra "Nova guia"/"Editar guia" — o conteúdo aqui é a continuação
+         direta desse cabeçalho, não um cartão à parte dentro de outro. -->
     <ScrollViewer VerticalScrollBarVisibility="Hidden">
-        <Border Style="{StaticResource Card}" Width="560" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="40">
-            <StackPanel VerticalAlignment="Center">
+        <StackPanel Margin="36,28">
 
-                <!-- Breadcrumb -->
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                    <TextBlock Text="Gestão" Style="{StaticResource BreadcrumbLink}"/>
-                    <Path Style="{StaticResource BreadcrumbSeparator}"/>
-                    <TextBlock Text="Guias" Style="{StaticResource BreadcrumbLink}"/>
-                    <Path Style="{StaticResource BreadcrumbSeparator}"/>
-                    <TextBlock x:Name="BreadcrumbCurrentText" Text="Nova guia" Style="{StaticResource BreadcrumbCurrent}"/>
+            <!-- Toast de confirmação -->
+            <Border x:Name="ToastBorder" Style="{StaticResource Toast}">
+                <StackPanel Orientation="Horizontal">
+                    <Path Data="{StaticResource IconCheck}" Stroke="{StaticResource AccentBrush}" StrokeThickness="2.2"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                          Width="14" Height="14" Stretch="Uniform" Margin="0,0,8,0"/>
+                    <TextBlock x:Name="ToastText" Text="Guia criada" Foreground="{StaticResource AccentPressedBrush}" FontWeight="SemiBold" FontSize="13"/>
                 </StackPanel>
+            </Border>
 
-                <!-- Toast de confirmação -->
-                <Border x:Name="ToastBorder" Style="{StaticResource Toast}">
-                    <StackPanel Orientation="Horizontal">
-                        <Path Data="{StaticResource IconCheck}" Stroke="{StaticResource AccentBrush}" StrokeThickness="2.2"
-                              StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
-                              Width="14" Height="14" Stretch="Uniform" Margin="0,0,8,0"/>
-                        <TextBlock x:Name="ToastText" Text="Guia criada" Foreground="{StaticResource AccentPressedBrush}" FontWeight="SemiBold" FontSize="13"/>
-                    </StackPanel>
-                </Border>
-
-                <TextBlock x:Name="PageTitleText" Text="Nova guia" Style="{StaticResource PageTitle}" Margin="0,0,0,8"/>
-                <TextBlock Style="{StaticResource HelperText}" Margin="0,0,0,20"
-                           Text="Escolhe o destinatário, o proprietário, o número de certificado e a rolaria — a vinheta é atribuída automaticamente e o resto dos dados já vem da base de dados."/>
+            <TextBlock Style="{StaticResource HelperText}" Margin="0,0,0,20"
+                       Text="Escolhe o destinatário, o proprietário, o número de certificado e a rolaria — a vinheta é atribuída automaticamente e o resto dos dados já vem da base de dados."/>
 
                 <!-- Barra de progresso -->
                 <Border Style="{StaticResource ProgressTrack}">
@@ -136,9 +129,8 @@
                     <Button x:Name="CancelarEdicaoButton" Content="Cancelar" Style="{StaticResource SecondaryButton}"
                             Margin="10,0,0,0" Visibility="Collapsed" Click="CancelarEdicao_Click"/>
                 </StackPanel>
-                <TextBlock x:Name="MicrocopyText" Style="{StaticResource HelperText}" TextAlignment="Center" Margin="0,8,0,0"/>
+            <TextBlock x:Name="MicrocopyText" Style="{StaticResource HelperText}" TextAlignment="Center" Margin="0,8,0,0"/>
 
-            </StackPanel>
-        </Border>
+        </StackPanel>
     </ScrollViewer>
 </Page>

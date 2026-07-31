@@ -10,7 +10,6 @@ namespace GuiasMadeira.Desktop.Pages;
 
 public partial class DestinatarioPage
 {
-    private int? editingId;
     private ICollectionView? listaView;
 
     public DestinatarioPage()
@@ -62,78 +61,23 @@ public partial class DestinatarioPage
 
     private void Pesquisa_TextChanged(object sender, TextChangedEventArgs e) => listaView?.Refresh();
 
-    private async void Guardar_Click(object sender, RoutedEventArgs e)
+    private async void CriarDestinatario_Click(object sender, RoutedEventArgs e)
     {
-        if (!Validar(out var destinatario))
-        {
-            return;
-        }
-
-        GuardarButton.IsEnabled = false;
-        try
-        {
-            if (editingId is int id)
-            {
-                destinatario.Id = id;
-                await AppServices.Destinatarios.UpdateAsync(destinatario);
-                ToastText.Text = "Destinatário atualizado";
-            }
-            else
-            {
-                await AppServices.Destinatarios.InsertAsync(destinatario);
-                ToastText.Text = "Destinatário guardado";
-            }
-
-            ToastBorder.Visibility = Visibility.Visible;
-            EntrarModoCriacao();
-            NomeBox.Focus();
-            await CarregarListaAsync();
-            AppNavigation.RefreshCounts?.Invoke();
-            await Task.Delay(1600);
-            ToastBorder.Visibility = Visibility.Collapsed;
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Ocorreu um erro ao guardar o destinatário.\n\n{ex.Message}",
-                "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        finally
-        {
-            GuardarButton.IsEnabled = true;
-        }
+        ModalHelper.ShowModal(this, new FormModalWindow(new DestinatarioFormPage(), "Novo destinatário"));
+        await CarregarListaAsync();
+        AppNavigation.RefreshCounts?.Invoke();
     }
 
-    private void Editar_Click(object sender, RoutedEventArgs e)
+    private async void Editar_Click(object sender, RoutedEventArgs e)
     {
         if (((FrameworkElement)sender).DataContext is not Destinatario destinatario)
         {
             return;
         }
 
-        editingId = destinatario.Id;
-        NomeBox.Text = destinatario.Nome;
-        NifBox.Text = destinatario.Nif;
-        MoradaBox.Text = destinatario.Morada;
-        ConcelhoBox.Text = destinatario.Concelho;
-        LimparErros();
-
-        FormTitleText.Text = "Editar destinatário";
-        BreadcrumbCurrentText.Text = "Editar destinatário";
-        GuardarButton.Content = "Guardar alterações";
-        CancelarEdicaoButton.Visibility = Visibility.Visible;
-        NomeBox.Focus();
-    }
-
-    private void CancelarEdicao_Click(object sender, RoutedEventArgs e) => EntrarModoCriacao();
-
-    private void EntrarModoCriacao()
-    {
-        editingId = null;
-        LimparCampos();
-        FormTitleText.Text = "Novo destinatário";
-        BreadcrumbCurrentText.Text = "Novo destinatário";
-        GuardarButton.Content = "Guardar";
-        CancelarEdicaoButton.Visibility = Visibility.Collapsed;
+        ModalHelper.ShowModal(this, new FormModalWindow(new DestinatarioFormPage(destinatario), "Editar destinatário"));
+        await CarregarListaAsync();
+        AppNavigation.RefreshCounts?.Invoke();
     }
 
     private async void Apagar_Click(object sender, RoutedEventArgs e)
@@ -154,12 +98,6 @@ public partial class DestinatarioPage
         try
         {
             await AppServices.Destinatarios.DeleteAsync(destinatario.Id);
-
-            if (editingId == destinatario.Id)
-            {
-                EntrarModoCriacao();
-            }
-
             await CarregarListaAsync();
             AppNavigation.RefreshCounts?.Invoke();
         }
@@ -172,71 +110,5 @@ public partial class DestinatarioPage
             MessageBox.Show($"Ocorreu um erro ao apagar o destinatário.\n\n{ex.Message}",
                 "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-    }
-
-    private bool Validar(out Destinatario destinatario)
-    {
-        LimparErros();
-        destinatario = new Destinatario();
-        var valido = true;
-
-        if (string.IsNullOrWhiteSpace(NomeBox.Text))
-        {
-            MostrarErro(NomeError, NomeBox, "Escreve o nome do destinatário");
-            valido = false;
-        }
-
-        if (string.IsNullOrWhiteSpace(NifBox.Text))
-        {
-            MostrarErro(NifError, valido ? NifBox : null, "Escreve o NIF");
-            valido = false;
-        }
-
-        if (string.IsNullOrWhiteSpace(MoradaBox.Text))
-        {
-            MostrarErro(MoradaError, valido ? MoradaBox : null, "Escreve a morada");
-            valido = false;
-        }
-
-        if (string.IsNullOrWhiteSpace(ConcelhoBox.Text))
-        {
-            MostrarErro(ConcelhoError, valido ? ConcelhoBox : null, "Escreve o concelho");
-            valido = false;
-        }
-
-        if (!valido)
-        {
-            return false;
-        }
-
-        destinatario.Nome = NomeBox.Text.Trim();
-        destinatario.Nif = NifBox.Text.Trim();
-        destinatario.Morada = MoradaBox.Text.Trim();
-        destinatario.Concelho = ConcelhoBox.Text.Trim();
-        return true;
-    }
-
-    private static void MostrarErro(TextBlock erro, TextBox? campoParaFoco, string mensagem)
-    {
-        erro.Text = mensagem;
-        erro.Visibility = Visibility.Visible;
-        campoParaFoco?.Focus();
-    }
-
-    private void LimparErros()
-    {
-        foreach (var erro in new[] { NomeError, NifError, MoradaError, ConcelhoError })
-        {
-            erro.Visibility = Visibility.Collapsed;
-        }
-    }
-
-    private void LimparCampos()
-    {
-        NomeBox.Clear();
-        NifBox.Clear();
-        MoradaBox.Clear();
-        ConcelhoBox.Clear();
-        LimparErros();
     }
 }

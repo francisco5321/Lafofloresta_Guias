@@ -1,0 +1,37 @@
+<Page x:Class="GuiasMadeira.Desktop.Pages.VinhetaFormPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="{StaticResource SurfaceBrush}"
+      Title="Editar vinheta">
+    <!-- Sem título/cartão nem barra de progresso próprios: esta página só serve para editar uma
+         vinheta já existente (não há criação individual, só importação em massa), por isso não faz
+         sentido mostrar "X de Y campos preenchidos" — os campos já vêm todos preenchidos. -->
+    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+        <StackPanel Margin="36,28">
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconBarcode}"/>
+                <TextBlock Text="Código de barras" Style="{StaticResource FieldLabel}" Margin="0"/>
+            </StackPanel>
+            <TextBox x:Name="CodigoBox"/>
+            <TextBlock x:Name="CodigoError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTag}"/>
+                <TextBlock Text="Nº certificado (opcional)" Style="{StaticResource FieldLabel}" Margin="0"/>
+            </StackPanel>
+            <TextBox x:Name="NumeroCertificadoBox"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTag}"/>
+                <TextBlock Text="Nº UGF (opcional)" Style="{StaticResource FieldLabel}" Margin="0"/>
+            </StackPanel>
+            <TextBox x:Name="NumeroUgfBox"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0" HorizontalAlignment="Center">
+                <Button x:Name="GuardarButton" Content="Guardar alterações" Style="{StaticResource PrimaryButton}" Click="Guardar_Click"/>
+                <Button Content="Cancelar" Style="{StaticResource SecondaryButton}" Margin="10,0,0,0" Click="Cancelar_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
