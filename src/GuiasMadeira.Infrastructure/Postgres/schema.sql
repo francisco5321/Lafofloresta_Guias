@@ -7,9 +7,7 @@ CREATE TABLE IF NOT EXISTS proprietarios (
     nome TEXT NOT NULL,
     distrito TEXT NULL,
     concelho TEXT NULL,
-    freguesia TEXT NULL,
-    codigo_prop TEXT NULL,
-    parcela TEXT NULL
+    freguesia TEXT NULL
 );
 
 CREATE TABLE IF NOT EXISTS destinatarios (

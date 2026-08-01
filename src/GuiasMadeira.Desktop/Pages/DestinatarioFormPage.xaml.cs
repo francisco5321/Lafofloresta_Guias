@@ -1,5 +1,7 @@
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using GuiasMadeira.Desktop.Services;
 using GuiasMadeira.Domain.Entities;
 
@@ -30,7 +32,33 @@ public partial class DestinatarioFormPage
         AtualizarProgresso();
     }
 
-    private void Campo_Changed(object sender, RoutedEventArgs e) => AtualizarProgresso();
+    private void Campo_Changed(object sender, RoutedEventArgs e)
+    {
+        NomeBox.Tag = null;
+        NifBox.Tag = null;
+        MoradaBox.Tag = null;
+        ConcelhoBox.Tag = null;
+        AtualizarProgresso();
+    }
+
+    private static readonly Regex NaoDigitos = new(@"[^\d]", RegexOptions.Compiled);
+
+    private void NifBox_PreviewTextInput(object sender, TextCompositionEventArgs e) =>
+        e.Handled = NaoDigitos.IsMatch(e.Text);
+
+    private void NifBox_PreviewKeyDown(object sender, KeyEventArgs e) =>
+        e.Handled = e.Key is Key.Space;
+
+    private void NifBox_Pasting(object sender, DataObjectPastingEventArgs e)
+    {
+        if (e.DataObject.GetDataPresent(DataFormats.Text) &&
+            e.DataObject.GetData(DataFormats.Text) is string texto && !NaoDigitos.IsMatch(texto))
+        {
+            return;
+        }
+
+        e.CancelCommand();
+    }
 
     private void AtualizarProgresso()
     {
@@ -65,6 +93,13 @@ public partial class DestinatarioFormPage
                 await AppServices.Destinatarios.InsertAsync(destinatario);
             }
 
+            NomeBox.Tag = "Success";
+            NifBox.Tag = "Success";
+            MoradaBox.Tag = "Success";
+            ConcelhoBox.Tag = "Success";
+
+            ToastBorder.Visibility = Visibility.Visible;
+            await Task.Delay(900);
             Window.GetWindow(this)?.Close();
         }
         catch (Exception ex)
@@ -95,6 +130,11 @@ public partial class DestinatarioFormPage
         if (string.IsNullOrWhiteSpace(NifBox.Text))
         {
             MostrarErro(NifError, valido ? NifBox : null, "Escreve o NIF");
+            valido = false;
+        }
+        else if (NifBox.Text.Trim().Length != 9)
+        {
+            MostrarErro(NifError, valido ? NifBox : null, "O NIF deve ter 9 números");
             valido = false;
         }
 

@@ -34,7 +34,7 @@
                 <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconRecycle}"/>
                 <TextBlock Text="Tipo de rolaria" Style="{StaticResource FieldLabel}" Margin="0"/>
             </StackPanel>
-            <TextBox x:Name="TipoBox" TextChanged="Campo_Changed"/>
+            <TextBox x:Name="TipoBox" Style="{StaticResource SuccessTextBox}" TextChanged="Campo_Changed"/>
             <TextBlock x:Name="TipoError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,8,0,0" HorizontalAlignment="Center">

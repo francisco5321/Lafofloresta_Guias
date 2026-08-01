@@ -26,7 +26,11 @@ public partial class RolariaFormPage
         AtualizarProgresso();
     }
 
-    private void Campo_Changed(object sender, RoutedEventArgs e) => AtualizarProgresso();
+    private void Campo_Changed(object sender, RoutedEventArgs e)
+    {
+        TipoBox.Tag = null;
+        AtualizarProgresso();
+    }
 
     private void AtualizarProgresso()
     {
@@ -64,6 +68,10 @@ public partial class RolariaFormPage
                 await AppServices.Rolarias.InsertAsync(rolaria);
             }
 
+            TipoBox.Tag = "Success";
+
+            ToastBorder.Visibility = Visibility.Visible;
+            await Task.Delay(900);
             Window.GetWindow(this)?.Close();
         }
         catch (Exception ex)

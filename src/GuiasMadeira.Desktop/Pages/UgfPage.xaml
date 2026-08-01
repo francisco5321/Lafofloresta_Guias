@@ -48,7 +48,7 @@
                             <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTag}"/>
                             <TextBlock Text="Código UGF" Style="{StaticResource FieldLabel}" Margin="0"/>
                         </StackPanel>
-                        <ComboBox x:Name="CodigoCombo" Style="{StaticResource EditableComboBox}"
+                        <ComboBox x:Name="CodigoCombo" Style="{StaticResource SuccessEditableComboBox}"
                                   IsEditable="True" IsTextSearchEnabled="True"
                                   SelectionChanged="CodigoCombo_SelectionChanged"/>
                         <TextBlock x:Name="CodigoError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
@@ -57,7 +57,7 @@
                             <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTruck}"/>
                             <TextBlock Text="Toneladas Certificado (inserir à mão)" Style="{StaticResource FieldLabel}" Margin="0"/>
                         </StackPanel>
-                        <TextBox x:Name="CertificadoBox" TextChanged="CertificadoBox_TextChanged"/>
+                        <TextBox x:Name="CertificadoBox" Style="{StaticResource SuccessTextBox}" TextChanged="CertificadoBox_TextChanged"/>
                         <TextBlock x:Name="CertificadoError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
 
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
@@ -94,6 +94,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0">
                                         <TextBlock Text="Guias possíveis" Style="{StaticResource FieldLabel}" Margin="0,0,0,2"/>
@@ -101,8 +102,13 @@
                                                    Foreground="{StaticResource TextPrimaryBrush}"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1">
-                                        <TextBlock Text="Guias criadas / restantes" Style="{StaticResource FieldLabel}" Margin="0,0,0,2"/>
+                                        <TextBlock Text="Guias criadas" Style="{StaticResource FieldLabel}" Margin="0,0,0,2"/>
                                         <TextBlock x:Name="GuiasCriadasText" Text="—" FontSize="18" FontWeight="Bold"
+                                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Guias restantes" Style="{StaticResource FieldLabel}" Margin="0,0,0,2"/>
+                                        <TextBlock x:Name="GuiasRestantesText" Text="—" FontSize="18" FontWeight="Bold"
                                                    Foreground="{StaticResource TextPrimaryBrush}"/>
                                     </StackPanel>
                                 </Grid>

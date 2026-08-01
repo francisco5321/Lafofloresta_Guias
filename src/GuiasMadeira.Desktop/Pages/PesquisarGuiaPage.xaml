@@ -4,10 +4,10 @@
       Title="Gerir guias">
     <Grid Margin="40">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Style="{StaticResource Card}" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" ClipToBounds="True">
+        <Border Style="{StaticResource Card}" Width="Auto" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ClipToBounds="True">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

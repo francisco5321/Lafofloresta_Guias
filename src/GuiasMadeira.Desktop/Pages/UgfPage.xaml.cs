@@ -87,6 +87,9 @@ public partial class UgfPage
             return;
         }
 
+        CodigoCombo.Tag = null;
+        CertificadoBox.Tag = null;
+
         var correspondente = ugfsCarregados.FirstOrDefault(u => string.Equals(u.Codigo, codigo, StringComparison.OrdinalIgnoreCase));
         if (correspondente is not null)
         {
@@ -113,6 +116,9 @@ public partial class UgfPage
 
     private void CarregarParaEdicao(UgfResumo ugf)
     {
+        CodigoCombo.Tag = null;
+        CertificadoBox.Tag = null;
+
         editingId = ugf.Id;
         importadasAtual = ugf.ToneladasImportadas;
         guiasCriadasAtual = ugf.GuiasCriadas;
@@ -137,6 +143,9 @@ public partial class UgfPage
 
     private void EntrarModoCriacao()
     {
+        CodigoCombo.Tag = null;
+        CertificadoBox.Tag = null;
+
         editingId = null;
         importadasAtual = 0m;
         guiasCriadasAtual = 0;
@@ -157,7 +166,12 @@ public partial class UgfPage
         CancelarEdicaoButton.Visibility = Visibility.Collapsed;
     }
 
-    private void CertificadoBox_TextChanged(object sender, TextChangedEventArgs e) => AtualizarPreview();
+    private void CertificadoBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        CodigoCombo.Tag = null;
+        CertificadoBox.Tag = null;
+        AtualizarPreview();
+    }
 
     private void AtualizarPreview()
     {
@@ -182,9 +196,8 @@ public partial class UgfPage
             EstadoText.Foreground = (Brush)EstadoCorConverter.Convert(preview.Estado, typeof(Brush), null, CultureInfo.InvariantCulture);
 
             GuiasMaximoText.Text = preview.NumeroMaximoGuias?.ToString(CultureInfo.InvariantCulture) ?? "—";
-            GuiasCriadasText.Text = preview.NumeroMaximoGuias is not null
-                ? $"{preview.GuiasCriadas} / {preview.GuiasRestantes}"
-                : $"{preview.GuiasCriadas} / —";
+            GuiasCriadasText.Text = preview.GuiasCriadas.ToString(CultureInfo.InvariantCulture);
+            GuiasRestantesText.Text = preview.GuiasRestantes?.ToString(CultureInfo.InvariantCulture) ?? "—";
 
             if (preview.LimiteGuiasAtingido)
             {
@@ -209,6 +222,7 @@ public partial class UgfPage
             EstadoText.Foreground = (Brush)FindResource("TextMutedBrush");
             GuiasMaximoText.Text = "—";
             GuiasCriadasText.Text = "—";
+            GuiasRestantesText.Text = "—";
             GuiasAvisoText.Visibility = Visibility.Collapsed;
         }
     }
@@ -282,10 +296,14 @@ public partial class UgfPage
             }
 
             ToastBorder.Visibility = Visibility.Visible;
-            EntrarModoCriacao();
             await CarregarListaAsync();
+
+            CodigoCombo.Tag = "Success";
+            CertificadoBox.Tag = "Success";
+
             await Task.Delay(1600);
             ToastBorder.Visibility = Visibility.Collapsed;
+            EntrarModoCriacao();
         }
         catch (PostgresException ex) when (ex.SqlState == PostgresErrorCodes.UniqueViolation)
         {

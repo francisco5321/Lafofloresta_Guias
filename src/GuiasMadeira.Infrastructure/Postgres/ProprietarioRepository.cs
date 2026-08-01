@@ -19,7 +19,7 @@ public sealed class ProprietarioRepository
         var command = new CommandDefinition(
             """
             SELECT id AS Id, nome AS Nome, distrito AS Distrito, concelho AS Concelho,
-                   freguesia AS Freguesia, codigo_prop AS CodigoProp, parcela AS Parcela
+                   freguesia AS Freguesia
             FROM proprietarios
             ORDER BY nome
             """,
@@ -40,8 +40,8 @@ public sealed class ProprietarioRepository
         await using var connection = connectionFactory.CreateConnection();
         var command = new CommandDefinition(
             """
-            INSERT INTO proprietarios (nome, distrito, concelho, freguesia, codigo_prop, parcela)
-            VALUES (@Nome, @Distrito, @Concelho, @Freguesia, @CodigoProp, @Parcela)
+            INSERT INTO proprietarios (nome, distrito, concelho, freguesia)
+            VALUES (@Nome, @Distrito, @Concelho, @Freguesia)
             RETURNING id
             """,
             proprietario,
@@ -56,7 +56,7 @@ public sealed class ProprietarioRepository
             """
             UPDATE proprietarios
             SET nome = @Nome, distrito = @Distrito, concelho = @Concelho,
-                freguesia = @Freguesia, codigo_prop = @CodigoProp, parcela = @Parcela
+                freguesia = @Freguesia
             WHERE id = @Id
             """,
             proprietario,

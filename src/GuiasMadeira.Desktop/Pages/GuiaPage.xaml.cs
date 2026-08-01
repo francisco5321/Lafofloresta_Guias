@@ -1,6 +1,8 @@
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using GuiasMadeira.Desktop.Services;
 using GuiasMadeira.Domain.Entities;
 
@@ -12,6 +14,11 @@ public partial class GuiaPage
 
     private readonly GuiaResumo? guiaEmEdicao;
     private Dictionary<string, UgfResumo> ugfsPorCodigo = new(StringComparer.OrdinalIgnoreCase);
+
+    private ICollectionView? destinatariosView;
+    private ICollectionView? proprietariosView;
+    private ICollectionView? certificadosView;
+    private ICollectionView? rolariasView;
 
     public GuiaPage()
     {
@@ -42,19 +49,23 @@ public partial class GuiaPage
                 .ToDictionary(u => u.Codigo, u => u, StringComparer.OrdinalIgnoreCase);
             AplicarLimiteUgf(certificados);
 
-            DestinatarioCombo.ItemsSource = destinatarios;
+            destinatariosView = CriarViewFiltravel(destinatarios, DestinatarioCombo, d => d.Nome);
+            DestinatarioCombo.ItemsSource = destinatariosView;
             DestinatarioEmptyState.Visibility = destinatarios.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
             DestinatarioCombo.Visibility = destinatarios.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
 
-            ProprietarioCombo.ItemsSource = proprietarios;
+            proprietariosView = CriarViewFiltravel(proprietarios, ProprietarioCombo, p => p.Nome);
+            ProprietarioCombo.ItemsSource = proprietariosView;
             ProprietarioEmptyState.Visibility = proprietarios.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
             ProprietarioCombo.Visibility = proprietarios.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
 
-            CertificadoCombo.ItemsSource = certificados;
+            certificadosView = CriarViewFiltravel(certificados, CertificadoCombo, c => c.Rotulo);
+            CertificadoCombo.ItemsSource = certificadosView;
             CertificadoEmptyState.Visibility = certificados.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
             CertificadoCombo.Visibility = certificados.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
 
-            RolariaCombo.ItemsSource = rolarias;
+            rolariasView = CriarViewFiltravel(rolarias, RolariaCombo, r => r.Tipo);
+            RolariaCombo.ItemsSource = rolariasView;
             RolariaEmptyState.Visibility = rolarias.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
             RolariaCombo.Visibility = rolarias.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
 
@@ -76,7 +87,71 @@ public partial class GuiaPage
         }
     }
 
-    private void Campo_Changed(object sender, RoutedEventArgs e) => AtualizarEstado();
+    private void Campo_Changed(object sender, RoutedEventArgs e)
+    {
+        DestinatarioCombo.Tag = null;
+        ProprietarioCombo.Tag = null;
+        CertificadoCombo.Tag = null;
+        RolariaCombo.Tag = null;
+        AtualizarEstado();
+    }
+
+    /// <summary>
+    /// Vista filtrável para uma combobox editável: enquanto o utilizador escreve, a lista de
+    /// opções mostrada no dropdown fica reduzida às que contêm o texto escrito (em vez de só
+    /// completar automaticamente para a correspondência mais próxima).
+    /// </summary>
+    private static ICollectionView CriarViewFiltravel<T>(IReadOnlyList<T> itens, ComboBox combo, Func<T, string> obterTexto)
+    {
+        var view = CollectionViewSource.GetDefaultView(itens);
+        view.Filter = item => string.IsNullOrEmpty(combo.Text) ||
+            (item is T tItem && obterTexto(tItem).Contains(combo.Text, StringComparison.OrdinalIgnoreCase));
+        return view;
+    }
+
+    private void DestinatarioCombo_GotFocus(object sender, RoutedEventArgs e) => DestinatarioCombo.IsDropDownOpen = true;
+
+    private void DestinatarioCombo_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        destinatariosView?.Refresh();
+        if (DestinatarioCombo.IsKeyboardFocusWithin)
+        {
+            DestinatarioCombo.IsDropDownOpen = true;
+        }
+    }
+
+    private void ProprietarioCombo_GotFocus(object sender, RoutedEventArgs e) => ProprietarioCombo.IsDropDownOpen = true;
+
+    private void ProprietarioCombo_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        proprietariosView?.Refresh();
+        if (ProprietarioCombo.IsKeyboardFocusWithin)
+        {
+            ProprietarioCombo.IsDropDownOpen = true;
+        }
+    }
+
+    private void CertificadoCombo_GotFocus(object sender, RoutedEventArgs e) => CertificadoCombo.IsDropDownOpen = true;
+
+    private void CertificadoCombo_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        certificadosView?.Refresh();
+        if (CertificadoCombo.IsKeyboardFocusWithin)
+        {
+            CertificadoCombo.IsDropDownOpen = true;
+        }
+    }
+
+    private void RolariaCombo_GotFocus(object sender, RoutedEventArgs e) => RolariaCombo.IsDropDownOpen = true;
+
+    private void RolariaCombo_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        rolariasView?.Refresh();
+        if (RolariaCombo.IsKeyboardFocusWithin)
+        {
+            RolariaCombo.IsDropDownOpen = true;
+        }
+    }
 
     private void AtualizarEstado()
     {
@@ -223,6 +298,11 @@ public partial class GuiaPage
                 idGuia = novoId.Value;
             }
 
+            DestinatarioCombo.Tag = "Success";
+            ProprietarioCombo.Tag = "Success";
+            CertificadoCombo.Tag = "Success";
+            RolariaCombo.Tag = "Success";
+
             ToastBorder.Visibility = Visibility.Visible;
             await Task.Delay(900);
             ToastBorder.Visibility = Visibility.Collapsed;
@@ -254,7 +334,8 @@ public partial class GuiaPage
         {
             var certificados = await AppServices.CodigosBarras.ListCertificadosDisponiveisAsync(guiaEmEdicao?.Id);
             AplicarLimiteUgf(certificados);
-            CertificadoCombo.ItemsSource = certificados;
+            certificadosView = CriarViewFiltravel(certificados, CertificadoCombo, c => c.Rotulo);
+            CertificadoCombo.ItemsSource = certificadosView;
             CertificadoEmptyState.Visibility = certificados.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
             CertificadoCombo.Visibility = certificados.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
         }

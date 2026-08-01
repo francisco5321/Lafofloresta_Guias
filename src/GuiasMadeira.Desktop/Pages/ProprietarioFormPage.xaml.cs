@@ -7,7 +7,7 @@ namespace GuiasMadeira.Desktop.Pages;
 
 public partial class ProprietarioFormPage
 {
-    private const int TotalCampos = 6;
+    private const int TotalCampos = 4;
 
     private int? editingId;
 
@@ -24,15 +24,20 @@ public partial class ProprietarioFormPage
         DistritoBox.Text = proprietarioParaEditar.Distrito;
         ConcelhoBox.Text = proprietarioParaEditar.Concelho;
         FreguesiaBox.Text = proprietarioParaEditar.Freguesia;
-        CodigoPropBox.Text = proprietarioParaEditar.CodigoProp;
-        ParcelaBox.Text = proprietarioParaEditar.Parcela;
         ToastText.Text = "Proprietário atualizado";
         GuardarButton.Content = "Guardar alterações";
         CancelarEdicaoButton.Visibility = Visibility.Visible;
         AtualizarProgresso();
     }
 
-    private void Campo_Changed(object sender, RoutedEventArgs e) => AtualizarProgresso();
+    private void Campo_Changed(object sender, RoutedEventArgs e)
+    {
+        NomeBox.Tag = null;
+        DistritoBox.Tag = null;
+        ConcelhoBox.Tag = null;
+        FreguesiaBox.Tag = null;
+        AtualizarProgresso();
+    }
 
     private void AtualizarProgresso()
     {
@@ -41,8 +46,6 @@ public partial class ProprietarioFormPage
         if (!string.IsNullOrWhiteSpace(DistritoBox.Text)) preenchidos++;
         if (!string.IsNullOrWhiteSpace(ConcelhoBox.Text)) preenchidos++;
         if (!string.IsNullOrWhiteSpace(FreguesiaBox.Text)) preenchidos++;
-        if (!string.IsNullOrWhiteSpace(CodigoPropBox.Text)) preenchidos++;
-        if (!string.IsNullOrWhiteSpace(ParcelaBox.Text)) preenchidos++;
 
         ProgressFillColumn.Width = new GridLength(preenchidos, GridUnitType.Star);
         ProgressRemainderColumn.Width = new GridLength(TotalCampos - preenchidos, GridUnitType.Star);
@@ -69,6 +72,13 @@ public partial class ProprietarioFormPage
                 await AppServices.Proprietarios.InsertAsync(proprietario);
             }
 
+            NomeBox.Tag = "Success";
+            DistritoBox.Tag = "Success";
+            ConcelhoBox.Tag = "Success";
+            FreguesiaBox.Tag = "Success";
+
+            ToastBorder.Visibility = Visibility.Visible;
+            await Task.Delay(900);
             Window.GetWindow(this)?.Close();
         }
         catch (Exception ex)
@@ -123,8 +133,6 @@ public partial class ProprietarioFormPage
         proprietario.Distrito = DistritoBox.Text.Trim();
         proprietario.Concelho = ConcelhoBox.Text.Trim();
         proprietario.Freguesia = FreguesiaBox.Text.Trim();
-        proprietario.CodigoProp = string.IsNullOrWhiteSpace(CodigoPropBox.Text) ? null : CodigoPropBox.Text.Trim();
-        proprietario.Parcela = string.IsNullOrWhiteSpace(ParcelaBox.Text) ? null : ParcelaBox.Text.Trim();
         return true;
     }
 

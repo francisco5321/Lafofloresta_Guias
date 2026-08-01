@@ -28,47 +28,35 @@
                 </Grid>
             </Border>
             <TextBlock x:Name="ProgressText" Style="{StaticResource HelperText}" Margin="0,6,0,20"
-                       Text="0 de 6 campos preenchidos"/>
+                       Text="0 de 4 campos preenchidos"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
                 <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTree}"/>
                 <TextBlock Text="Nome" Style="{StaticResource FieldLabel}" Margin="0"/>
             </StackPanel>
-            <TextBox x:Name="NomeBox" TextChanged="Campo_Changed"/>
+            <TextBox x:Name="NomeBox" Style="{StaticResource SuccessTextBox}" TextChanged="Campo_Changed"/>
             <TextBlock x:Name="NomeError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
                 <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconPin}"/>
                 <TextBlock Text="Distrito" Style="{StaticResource FieldLabel}" Margin="0"/>
             </StackPanel>
-            <TextBox x:Name="DistritoBox" TextChanged="Campo_Changed"/>
+            <TextBox x:Name="DistritoBox" Style="{StaticResource SuccessTextBox}" TextChanged="Campo_Changed"/>
             <TextBlock x:Name="DistritoError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
                 <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconPin}"/>
                 <TextBlock Text="Concelho" Style="{StaticResource FieldLabel}" Margin="0"/>
             </StackPanel>
-            <TextBox x:Name="ConcelhoBox" TextChanged="Campo_Changed"/>
+            <TextBox x:Name="ConcelhoBox" Style="{StaticResource SuccessTextBox}" TextChanged="Campo_Changed"/>
             <TextBlock x:Name="ConcelhoError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
                 <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconPin}"/>
                 <TextBlock Text="Freguesia" Style="{StaticResource FieldLabel}" Margin="0"/>
             </StackPanel>
-            <TextBox x:Name="FreguesiaBox" TextChanged="Campo_Changed"/>
+            <TextBox x:Name="FreguesiaBox" Style="{StaticResource SuccessTextBox}" TextChanged="Campo_Changed"/>
             <TextBlock x:Name="FreguesiaError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
-
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTag}"/>
-                <TextBlock Text="Código de propriedade (opcional)" Style="{StaticResource FieldLabel}" Margin="0"/>
-            </StackPanel>
-            <TextBox x:Name="CodigoPropBox" TextChanged="Campo_Changed"/>
-
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTag}"/>
-                <TextBlock Text="Parcela (opcional)" Style="{StaticResource FieldLabel}" Margin="0"/>
-            </StackPanel>
-            <TextBox x:Name="ParcelaBox" TextChanged="Campo_Changed"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,8,0,0" HorizontalAlignment="Center">
                 <Button x:Name="GuardarButton" Content="Guardar" Style="{StaticResource PrimaryButton}" Click="Guardar_Click"/>

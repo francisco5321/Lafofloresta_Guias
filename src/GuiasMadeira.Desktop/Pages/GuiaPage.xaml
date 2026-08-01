@@ -40,8 +40,10 @@
                     <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconPerson}"/>
                     <TextBlock Text="Destinatário" Style="{StaticResource FieldLabel}" Margin="0"/>
                 </StackPanel>
-                <ComboBox x:Name="DestinatarioCombo" Style="{StaticResource SuccessComboBox}"
-                          DisplayMemberPath="Nome" IsTextSearchEnabled="True" SelectionChanged="Campo_Changed"/>
+                <ComboBox x:Name="DestinatarioCombo" Style="{StaticResource SuccessEditableComboBox}"
+                          IsEditable="True" DisplayMemberPath="Nome" IsTextSearchEnabled="True"
+                          SelectionChanged="Campo_Changed" GotFocus="DestinatarioCombo_GotFocus"
+                          TextBoxBase.TextChanged="DestinatarioCombo_TextChanged"/>
                 <Border x:Name="DestinatarioEmptyState" Style="{StaticResource EmptyState}">
                     <StackPanel HorizontalAlignment="Center">
                         <Path Data="{StaticResource IconEmptyBox}" Stroke="{StaticResource TextMutedBrush}" StrokeThickness="1.6"
@@ -58,8 +60,10 @@
                     <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTree}"/>
                     <TextBlock Text="Proprietário" Style="{StaticResource FieldLabel}" Margin="0"/>
                 </StackPanel>
-                <ComboBox x:Name="ProprietarioCombo" Style="{StaticResource SuccessComboBox}"
-                          DisplayMemberPath="Nome" IsTextSearchEnabled="True" SelectionChanged="Campo_Changed"/>
+                <ComboBox x:Name="ProprietarioCombo" Style="{StaticResource SuccessEditableComboBox}"
+                          IsEditable="True" DisplayMemberPath="Nome" IsTextSearchEnabled="True"
+                          SelectionChanged="Campo_Changed" GotFocus="ProprietarioCombo_GotFocus"
+                          TextBoxBase.TextChanged="ProprietarioCombo_TextChanged"/>
                 <Border x:Name="ProprietarioEmptyState" Style="{StaticResource EmptyState}">
                     <StackPanel HorizontalAlignment="Center">
                         <Path Data="{StaticResource IconEmptyBox}" Stroke="{StaticResource TextMutedBrush}" StrokeThickness="1.6"
@@ -76,8 +80,10 @@
                     <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconBarcode}"/>
                     <TextBlock Text="Número de certificado" Style="{StaticResource FieldLabel}" Margin="0"/>
                 </StackPanel>
-                <ComboBox x:Name="CertificadoCombo" Style="{StaticResource SuccessComboBox}"
-                          DisplayMemberPath="Rotulo" IsTextSearchEnabled="True" SelectionChanged="Campo_Changed"/>
+                <ComboBox x:Name="CertificadoCombo" Style="{StaticResource SuccessEditableComboBox}"
+                          IsEditable="True" DisplayMemberPath="Rotulo" IsTextSearchEnabled="True"
+                          SelectionChanged="Campo_Changed" GotFocus="CertificadoCombo_GotFocus"
+                          TextBoxBase.TextChanged="CertificadoCombo_TextChanged"/>
                 <Border x:Name="CertificadoEmptyState" Style="{StaticResource EmptyState}">
                     <StackPanel HorizontalAlignment="Center">
                         <Path Data="{StaticResource IconEmptyBox}" Stroke="{StaticResource TextMutedBrush}" StrokeThickness="1.6"
@@ -98,8 +104,10 @@
                     <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconRecycle}"/>
                     <TextBlock Text="Tipo de rolaria" Style="{StaticResource FieldLabel}" Margin="0"/>
                 </StackPanel>
-                <ComboBox x:Name="RolariaCombo" Style="{StaticResource SuccessComboBox}"
-                          DisplayMemberPath="Tipo" IsTextSearchEnabled="True" SelectionChanged="Campo_Changed"/>
+                <ComboBox x:Name="RolariaCombo" Style="{StaticResource SuccessEditableComboBox}"
+                          IsEditable="True" DisplayMemberPath="Tipo" IsTextSearchEnabled="True"
+                          SelectionChanged="Campo_Changed" GotFocus="RolariaCombo_GotFocus"
+                          TextBoxBase.TextChanged="RolariaCombo_TextChanged"/>
                 <Border x:Name="RolariaEmptyState" Style="{StaticResource EmptyState}">
                     <StackPanel HorizontalAlignment="Center">
                         <Path Data="{StaticResource IconEmptyBox}" Stroke="{StaticResource TextMutedBrush}" StrokeThickness="1.6"

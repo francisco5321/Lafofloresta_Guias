@@ -1,15 +1,47 @@
 using Dapper;
 using GuiasMadeira.Domain.Entities;
+using Npgsql;
 
 namespace GuiasMadeira.Infrastructure.Postgres;
 
 public sealed class GuiaRepository
 {
+    /// <summary>
+    /// A verificação "NOT EXISTS (guia já usa esta vinheta)" usa o snapshot MVCC do início da
+    /// instrução, tirado antes do FOR UPDATE SKIP LOCKED bloquear a linha — não depois. Isto
+    /// significa que duas transações verdadeiramente concorrentes podem ambas ver a mesma vinheta
+    /// como livre e só uma delas conseguir de facto inseri-la (a outra falha com a violação de
+    /// <see cref="ConstraintVinhetaUnica"/>, apanhada por <see cref="TentarComRetentativaDeVinhetaAsync"/>).
+    /// O SKIP LOCKED continua a evitar contenção/espera; quem perde a corrida repete a consulta,
+    /// que numa nova instrução já vê o commit anterior e escolhe a vinheta seguinte disponível.
+    /// </summary>
+    private const string ConstraintVinhetaUnica = "ux_guias_codigo_barra";
+    private const int MaxTentativasVinheta = 5;
+
     private readonly PostgresConnectionFactory connectionFactory;
 
     public GuiaRepository(PostgresConnectionFactory connectionFactory)
     {
         this.connectionFactory = connectionFactory;
+    }
+
+    private static async Task<T> TentarComRetentativaDeVinhetaAsync<T>(Func<Task<T>> tentativa)
+    {
+        for (var i = 1; i < MaxTentativasVinheta; i++)
+        {
+            try
+            {
+                return await tentativa();
+            }
+            catch (PostgresException ex) when (ex.SqlState == PostgresErrorCodes.UniqueViolation
+                && ex.ConstraintName == ConstraintVinhetaUnica)
+            {
+                // Outra transação ganhou esta vinheta entretanto; tenta de novo com uma instrução
+                // nova (snapshot atualizado) para apanhar a próxima vinheta ainda livre.
+            }
+        }
+
+        return await tentativa();
     }
 
     public async Task<int> InsertAsync(Guia guia, CancellationToken cancellationToken = default)
@@ -29,31 +61,33 @@ public sealed class GuiaRepository
     /// <summary>
     /// Cria a guia atribuindo, de forma atómica, a próxima vinheta ainda disponível do certificado
     /// indicado (FOR UPDATE SKIP LOCKED evita que duas guias criadas em simultâneo fiquem com a
-    /// mesma vinheta). Devolve null se não houver nenhuma vinheta disponível para esse certificado.
+    /// mesma vinheta — ver <see cref="TentarComRetentativaDeVinhetaAsync"/> para a garantia
+    /// completa). Devolve null se não houver nenhuma vinheta disponível para esse certificado.
     /// </summary>
-    public async Task<int?> InsertComCertificadoAsync(Guia guia, string numeroCertificado, CancellationToken cancellationToken = default)
-    {
-        await using var connection = connectionFactory.CreateConnection();
-        var command = new CommandDefinition(
-            """
-            WITH vinheta AS (
-                SELECT c.id
-                FROM codigos_barras c
-                WHERE c.numero_certificado = @numeroCertificado
-                  AND NOT EXISTS (SELECT 1 FROM guias g WHERE g.codigo_barra_id = c.id)
-                ORDER BY c.codigo
-                LIMIT 1
-                FOR UPDATE SKIP LOCKED
-            )
-            INSERT INTO guias (destinatario_id, proprietario_id, codigo_barra_id, rolaria_id, fornecedor)
-            SELECT @DestinatarioId, @ProprietarioId, vinheta.id, @RolariaId, @Fornecedor
-            FROM vinheta
-            RETURNING id
-            """,
-            new { guia.DestinatarioId, guia.ProprietarioId, guia.RolariaId, guia.Fornecedor, numeroCertificado },
-            cancellationToken: cancellationToken);
-        return await connection.ExecuteScalarAsync<int?>(command);
-    }
+    public Task<int?> InsertComCertificadoAsync(Guia guia, string numeroCertificado, CancellationToken cancellationToken = default) =>
+        TentarComRetentativaDeVinhetaAsync(async () =>
+        {
+            await using var connection = connectionFactory.CreateConnection();
+            var command = new CommandDefinition(
+                """
+                WITH vinheta AS (
+                    SELECT c.id
+                    FROM codigos_barras c
+                    WHERE c.numero_certificado = @numeroCertificado
+                      AND NOT EXISTS (SELECT 1 FROM guias g WHERE g.codigo_barra_id = c.id)
+                    ORDER BY c.codigo
+                    LIMIT 1
+                    FOR UPDATE SKIP LOCKED
+                )
+                INSERT INTO guias (destinatario_id, proprietario_id, codigo_barra_id, rolaria_id, fornecedor)
+                SELECT @DestinatarioId, @ProprietarioId, vinheta.id, @RolariaId, @Fornecedor
+                FROM vinheta
+                RETURNING id
+                """,
+                new { guia.DestinatarioId, guia.ProprietarioId, guia.RolariaId, guia.Fornecedor, numeroCertificado },
+                cancellationToken: cancellationToken);
+            return await connection.ExecuteScalarAsync<int?>(command);
+        });
 
     /// <summary>
     /// Equivalente a <see cref="InsertComCertificadoAsync"/> mas para uma guia já existente cujo
@@ -62,31 +96,34 @@ public sealed class GuiaRepository
     /// </summary>
     public async Task<bool> AtualizarComCertificadoAsync(Guia guia, string numeroCertificado, CancellationToken cancellationToken = default)
     {
-        await using var connection = connectionFactory.CreateConnection();
-        var command = new CommandDefinition(
-            """
-            WITH vinheta AS (
-                SELECT c.id
-                FROM codigos_barras c
-                WHERE c.numero_certificado = @numeroCertificado
-                  AND NOT EXISTS (
-                      SELECT 1 FROM guias g
-                      WHERE g.codigo_barra_id = c.id AND g.id <> @Id
-                  )
-                ORDER BY c.codigo
-                LIMIT 1
-                FOR UPDATE SKIP LOCKED
-            )
-            UPDATE guias
-            SET destinatario_id = @DestinatarioId, proprietario_id = @ProprietarioId,
-                rolaria_id = @RolariaId, fornecedor = @Fornecedor, codigo_barra_id = vinheta.id
-            FROM vinheta
-            WHERE guias.id = @Id
-            RETURNING guias.id
-            """,
-            new { guia.Id, guia.DestinatarioId, guia.ProprietarioId, guia.RolariaId, guia.Fornecedor, numeroCertificado },
-            cancellationToken: cancellationToken);
-        var idAtualizado = await connection.ExecuteScalarAsync<int?>(command);
+        var idAtualizado = await TentarComRetentativaDeVinhetaAsync(async () =>
+        {
+            await using var connection = connectionFactory.CreateConnection();
+            var command = new CommandDefinition(
+                """
+                WITH vinheta AS (
+                    SELECT c.id
+                    FROM codigos_barras c
+                    WHERE c.numero_certificado = @numeroCertificado
+                      AND NOT EXISTS (
+                          SELECT 1 FROM guias g
+                          WHERE g.codigo_barra_id = c.id AND g.id <> @Id
+                      )
+                    ORDER BY c.codigo
+                    LIMIT 1
+                    FOR UPDATE SKIP LOCKED
+                )
+                UPDATE guias
+                SET destinatario_id = @DestinatarioId, proprietario_id = @ProprietarioId,
+                    rolaria_id = @RolariaId, fornecedor = @Fornecedor, codigo_barra_id = vinheta.id
+                FROM vinheta
+                WHERE guias.id = @Id
+                RETURNING guias.id
+                """,
+                new { guia.Id, guia.DestinatarioId, guia.ProprietarioId, guia.RolariaId, guia.Fornecedor, numeroCertificado },
+                cancellationToken: cancellationToken);
+            return await connection.ExecuteScalarAsync<int?>(command);
+        });
         return idAtualizado is not null;
     }
 

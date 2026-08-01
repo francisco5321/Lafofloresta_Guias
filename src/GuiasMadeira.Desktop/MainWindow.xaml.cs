@@ -9,8 +9,8 @@ public partial class MainWindow
     public MainWindow()
     {
         InitializeComponent();
-        WindowState = WindowState.Normal;
         SizeToScreen();
+        WindowState = WindowState.Maximized;
         NavPesquisar.IsChecked = true;
         Loaded += (_, _) => InvalidateVisual();
         Loaded += MainWindow_Loaded;

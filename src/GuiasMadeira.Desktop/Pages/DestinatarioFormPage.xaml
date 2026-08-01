@@ -34,28 +34,30 @@
                 <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconPerson}"/>
                 <TextBlock Text="Nome" Style="{StaticResource FieldLabel}" Margin="0"/>
             </StackPanel>
-            <TextBox x:Name="NomeBox" TextChanged="Campo_Changed"/>
+            <TextBox x:Name="NomeBox" Style="{StaticResource SuccessTextBox}" TextChanged="Campo_Changed"/>
             <TextBlock x:Name="NomeError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
                 <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconTag}"/>
                 <TextBlock Text="NIF" Style="{StaticResource FieldLabel}" Margin="0"/>
             </StackPanel>
-            <TextBox x:Name="NifBox" TextChanged="Campo_Changed"/>
+            <TextBox x:Name="NifBox" Style="{StaticResource SuccessTextBox}" MaxLength="9" TextChanged="Campo_Changed"
+                     PreviewTextInput="NifBox_PreviewTextInput" PreviewKeyDown="NifBox_PreviewKeyDown"
+                     DataObject.Pasting="NifBox_Pasting"/>
             <TextBlock x:Name="NifError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
                 <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconPin}"/>
                 <TextBlock Text="Morada" Style="{StaticResource FieldLabel}" Margin="0"/>
             </StackPanel>
-            <TextBox x:Name="MoradaBox" TextChanged="Campo_Changed"/>
+            <TextBox x:Name="MoradaBox" Style="{StaticResource SuccessTextBox}" TextChanged="Campo_Changed"/>
             <TextBlock x:Name="MoradaError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
                 <Path Style="{StaticResource FieldIcon}" Data="{StaticResource IconPin}"/>
                 <TextBlock Text="Concelho" Style="{StaticResource FieldLabel}" Margin="0"/>
             </StackPanel>
-            <TextBox x:Name="ConcelhoBox" TextChanged="Campo_Changed"/>
+            <TextBox x:Name="ConcelhoBox" Style="{StaticResource SuccessTextBox}" TextChanged="Campo_Changed"/>
             <TextBlock x:Name="ConcelhoError" Style="{StaticResource InlineError}" Margin="0,-12,0,16"/>
 
             <StackPanel Orientation="Horizontal" Margin="0,8,0,0" HorizontalAlignment="Center">

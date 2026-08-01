@@ -53,8 +53,7 @@ public partial class ProprietarioPage
         }
 
         return Contem(proprietario.Nome, termo) || Contem(proprietario.Distrito, termo)
-            || Contem(proprietario.Concelho, termo) || Contem(proprietario.Freguesia, termo)
-            || Contem(proprietario.CodigoProp, termo) || Contem(proprietario.Parcela, termo);
+            || Contem(proprietario.Concelho, termo) || Contem(proprietario.Freguesia, termo);
     }
 
     private static bool Contem(string? valor, string termo) =>
